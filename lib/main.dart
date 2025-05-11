@@ -4,13 +4,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/providers/thems_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/aboutItScreen.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/addNewJob.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/details.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/notification.dart';
 import 'package:provider/provider.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/homeScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/signIn.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/about_it.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/add_task.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/changePassword.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/change_profile.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/chat.dart';
@@ -43,8 +43,8 @@ class MyApp extends StatelessWidget {
           darkTheme: ThemeData.dark(),
           routes: {
             SignIn.routeName: (context) => const SignIn(),
-            AboutItScreen.routeName: (context) => const AboutItScreen(),
-            AddTaskScreen.routeName: (context) => const AddTaskScreen(),
+            AboutItScreen.routeName: (context) =>   AboutItScreen(),
+            AddNewJobScreen.routeName: (context) =>   AddNewJobScreen(),
             HomeScreen.routeName: (context) => const HomeScreen(),
             ChatScreen.routeName: (context) => ChatScreen(),
             Chat.routeName: (context) => Chat(),
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
                 ),
                 
           },
-          home: const HomeScreen(),
+          home: const SignIn(),
         );
       },
     );

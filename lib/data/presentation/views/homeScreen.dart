@@ -3,10 +3,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:iti_freelancing_hub/constants.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/aboutIt.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/aboutItScreen.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/addNewJob.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/chat.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/add_task.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/setting.dart';
+ import 'package:iti_freelancing_hub/data/presentation/views/setting.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_home.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -25,9 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _pages = [
     const CustomeHome(),
     Chat(), // Make sure it's a Widget, not route
-    AddTaskScreen(),
+    AddNewJobScreen(),
     SettingsPage(),
-    AboutIt(),
+    AboutItScreen(),
   ];
 
   // Define your icons (optional: use svg if needed)
