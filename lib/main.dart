@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/providers/thems_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
+import 'package:iti_freelancing_hub/core/utils/remote/Dio-Helper.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/login_cubit_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/aboutItScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/addNewJob.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/details.dart';
@@ -18,6 +21,7 @@ import 'package:iti_freelancing_hub/data/presentation/views/chats.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/setting.dart';
 
 void main() {
+  DioHelper.init();
   runApp(
     ChangeNotifierProvider(create: (_) => SettingsProvider(), child: MyApp()),
   );
@@ -30,38 +34,46 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
 
-    return ScreenUtilInit(
+    return ScreenUtilInit(  
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          themeMode: settingsProvider.isDark ? ThemeMode.dark : ThemeMode.light,
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
-          routes: {
-            SignIn.routeName: (context) => const SignIn(),
-            AboutItScreen.routeName: (context) =>   AboutItScreen(),
-            AddNewJobScreen.routeName: (context) =>   AddNewJobScreen(),
-            HomeScreen.routeName: (context) => const HomeScreen(),
-            ChatScreen.routeName: (context) => ChatScreen(),
-            Chat.routeName: (context) => Chat(),
-            SettingsPage.routeName: (context) => SettingsPage(),
-            Changepassword.routeName: (context) => Changepassword(),
-            JobDetails.routeName: (context) => JobDetails(),
-            Notifications.routeName:(context) =>Notifications(),
-            ChangeProfile.routeName:
-                (context) => ChangeProfile(
-                  image: SvgPicture.asset(Assets.assetsavatar),
-                  onEdit: () {
-                    print(" done");
-                  },
-                ),
-                
-          },
-          home: const SignIn(),
+        return MultiProvider(
+          providers: [
+            BlocProvider(
+            create: (context) => LoginCubitCubit(),
+            
+          ),
+          ] , 
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            themeMode: settingsProvider.isDark ? ThemeMode.dark : ThemeMode.light,
+            theme: ThemeData.light(),
+            darkTheme: ThemeData.dark(),
+            routes: {
+              SignIn.routeName: (context) =>   SignIn(),
+              AboutItScreen.routeName: (context) =>   AboutItScreen(),
+              AddNewJobScreen.routeName: (context) =>   AddNewJobScreen(),
+              HomeScreen.routeName: (context) => const HomeScreen(),
+              ChatScreen.routeName: (context) => ChatScreen(),
+              Chat.routeName: (context) => Chat(),
+              SettingsPage.routeName: (context) => SettingsPage(),
+              Changepassword.routeName: (context) => Changepassword(),
+              JobDetails.routeName: (context) => JobDetails(),
+              Notifications.routeName:(context) =>Notifications(),
+              ChangeProfile.routeName:
+                  (context) => ChangeProfile(
+                    image: SvgPicture.asset(Assets.assetsavatar),
+                    onEdit: () {
+                      print(" done");
+                    },
+                  ),
+                  
+            },
+            home:   SignIn(),
+          ),
         );
       },
     );
