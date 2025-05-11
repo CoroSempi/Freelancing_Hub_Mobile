@@ -9,7 +9,6 @@ import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/signIn.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_Buttom.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_app_bar.dart';
-import 'package:iti_freelancing_hub/data/presentation/widgets/draw_item.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/text_field.dart';
 
 class Changepassword extends StatelessWidget {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
-import 'package:iti_freelancing_hub/data/presentation/widgets/draw_item.dart';
 
 class MainScaffold extends StatelessWidget {
   const MainScaffold({super.key, required this.body});

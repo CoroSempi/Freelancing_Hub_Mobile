@@ -2,14 +2,18 @@
 class Assets {
   Assets._();
 
+
   /// Assets for assetsImagesBoy
   /// assets/images/boy.svg
   static const String assetsImagesBoy = "assets/images/boy.svg";
 
   /// Assets for assetsImagesCarbonPassword
   /// assets/images/carbon_password.svg
-  static const String assetsImagesCarbonPassword =
-      "assets/images/carbon_password.svg";
+  static const String assetsImagesCarbonPassword = "assets/images/carbon_password.svg";
+
+  /// Assets for assetsImagesCongratulation
+  /// assets/images/Congratulation.svg
+  static const String assetsImagesCongratulation = "assets/images/Congratulation.svg";
 
   /// Assets for assetsImagesEmail
   /// assets/images/email.svg
@@ -17,8 +21,7 @@ class Assets {
 
   /// Assets for assetsImagesFreelancing Hub
   /// assets/images/Freelancing Hub.svg
-  static const String assetsImagesFreelancingHub =
-      "assets/images/Freelancing Hub.svg";
+  static const String assetsImagesFreelancingHub = "assets/images/Freelancing Hub.svg";
 
   /// Assets for assetsImagesIti
   /// assets/images/iti.svg
@@ -28,9 +31,23 @@ class Assets {
   /// assets/images/message.svg
   static const String assetsImagesMessage = "assets/images/message.svg";
 
+  /// Assets for assetsImagesNotification
+  /// assets/images/notification.svg
+  static const String assetsImagesNotification = "assets/images/notification.svg";
+
+  /// Assets for assetsImagesPerson
+  /// assets/images/person.svg
+  static const String assetsImagesPerson = "assets/images/person.svg";
+
   /// Assets for assetsImagesTrue
   /// assets/images/true.svg
   static const String assetsImagesTrue = "assets/images/true.svg";
+
+
+  /// Assets for assetsImagesBoy
+  /// assets/images/boy.svg
+
+
 
   static const String assetsLogo = "assets/images/logo.svg";
   static const String assetsKey = "assets/images/key.svg";
