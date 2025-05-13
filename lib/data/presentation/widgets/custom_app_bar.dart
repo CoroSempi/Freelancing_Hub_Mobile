@@ -27,7 +27,7 @@ class CustomAppBar extends StatelessWidget {
       child: Row(
         children: [
           IconButton(
-            icon: Icon(Icons.arrow_forward_ios, color: kColors[0]),
+            icon: Icon(Icons.arrow_back_ios, color: kColors[0]),
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,

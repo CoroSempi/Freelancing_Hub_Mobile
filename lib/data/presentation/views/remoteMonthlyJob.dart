@@ -1,54 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
+import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/CustomButtonWidget.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/form-field.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/formFieldWithDropdown.dart';
 
 class Remotemonthlyjob extends StatelessWidget {
- 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add New Job'),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.red),
-      ),
+    return MainScaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Remote monthly job',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(height: 16),
+            SvgPicture.asset(Assets.assetremote),
+            SizedBox(height: 16.h),
             FormFieldWidget(
               title: 'Job Title',
               subtitle: 'Enter the title of the job',
               hintText: 'Enter the title of the job',
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
+
             FormFieldWidget(
               title: 'Client Name',
               subtitle: 'Enter the client\'s name',
               hintText: 'Enter the client\'s name',
             ),
- 
 
-                        const SizedBox(height: 16),
+            SizedBox(height: 16.h),
 
             FormFieldWidget(
               title: 'Start Date',
               subtitle: 'Enter the start date',
               hintText: 'DD/MM/YYYY',
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
+
             Row(
               children: [
                 Expanded(
@@ -58,7 +49,7 @@ class Remotemonthlyjob extends StatelessWidget {
                     hintText: 'Enter the budget',
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: 16.w),
                 Expanded(
                   child: FormFieldWidget(
                     title: 'Currency',
@@ -68,51 +59,56 @@ class Remotemonthlyjob extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
-    
-             FormFieldWidget(
+            SizedBox(height: 16.h),
+
+            FormFieldWidget(
               title: 'Client Name ',
               subtitle: '(Required)',
               hintText: '',
             ),
 
-
-
-                  FormFieldWidget(
+            FormFieldWidget(
               title: 'Client Contact ',
               subtitle: '(Required)',
               hintText: '',
             ),
 
-            const SizedBox(height: 24),
-            FormFieldWithDropdown(title: 'Client Country ', subtitle: '(Required)', dropDownText: 'dropDownText',),
+            SizedBox(height: 24.h),
+            FormFieldWithDropdown(
+              title: 'Client Country ',
+              subtitle: '(Required)',
+              dropDownText: 'dropDownText',
+            ),
 
-         const SizedBox(height: 16),
-    
- 
-           
+            SizedBox(height: 16.h),
+
             FormFieldWidget(
               title: 'Proof of Work',
               subtitle: '(Required)',
-              hintText: "Prepare a PDF document that includes screenshots of chats between you and the client, samples of the work completed, and proof of payment or invoices. Once you've compiled everything into a single PDF, upload it to Google Drive, copy the link, and paste it in here. Make sure the link is set to Anyone with the link can view so that admin can access it.",
+              hintText:
+                  "Prepare a PDF document that includes screenshots of chats between you and the client, samples of the work completed, and proof of payment or invoices. Once you've compiled everything into a single PDF, upload it to Google Drive, copy the link, and paste it in here. Make sure the link is set to Anyone with the link can view so that admin can access it.",
             ),
-               
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: CustomButtonWidget(
-                    text: "Back",
-                    onPressed: () {
-                    },
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.red,
+                      side: const BorderSide(color: Colors.red),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text('Back'),
                   ),
                 ),
+                Spacer(),
                 Expanded(
-                  child: CustomButtonWidget(
-                    text: "Submit",
-                    onPressed: () {
-                    },
-                  ),
+                  child: CustomButtonWidget(text: "Submit", onPressed: () {}),
                 ),
               ],
             ),

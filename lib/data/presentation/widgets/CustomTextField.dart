@@ -26,10 +26,7 @@ class CustomTextFields extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            width: 1,
-            color: Color(0xFFA6A4A4),
-          ),
+          side: const BorderSide(width: 1, color: Color(0xFFA6A4A4)),
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -38,13 +35,15 @@ class CustomTextFields extends StatelessWidget {
         controller: controller,
         onChanged: onChanged,
         onSaved: onSaved,
-        validator: validator ?? (value) {
-          if (value?.isEmpty ?? true) {
-            return 'Field is required';
-          } else {
-            return null;
-          }
-        },
+        validator:
+            validator ??
+            (value) {
+              if (value?.isEmpty ?? true) {
+                return 'Field is required';
+              } else {
+                return null;
+              }
+            },
         maxLines: maxLines,
         style: const TextStyle(
           color: Color(0xFFA6A4A4),

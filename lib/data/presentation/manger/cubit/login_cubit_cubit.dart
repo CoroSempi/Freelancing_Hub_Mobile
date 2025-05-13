@@ -8,33 +8,27 @@ part 'login_cubit_state.dart';
 
 class LoginCubitCubit extends Cubit<LoginCubitState> {
   LoginCubitCubit() : super(LoginCubitInitial());
-  
-   Future<void> login(String email, String password) async {
+
+  Future<void> login(String email, String password) async {
     emit(LoginLoading());
     print('LoginLoading');
+
     try {
-       final response = await DioHelper.login({
+      final response = await DioHelper.login({
         'email': email,
         'password': password,
       });
 
       final loginResponse = LoginResponse.fromJson(response.data);
-      
+
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('accessToken', loginResponse.accessToken);
 
       emit(LoginSuccess(loginResponse));
-          print('success');
-
+      print('success');
     } catch (e) {
       print(e.toString());
       emit(LoginFailure(e.toString()));
     }
   }
 }
-
-
-
-
-
-

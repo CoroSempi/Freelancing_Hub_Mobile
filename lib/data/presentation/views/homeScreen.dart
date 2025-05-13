@@ -6,7 +6,7 @@ import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/aboutItScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/addNewJob.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/chat.dart';
- import 'package:iti_freelancing_hub/data/presentation/views/setting.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/setting.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_home.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,8 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
     const CustomeHome(),
     Chat(), // Make sure it's a Widget, not route
     AddNewJobScreen(),
-    SettingsPage(),
     AboutItScreen(),
+    SettingsPage(),
   ];
 
   // Define your icons (optional: use svg if needed)
@@ -38,8 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
       icon: Icon(Icons.add_circle_outline),
       label: 'Add Job',
     ),
-    BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setting'),
+
     BottomNavigationBarItem(icon: Icon(Icons.help_outline), label: 'About'),
+    BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setting'),
   ];
 
   void _onItemTapped(int index) {

@@ -76,7 +76,7 @@ class ForgetPassword extends StatelessWidget {
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           Navigator.push(context,   MaterialPageRoute(
-                            builder: (context) =>   SignIn(),
+                            builder: (context) => SignIn(),
                           ));
                          },
                     ),

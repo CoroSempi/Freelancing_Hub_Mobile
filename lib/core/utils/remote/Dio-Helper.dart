@@ -45,4 +45,28 @@ class DioHelper {
       throw Exception('Failed to login: $e');
     }
   }
+
+
+
+static Future<Response> sendMessage(Map<String, dynamic> messageData) async {
+  try {
+    Response response = await dio.post(
+      'students/sendMessage',
+      data: messageData,
+    );
+    return response;
+  } catch (e) {
+    throw Exception('Failed to send message: $e');
+  }
+}
+
+static Future<Response> getChat() async {
+  try {
+    Response response = await dio.get('students/getChat');
+    return response;
+  } catch (e) {
+    throw Exception('Failed to fetch chat: $e');
+  }
+}
+
 }

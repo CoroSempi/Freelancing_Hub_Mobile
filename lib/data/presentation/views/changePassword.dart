@@ -18,7 +18,7 @@ class Changepassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainScaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             CustomAppBar(
@@ -35,7 +35,7 @@ class Changepassword extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 25.h),
+            SizedBox(height: 15.h),
 
             Row(
               children: [
@@ -137,7 +137,7 @@ class Changepassword extends StatelessWidget {
                               fontSize: 14,
                             ),
                           ),
-                          SizedBox(height: 12),
+                          SizedBox(height: 12.h),
                           SvgPicture.asset(Assets.assetsImagesTrue, height: 80),
                         ],
                       ),
