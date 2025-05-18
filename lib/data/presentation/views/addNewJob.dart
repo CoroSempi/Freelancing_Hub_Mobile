@@ -4,6 +4,7 @@ import 'package:iti_freelancing_hub/constants.dart';
 import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/directContentScreen.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/homeScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/platFormScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/remoteMonthlyJob.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/CustomButtonWidget.dart';
@@ -87,7 +88,14 @@ class AddNewJobScreen extends StatelessWidget {
                 Expanded(
                   child: CustomButtonWidget(
                     text: "Back",
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        HomeScreen.routeName,
+                        (route) =>
+                            false, 
+                      );
+                    },
                   ),
                 ),
                 SizedBox(width: 16.w),

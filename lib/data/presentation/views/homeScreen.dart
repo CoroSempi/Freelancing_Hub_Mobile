@@ -26,7 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
     const CustomeHome(),
     Chat(), // Make sure it's a Widget, not route
     AddNewJobScreen(),
-    AboutItScreen(),
     SettingsPage(),
   ];
 
@@ -39,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
       label: 'Add Job',
     ),
 
-    BottomNavigationBarItem(icon: Icon(Icons.help_outline), label: 'About'),
     BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setting'),
   ];
 

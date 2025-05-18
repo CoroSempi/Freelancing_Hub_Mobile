@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:iti_freelancing_hub/constants.dart';
+import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/chat.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_Buttom.dart';
+import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
   static const routeName = '/chat-screen';
@@ -17,6 +19,8 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
+    final settingsProviders = Provider.of<SettingsProvider>(context);
+
     return MainScaffold(
       body: Column(
         children: [
@@ -44,7 +48,10 @@ class _ChatScreenState extends State<ChatScreen> {
               children: [
                 Text(
                   "If you have any questions or encounter any issues, you’re in the right place.",
-                  style: TextStyles.black20SemiBold,
+                  style: TextStyles.black20SemiBold.copyWith(
+                    color:
+                        settingsProviders.isDark ? Colors.white : Colors.black,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 16.h),
@@ -56,7 +63,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 SizedBox(height: 24.h),
                 CustomButtoms(
                   text: 'Get Started',
-                  color: kColors[1],
+                  color: settingsProviders.isDark ? kColors[0] : Colors.black,
                   textcolor: Colors.white,
                   onPressed: () {
                     Navigator.push(

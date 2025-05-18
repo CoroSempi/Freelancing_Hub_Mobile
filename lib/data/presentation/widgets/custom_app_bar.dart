@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iti_freelancing_hub/constants.dart';
+import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/homeScreen.dart';
+import 'package:provider/provider.dart';
 
 class CustomAppBar extends StatelessWidget {
   final String? title;
@@ -20,35 +22,44 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settingsProviders = Provider.of<SettingsProvider>(context);
+
     return Container(
-      // decoration: BoxDecoration(
-      //   border: Border(bottom: BorderSide(color: Colors.grey, width: 1.0)),
-      // ),
+      padding: EdgeInsets.symmetric(vertical: 8.h),
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: kColors[0]),
-            onPressed: () {
+          GestureDetector(
+            onTap: () {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => const HomeScreen()),
                 (Route<dynamic> route) => false,
               );
             },
+            child: Row(
+              children: [
+                Icon(Icons.arrow_back_ios, color: kColors[5], size: 20),
+                if (backText != null)
+                  Text(
+                    backText!,
+                    style: TextStyles.red15SemiBold.copyWith(color: kColors[5]),
+                  ),
+              ],
+            ),
           ),
 
-          if (backText != null) ...[
-            Text(backText!, style: TextStyles.red15SemiBold),
-            SizedBox(width: 4.w),
-          ],
           SizedBox(width: 10.w),
-          if (title != null) ...[
-            Text(title!, style: TextStyles.black12SemiBold),
-            SizedBox(width: 5.w),
-          ],
+
+          if (title != null)
+            Text(
+              title!,
+              style: TextStyles.black12SemiBold.copyWith(
+                color: settingsProviders.isDark ? Colors.white : Colors.black,
+              ),
+            ),
 
           if (showPendingButton) ...[
-            Spacer(),
+            const Spacer(),
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(

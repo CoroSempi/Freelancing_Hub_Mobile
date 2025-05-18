@@ -59,7 +59,7 @@ class Assets {
   static const String assettag = "assets/images/tag.svg";
   static const String assetremote = "assets/images/tagremote.svg";
   static const String assetplatform = "assets/images/tagplatform.svg";
-
+  static const  String  assetlogodark = "assets/images/headerLogoDark.svg";
   static const String assetdirect = "assets/images/tagdirectcont.svg";
 
   static String assetaccept = "assets/images/accept.svg";

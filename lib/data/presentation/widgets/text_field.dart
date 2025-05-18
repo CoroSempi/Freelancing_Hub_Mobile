@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart'; // لإضافة الصور من نوع SVG
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:iti_freelancing_hub/constants.dart';
 
 class CustomTextFiled extends StatefulWidget {
   const CustomTextFiled({
@@ -7,7 +8,7 @@ class CustomTextFiled extends StatefulWidget {
     required this.hittext,
     this.prefixIcon,
     this.suffixIcon,
-    this.prefixImage, // صورة للبداية
+    this.prefixImage,
     this.controller,
     this.validator,
     this.isPassword = false,
@@ -65,6 +66,10 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
                 : widget.suffixIcon,
 
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: kColors[0]),
+        ),
       ),
     );
   }

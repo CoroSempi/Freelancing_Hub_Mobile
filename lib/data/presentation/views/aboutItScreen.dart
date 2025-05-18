@@ -35,8 +35,8 @@ class AboutItScreen extends StatelessWidget {
               'What is the ITI Freelancing Hub?',
               style: TextStyles.red15SemiBold.copyWith(fontSize: 18),
             ),
-             SizedBox(height: 8.h),
-             Text(
+            SizedBox(height: 8.h),
+            Text(
               'The ITI Freelancing Hub is designed specifically for students who have secured their own freelancing jobs. This platform allows students to upload the details of their jobs for administrative approval. Once approved, these opportunities contribute to their graduation requirements.',
               style: TextStyles.grey12Medium,
             ),

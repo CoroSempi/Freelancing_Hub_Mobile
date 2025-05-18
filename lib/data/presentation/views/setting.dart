@@ -6,6 +6,7 @@ import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/providers/thems_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/login_cubit_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/aboutItScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,7 @@ import 'package:iti_freelancing_hub/data/presentation/views/changePassword.dart'
 import 'package:iti_freelancing_hub/data/presentation/views/change_profile.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/chat.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/chats.dart';
- import 'package:iti_freelancing_hub/core/utils/styles.dart';
+import 'package:iti_freelancing_hub/core/utils/styles.dart';
 
 class SettingsPage extends StatefulWidget {
   static const routeName = '/settings';
@@ -27,6 +28,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     // final themeProvider = Provider.of<ThemeProvider>(context);
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
+    final settingsProviders = Provider.of<SettingsProvider>(context);
 
     return MainScaffold(
       body: Padding(
@@ -41,7 +43,11 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             Text(
               'Setting',
-              style: TextStyles.black12SemiBold.copyWith(fontSize: 16),
+              style: TextStyles.black12SemiBold.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: settingsProviders.isDark ? Colors.white : Colors.black,
+              ),
             ),
             SizedBox(height: 16.h),
 
@@ -63,12 +69,22 @@ class _SettingsPageState extends State<SettingsPage> {
                       // inactiveThumbColor: kColors[3],
                     ),
                     SizedBox(width: 8.w),
-                    Text("Theme", style: TextStyles.black12SemiBold),
+                    Text(
+                      "Theme",
+                      style: TextStyles.black12SemiBold.copyWith(
+                        color:
+                            settingsProviders.isDark
+                                ? Colors.white
+                                : Colors.black,
+                      ),
+                    ),
                   ],
                 ),
                 Text(
                   settingsProvider.isDark ? "Dark" : "Light",
-                  style: TextStyles.red15SemiBold,
+                  style: TextStyles.red15SemiBold.copyWith(
+                    color: settingsProviders.isDark ? kColors[5] : kColors[0],
+                  ),
                 ),
               ],
             ),
@@ -84,13 +100,27 @@ class _SettingsPageState extends State<SettingsPage> {
               leading: Icon(Icons.person_pin, color: kColors[0]),
               title: Text(
                 'Edit My Profile',
-                style: TextStyles.black20SemiBold.copyWith(fontSize: 14),
+                style: TextStyles.black20SemiBold.copyWith(
+                  fontSize: 14,
+                  color: settingsProviders.isDark ? Colors.white : Colors.black,
+                ),
               ),
               contentPadding: EdgeInsets.zero,
               onTap: () {
-                Navigator.of(
-                  context,
-                ).pushReplacementNamed(ChangeProfile.routeName);
+                final loginCubit = context.read<LoginCubitCubit>();
+                final userId = loginCubit.user?.studentData.id;
+
+                if (userId != null) {
+                  Navigator.of(context).pushReplacementNamed(
+                    ChangeProfile.routeName,
+                    arguments: {'userId': userId},
+                  );
+                } else {
+                  // Optional: Show an error dialog
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("User ID not available")),
+                  );
+                }
               },
             ),
             // Change Password
@@ -98,7 +128,10 @@ class _SettingsPageState extends State<SettingsPage> {
               leading: SvgPicture.asset(Assets.assetsKey),
               title: Text(
                 'Change Password',
-                style: TextStyles.black20SemiBold.copyWith(fontSize: 14),
+                style: TextStyles.black20SemiBold.copyWith(
+                  fontSize: 14,
+                  color: settingsProviders.isDark ? Colors.white : Colors.black,
+                ),
               ),
               contentPadding: EdgeInsets.zero,
               onTap: () {
@@ -119,7 +152,10 @@ class _SettingsPageState extends State<SettingsPage> {
               leading: Icon(Icons.chat, color: kColors[0]),
               title: Text(
                 'Chat with us',
-                style: TextStyles.black20SemiBold.copyWith(fontSize: 14),
+                style: TextStyles.black20SemiBold.copyWith(
+                  fontSize: 14,
+                  color: settingsProviders.isDark ? Colors.white : Colors.black,
+                ),
               ),
               contentPadding: EdgeInsets.zero,
               onTap: () {
@@ -133,13 +169,14 @@ class _SettingsPageState extends State<SettingsPage> {
               leading: Icon(Icons.help_outline, color: kColors[0]),
               title: Text(
                 'About ITI Freelancing Hub',
-                style: TextStyles.black20SemiBold.copyWith(fontSize: 14),
+                style: TextStyles.black20SemiBold.copyWith(
+                  fontSize: 14,
+                  color: settingsProviders.isDark ? Colors.white : Colors.black,
+                ),
               ),
               contentPadding: EdgeInsets.zero,
               onTap: () {
-                Navigator.of(
-                  context,
-                ).pushReplacementNamed(AboutItScreen.routeName);
+                Navigator.of(context).pushNamed(AboutItScreen.routeName);
               },
             ),
           ],

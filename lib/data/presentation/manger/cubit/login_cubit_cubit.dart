@@ -9,9 +9,10 @@ part 'login_cubit_state.dart';
 class LoginCubitCubit extends Cubit<LoginCubitState> {
   LoginCubitCubit() : super(LoginCubitInitial());
 
+  LoginResponse? user;
+
   Future<void> login(String email, String password) async {
     emit(LoginLoading());
-    print('LoginLoading');
 
     try {
       final response = await DioHelper.login({
@@ -24,10 +25,10 @@ class LoginCubitCubit extends Cubit<LoginCubitState> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('accessToken', loginResponse.accessToken);
 
+      user = loginResponse; 
+
       emit(LoginSuccess(loginResponse));
-      print('success');
     } catch (e) {
-      print(e.toString());
       emit(LoginFailure(e.toString()));
     }
   }

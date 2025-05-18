@@ -28,8 +28,7 @@ class _ChatState extends State<Chat> {
 
   @override
   void dispose() {
-    _scrollController
-        .dispose(); 
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -55,6 +54,24 @@ class _ChatState extends State<Chat> {
                   );
                 } else if (state is ChatLoaded) {
                   final messages = state.messages;
+
+                  if (messages.isEmpty) {
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          'Welcome! If you have any questions or problems, feel free to chat with our admin here. '
+                          'Just type your message below, and we’ll get back to you as soon as possible. We\'re here to help!',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Colors.grey[700],
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     _scrollController.jumpTo(
                       _scrollController.position.maxScrollExtent,
@@ -62,7 +79,7 @@ class _ChatState extends State<Chat> {
                   });
 
                   return ListView.builder(
-                    controller: _scrollController, 
+                    controller: _scrollController,
                     itemCount: messages.length,
                     itemBuilder: (context, index) {
                       final msg = messages[index];

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iti_freelancing_hub/constants.dart';
+import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_Buttom.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_app_bar.dart';
+import 'package:provider/provider.dart';
 
 class JobDetails extends StatelessWidget {
   const JobDetails({super.key});
@@ -14,6 +16,8 @@ class JobDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settingsProviders = Provider.of<SettingsProvider>(context);
+
     return MainScaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -28,20 +32,31 @@ class JobDetails extends StatelessWidget {
             SizedBox(height: 4.h),
             Text(
               'Website Development for Local Bakery',
-              style: TextStyles.black20SemiBold,
+              style: TextStyles.black20SemiBold.copyWith(
+                color: settingsProviders.isDark ? kColors[2] : kColors[1],
+              ),
             ),
             SizedBox(height: 8.h),
-            Text('platform job - Mostaql ', style: TextStyles.red15SemiBold),
+            Text(
+              'platform job - Mostaql ',
+              style: TextStyles.red15SemiBold.copyWith(color: kColors[5]),
+            ),
             SizedBox(height: 8.h),
             Text(
               'Develop a responsive website for a local bakery that showcases its products and allows customers to place orders online. The site should include an online menu, a contact page, and a blog section for updates. The design must reflect the bakery\'s branding and be user-friendly.',
-              style: const TextStyle(fontSize: 14, color: Colors.black87),
+              style: TextStyles.grey12Medium,
               softWrap: true,
             ),
             SizedBox(height: 16.h),
             Row(
               children: [
-                Text('Contributors : ', style: TextStyles.black12SemiBold),
+                Text(
+                  'Contributors : ',
+                  style: TextStyles.black12SemiBold.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: settingsProviders.isDark ? kColors[2] : kColors[1],
+                  ),
+                ),
                 Text('Seif El-islam', style: TextStyles.grey12Medium),
               ],
             ),
@@ -50,7 +65,13 @@ class JobDetails extends StatelessWidget {
               children: [
                 SvgPicture.asset(Assets.assetdate),
                 SizedBox(width: 5.w),
-                Text('Start : ', style: TextStyles.black12SemiBold),
+                Text(
+                  'Start : ',
+                  style: TextStyles.black12SemiBold.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: settingsProviders.isDark ? kColors[2] : kColors[1],
+                  ),
+                ),
                 SizedBox(width: 5.w),
                 Text('25/9/2001', style: TextStyles.grey12Medium),
               ],
@@ -60,34 +81,56 @@ class JobDetails extends StatelessWidget {
               children: [
                 SvgPicture.asset(Assets.assetdate),
                 SizedBox(width: 5.w),
-                Text('Completion : ', style: TextStyles.black12SemiBold),
+                Text(
+                  'Completion : ',
+                  style: TextStyles.black12SemiBold.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: settingsProviders.isDark ? kColors[2] : kColors[1],
+                  ),
+                ),
                 SizedBox(width: 5.w),
                 Text('25/9/2001', style: TextStyles.grey12Medium),
               ],
             ),
-            SizedBox(height: 8.h),
+             SizedBox(height: 8.h),
             Row(
               children: [
                 SvgPicture.asset(Assets.assetsusd),
                 SizedBox(width: 5.w),
-                Text('80', style: TextStyles.black12SemiBold),
+                Text(
+                  '80',
+                  style: TextStyles.black12SemiBold.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: settingsProviders.isDark ? kColors[2] : kColors[1],
+                  ),
+                ),
                 SizedBox(width: 10.w),
                 SvgPicture.asset(Assets.assetsegp),
                 SizedBox(width: 5.w),
-                Text('4,000', style: TextStyles.grey12Medium),
+                Text(
+                  '4,000',
+                  style: TextStyles.grey12Medium.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: settingsProviders.isDark ? kColors[2] : kColors[1],
+                  ),
+                ),
               ],
             ),
-            SizedBox(height: 16.h),
+             SizedBox(height: 16.h),
             Text(
               'Comments',
-              style: TextStyles.black20SemiBold.copyWith(fontSize: 20),
+              style: TextStyles.black20SemiBold.copyWith(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: settingsProviders.isDark ? kColors[2] : kColors[1],
+              ),
             ),
             SizedBox(height: 4.h),
             Text(
               'No Comments Yet',
               style: TextStyles.grey12Medium.copyWith(fontSize: 12),
             ),
-            SizedBox(height: 16.h),
+           SizedBox(height: 16.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -101,6 +144,10 @@ class JobDetails extends StatelessWidget {
                             'Job Deletion Confirmation',
                             style: TextStyles.black12SemiBold.copyWith(
                               fontSize: 16,
+                              color:
+                                  settingsProviders.isDark
+                                      ? kColors[2]
+                                      : kColors[1],
                             ),
                           ),
                           content: Column(
@@ -108,11 +155,11 @@ class JobDetails extends StatelessWidget {
                             children: [
                               Text(
                                 "Are you sure you want to delete this job? This action cannot be undone, and all associated data will be permanently removed.",
-                                style: TextStyles.black20SemiBold.copyWith(
+                                style: TextStyles.grey12Medium.copyWith(
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(height: 4),
+                               SizedBox(height: 4),
                               SvgPicture.asset(Assets.assetconfitm, height: 80),
                             ],
                           ),
@@ -134,7 +181,10 @@ class JobDetails extends StatelessWidget {
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.black,
+                                  backgroundColor:
+                                      settingsProviders.isDark
+                                          ? kColors[0]
+                                          : Colors.black,
                                   padding: EdgeInsets.symmetric(vertical: 12),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
@@ -153,8 +203,8 @@ class JobDetails extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
-                    foregroundColor: Colors.red,
-                    side: const BorderSide(color: Colors.red),
+                    foregroundColor: kColors[0],
+                    side: BorderSide(color: kColors[0]),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

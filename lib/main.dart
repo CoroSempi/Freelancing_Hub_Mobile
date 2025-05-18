@@ -3,25 +3,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
-import 'package:iti_freelancing_hub/core/providers/thems_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/remote/Dio-Helper.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/changmypassword/changmypassword_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/chat/chat_cubit_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/login_cubit_cubit.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/notification/notification_cubit.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/profile/profile_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/aboutItScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/addNewJob.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/details.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/notification.dart';
-import 'package:provider/provider.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/homeScreen.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/signIn.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/changePassword.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/change_profile.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/chat.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/chats.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/homeScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/setting.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/signIn.dart';
+import 'package:provider/provider.dart';
 
-// corosempi@gmail.com
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+
 void main() {
   DioHelper.init();
   runApp(
@@ -45,34 +45,48 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider(create: (context) => LoginCubitCubit()),
             BlocProvider(create: (context) => ChatCubitCubit()),
+            BlocProvider(create: (context) => ProfileCubit()),
+            BlocProvider(create: (context) => NotificationsCubit()),
+            BlocProvider(create: (context) => ChangePasswordCubit()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
-            themeMode:
-                settingsProvider.isDark ? ThemeMode.dark : ThemeMode.light,
+            title: 'ITI Freelancing',
+            themeMode: settingsProvider.themeMode,
             theme: ThemeData.light(),
             darkTheme: ThemeData.dark(),
-            routes: {
-              SignIn.routeName: (context) => SignIn(),
-              AboutItScreen.routeName: (context) => AboutItScreen(),
-              AddNewJobScreen.routeName: (context) => AddNewJobScreen(),
-              HomeScreen.routeName: (context) => const HomeScreen(),
-              ChatScreen.routeName: (context) => ChatScreen(),
-              Chat.routeName: (context) => Chat(),
-              SettingsPage.routeName: (context) => SettingsPage(),
-              Changepassword.routeName: (context) => Changepassword(),
-              JobDetails.routeName: (context) => JobDetails(),
-              Notifications.routeName: (context) => Notifications(),
-              ChangeProfile.routeName:
-                  (context) => ChangeProfile(
-                    image: SvgPicture.asset(Assets.assetsavatar),
-                    onEdit: () {
-                      print("done");
-                    },
-                  ),
+            navigatorObservers: [routeObserver],
+            onGenerateRoute: (settings) {
+              switch (settings.name) {
+                case SignIn.routeName:
+                  return MaterialPageRoute(builder: (_) => SignIn());
+                case SettingsPage.routeName:
+                  return MaterialPageRoute(builder: (_) => SettingsPage());
+                case Changepassword.routeName:
+                  return MaterialPageRoute(builder: (_) => Changepassword());
+                case AboutItScreen.routeName:
+                  return MaterialPageRoute(builder: (_) => AboutItScreen());
+                case HomeScreen.routeName:
+                  return MaterialPageRoute(builder: (_) => HomeScreen());
+                case AddNewJobScreen.routeName:
+                  return MaterialPageRoute(builder: (_) => AddNewJobScreen());
+                case ChangeProfile.routeName:
+                  final args = settings.arguments as Map<String, dynamic>?;
+                  final userId = args?['userId'] ?? '';
+                  return MaterialPageRoute(
+                    builder:
+                        (_) => ChangeProfile(
+                          userId: userId,
+                          image: SvgPicture.asset(Assets.assetsavatar),
+                        ),
+                  );
+                case ChatScreen.routeName:
+                  return MaterialPageRoute(builder: (_) => ChatScreen());
+                default:
+                  return MaterialPageRoute(builder: (_) => SignIn());
+              }
             },
-            home: HomeScreen(),
+            home: SignIn(),
           ),
         );
       },
