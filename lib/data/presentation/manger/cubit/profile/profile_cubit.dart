@@ -12,7 +12,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> loadUserProfile() async {
     emit(ProfileLoading());
     try {
-      final response = await DioHelper.getUserData();
+      final response = await DioHelper.getStudentData();
       avatarUrl = response.data['avatar'];
       emit(ProfileLoaded(avatarUrl!));
     } catch (e) {
@@ -31,7 +31,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
       if (response.statusCode == 200 &&
           response.data['message'] == 'Avatar changed successfully') {
-        final userDataResponse = await DioHelper.getUserData();
+        final userDataResponse = await DioHelper.getStudentData();
         avatarUrl = userDataResponse.data['avatar'];
 
         emit(ProfileAvatarUpdated(avatarUrl ?? ''));

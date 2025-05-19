@@ -21,6 +21,9 @@ dependencies:
   intl: ^0.20.2
   provider: ^6.1.5
   shared_preferences: ^2.5.3
+  fluttertoast: ^8.2.2
+  conditional_builder_rec: 
+  another_flushbar:
 
 dev_dependencies:
   build_runner: ^2.4.6

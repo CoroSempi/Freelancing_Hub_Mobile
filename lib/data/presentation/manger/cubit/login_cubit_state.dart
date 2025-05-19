@@ -10,6 +10,8 @@ final class LoginCubitInitial extends LoginCubitState {}
 
 class LoginLoading extends LoginCubitState {}
 
+class ChangePassword extends LoginCubitState {}
+
 class LoginSuccess extends LoginCubitState {
   final LoginResponse loginResponse;
 
@@ -18,6 +20,5 @@ class LoginSuccess extends LoginCubitState {
 
 class LoginFailure extends LoginCubitState {
   final String error;
-
   LoginFailure(this.error);
 }

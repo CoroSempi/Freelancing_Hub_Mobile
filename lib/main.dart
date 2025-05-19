@@ -5,11 +5,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/remote/Dio-Helper.dart';
+import 'package:iti_freelancing_hub/data/local/cashHelper.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/changmypassword/changmypassword_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/chat/chat_cubit_cubit.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/forget-password/cubit/forgetpassword_cubit.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/get-all-certificate/cubit/getcertificate_cubit.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/getAll-jobs/cubit/getalljobs_cubit.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/getStudent-data/cubit/getstudentdata_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/login_cubit_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/notification/notification_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/profile/profile_cubit.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/reset-password/cubit/resetpassword_cubit.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/verify-code/cubit/verifycode_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/aboutItScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/addNewJob.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/changePassword.dart';
@@ -23,7 +30,10 @@ import 'package:provider/provider.dart';
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 void main() {
+    CashHelper.init();
+
   DioHelper.init();
+
   runApp(
     ChangeNotifierProvider(create: (_) => SettingsProvider(), child: MyApp()),
   );
@@ -48,6 +58,23 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => ProfileCubit()),
             BlocProvider(create: (context) => NotificationsCubit()),
             BlocProvider(create: (context) => ChangePasswordCubit()),
+                    BlocProvider(
+            create: (context) => ForgetpasswordCubit(),
+          ),
+         
+
+         BlocProvider(create: (_) => VerifycodeCubit()),
+   
+         
+         BlocProvider(create: (context) => ResetpasswordCubit(),),
+         
+
+         BlocProvider(create: (context) => GetstudentdataCubit()..getStudentData(),),
+
+
+         BlocProvider(create: (context) => GetalljobsCubit()..getAllJobs()..getDataPreference(),),
+
+         BlocProvider(create: (context) => GetcertificateCubit()..getCertificate(),),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
