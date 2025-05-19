@@ -1,9 +1,12 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
 
 class CashHelper {
   static late SharedPreferences sharedPreferences;
 
   static init() async {
+        WidgetsFlutterBinding.ensureInitialized();
+
     sharedPreferences = await SharedPreferences.getInstance();
   }
 

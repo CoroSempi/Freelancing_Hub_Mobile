@@ -63,4 +63,9 @@ class Assets {
   static const String assetdirect = "assets/images/tagdirectcont.svg";
 
   static String assetaccept = "assets/images/accept.svg";
-}
+
+ 
+  static String assetpendcer = "assets/images/pendCer.svg";
+  static String assetpend = "assets/images/pend.svg";
+  static String assetacceptcer = "assets/images/doneCer.svg";}
+
