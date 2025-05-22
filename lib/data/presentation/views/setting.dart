@@ -6,8 +6,10 @@ import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/providers/thems_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/getStudent-data/cubit/getstudentdata_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/login_cubit_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/aboutItScreen.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/signIn.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/changePassword.dart';
@@ -106,17 +108,20 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               contentPadding: EdgeInsets.zero,
-              onTap: () {
+              onTap: () async {
                 final loginCubit = context.read<LoginCubitCubit>();
                 final userId = loginCubit.user?.studentData.id;
 
                 if (userId != null) {
-                  Navigator.of(context).pushReplacementNamed(
+                  final result = await Navigator.of(context).pushNamed(
                     ChangeProfile.routeName,
                     arguments: {'userId': userId},
                   );
+
+                  if (result == true) {
+                    context.read<GetstudentdataCubit>().getStudentData();
+                  }
                 } else {
-                  // Optional: Show an error dialog
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("User ID not available")),
                   );
@@ -177,6 +182,27 @@ class _SettingsPageState extends State<SettingsPage> {
               contentPadding: EdgeInsets.zero,
               onTap: () {
                 Navigator.of(context).pushNamed(AboutItScreen.routeName);
+              },
+            ),
+
+            ListTile(
+              leading: Icon(Icons.logout, color: kColors[0]),
+              title: Text(
+                'Sign Out',
+                style: TextStyles.black20SemiBold.copyWith(
+                  fontSize: 14,
+                  color: settingsProviders.isDark ? Colors.white : Colors.black,
+                ),
+              ),
+              contentPadding: EdgeInsets.zero,
+              onTap: () async {
+                await context.read<LoginCubitCubit>().logout();
+
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  SignIn.routeName,
+                  (route) => false,
+                );
               },
             ),
           ],

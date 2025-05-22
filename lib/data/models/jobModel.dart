@@ -1,26 +1,25 @@
 class JobData {
-  String? id;
-  String? jobTitle;
-  String? jobType;
-  String? uploadedBy;
-  String? studentName;
-  String? branch;
-  String? jobDescription;
-  String? startDate;
-  String? endDate;
-  int? costInUSD;
-  int? costInEGP
-  ;
-  int? studentShare;
-  String? clientName;
-  String? clientCountry;
-  String? platform;
-  String? clientContact;
-  String? proofOfWork;
-  bool? verified;
-  List<dynamic>? comments;
-  List<TeamMemberModel>? teamMembers;
-  int? v;
+  final String? id;
+  final String? jobTitle;
+  final String? jobType;
+  final String? uploadedBy;
+  final String? studentName;
+  final String? branch;
+  final String? jobDescription;
+  final DateTime startDate;
+  final DateTime? endDate;
+  final int? costInUSD;
+  final int? costInEGP;
+  final int? studentShare;
+  final String? clientName;
+  final String? clientCountry;
+  final String? platform;
+  final String? clientContact;
+  final String? proofOfWork;
+  final bool? verified;
+  final List<dynamic>? comments;
+  final List<TeamMemberModel>? teamMembers;
+  final int? v;
 
   JobData({
     this.id,
@@ -28,10 +27,9 @@ class JobData {
     this.jobType,
     this.uploadedBy,
     this.studentName,
-    this.teamMembers,
     this.branch,
     this.jobDescription,
-    this.startDate,
+    required this.startDate,
     this.endDate,
     this.costInUSD,
     this.costInEGP,
@@ -43,6 +41,7 @@ class JobData {
     this.proofOfWork,
     this.verified,
     this.comments,
+    this.teamMembers,
     this.v,
   });
 
@@ -55,8 +54,8 @@ class JobData {
       studentName: json['studentName']?.toString(),
       branch: json['branch']?.toString(),
       jobDescription: json['jobDescription']?.toString(),
-      startDate: json['startDate']?.toString(),
-      endDate: json['endDate']?.toString(),
+      startDate: DateTime.parse(json['startDate']),
+      endDate: json['endDate'] != null ? DateTime.parse(json['endDate']) : null,
       costInUSD: (json['costInUSD'] as num?)?.toInt(),
       costInEGP: (json['costInEGP'] as num?)?.toInt(),
       studentShare: (json['studentShare'] as num?)?.toInt(),
@@ -67,11 +66,11 @@ class JobData {
       proofOfWork: json['proofOfWork']?.toString(),
       verified: json['verified'] as bool?,
       comments: json['comments'] is List ? List<dynamic>.from(json['comments']) : [],
-teamMembers: json['teamMembers'] != null
-    ? (json['teamMembers'] as List)
-        .map((e) => TeamMemberModel.fromJson(e))
-        .toList()
-    : [],
+      teamMembers: json['teamMembers'] != null
+          ? (json['teamMembers'] as List)
+              .map((e) => TeamMemberModel.fromJson(e))
+              .toList()
+          : [],
       v: (json['__v'] as num?)?.toInt(),
     );
   }
@@ -83,11 +82,10 @@ teamMembers: json['teamMembers'] != null
       'jobType': jobType,
       'uploadedBy': uploadedBy,
       'studentName': studentName,
-'teamMembers': teamMembers?.map((e) => e.toJson()).toList(),
       'branch': branch,
       'jobDescription': jobDescription,
-      'startDate': startDate,
-      'endDate': endDate,
+      'startDate': startDate.toIso8601String(),
+      'endDate': endDate?.toIso8601String(),
       'costInUSD': costInUSD,
       'costInEGP': costInEGP,
       'studentShare': studentShare,
@@ -98,6 +96,7 @@ teamMembers: json['teamMembers'] != null
       'proofOfWork': proofOfWork,
       'verified': verified,
       'comments': comments,
+      'teamMembers': teamMembers?.map((e) => e.toJson()).toList(),
       '__v': v,
     };
   }
@@ -107,7 +106,6 @@ teamMembers: json['teamMembers'] != null
     return 'JobData{id: $id, jobTitle: $jobTitle, jobType: $jobType, uploadedBy: $uploadedBy, studentName: $studentName, branch: $branch, jobDescription: $jobDescription, startDate: $startDate, endDate: $endDate, costInUsd: $costInUSD, costInEgp: $costInEGP, studentShare: $studentShare, clientName: $clientName, clientCountry: $clientCountry, platform: $platform, clientContact: $clientContact, proofOfWork: $proofOfWork, verified: $verified, comments: $comments, v: $v}';
   }
 }
-
 class TeamMemberModel {
   final String studentID;
   final String studentName;

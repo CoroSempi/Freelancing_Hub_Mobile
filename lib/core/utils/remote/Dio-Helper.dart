@@ -4,6 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DioHelper {
   static late Dio dio;
   static const String kAccessTokenKey = 'AccessToken';
+  static String clean(String? s) {
+    return s?.replaceAll('\u00A0', ' ').trim() ?? '';
+  }
 
   static void init() {
     dio = Dio(
@@ -17,14 +20,14 @@ class DioHelper {
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           final prefs = await SharedPreferences.getInstance();
-          final token = prefs.getString(kAccessTokenKey);  
+          final token = prefs.getString(kAccessTokenKey);
           if (token != null) {
             options.headers['Authorization'] = 'Bearer $token';
           }
           return handler.next(options);
         },
         onResponse: (response, handler) {
-          print('Response: ${response.data}');
+          // print('Response: ${response.data}');
           return handler.next(response);
         },
         onError: (DioException e, handler) {
@@ -47,7 +50,7 @@ class DioHelper {
   static Future<Response> getStudentData() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString(kAccessTokenKey); 
+      final token = prefs.getString(kAccessTokenKey);
       Options? options;
       if (token != null) {
         options = Options(headers: {'Authorization': 'Bearer $token'});
@@ -83,10 +86,8 @@ class DioHelper {
   static Future<Response> changeAvatar(String imagePath) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString(kAccessTokenKey); 
-      Options options = Options(
-        contentType: 'multipart/form-data',
-      );
+      final token = prefs.getString(kAccessTokenKey);
+      Options options = Options(contentType: 'multipart/form-data');
 
       if (token != null) {
         options.headers = {'Authorization': 'Bearer $token'};
@@ -211,5 +212,82 @@ class DioHelper {
       data: data,
       options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
+  }
+
+  static Future<Response> getJobDetails(String jobId) async {
+    try {
+      final response = await dio.get('students/jobs/$jobId');
+      return response;
+    } catch (e) {
+      throw Exception('Failed to get job details: $e');
+    }
+  }
+
+  static Future<Response> deleteJob(String jobId, String jobType) async {
+    try {
+      String cleanedJobType = clean(jobType);
+
+      String endpoint;
+      switch (cleanedJobType) {
+        case 'Freelancing job with direct contact':
+          endpoint = 'students/directJob/$jobId';
+          break;
+        case 'Freelancing job on platform':
+          endpoint = 'students/platformJob/$jobId';
+          break;
+        case 'Remote monthly job':
+          endpoint = 'students/remoteJob/$jobId';
+          break;
+        default:
+          throw Exception('Unknown job type: $cleanedJobType');
+      }
+
+      final response = await dio.delete(endpoint);
+      print(response.data);
+      return response;
+    } catch (e) {
+      print('Failed to delete job: $e');
+      throw Exception('Failed to delete job: $e');
+    }
+  }
+
+  static Future<Response> getCertificateDetails(String certificateId) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString(kAccessTokenKey);
+      Options? options;
+      if (token != null) {
+        options = Options(headers: {'Authorization': 'Bearer $token'});
+      }
+
+      final response = await dio.get(
+        'students/certificate/$certificateId',
+        options: options,
+      );
+      print('details response: $response.data');
+      return response;
+    } catch (e) {
+      print('Failed to get certificate details: $e');
+      throw Exception('Failed to get certificate details: $e');
+    }
+  }
+
+  static Future<Response> deleteCertificate(String certificateId) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString(kAccessTokenKey);
+      Options? options;
+      if (token != null) {
+        options = Options(headers: {'Authorization': 'Bearer $token'});
+      }
+
+      final response = await dio.delete(
+        'students/certificate/$certificateId',
+        options: options,
+      );
+      return response;
+    } catch (e) {
+      throw Exception('Failed to delete certificate: $e');
+    }
   }
 }

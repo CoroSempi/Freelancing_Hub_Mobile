@@ -22,7 +22,7 @@ class CardOfDetailsFreelancerJob extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildDetailRow('Track:', track),
+        _buildDetailRow('Tracks:', track),
         SizedBox(height: 10),
         _buildDetailRow('Total Jobs:', totalJobs),
         SizedBox(height: 10),
@@ -43,7 +43,7 @@ class CardOfDetailsFreelancerJob extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(10),
       decoration: ShapeDecoration(
-        color: Colors.white,
+        color: Colors.red,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         shadows: [
           BoxShadow(

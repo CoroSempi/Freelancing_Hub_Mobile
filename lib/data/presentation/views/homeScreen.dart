@@ -5,6 +5,7 @@ import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/aboutItScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/addNewJob.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/add_note.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/chat.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/setting.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_home.dart';
@@ -21,15 +22,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  // Define your pages here
   final List<Widget> _pages = [
     const CustomeHome(),
-    Chat(), // Make sure it's a Widget, not route
+    Chat(),
     AddNewJobScreen(),
     SettingsPage(),
   ];
 
-  // Define your icons (optional: use svg if needed)
   final List<BottomNavigationBarItem> _items = [
     BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
     BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
@@ -55,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: _items,
-        selectedItemColor: kColors[0],
+        selectedItemColor: kColors[5],
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
       ),

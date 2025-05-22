@@ -59,13 +59,20 @@ class Assets {
   static const String assettag = "assets/images/tag.svg";
   static const String assetremote = "assets/images/tagremote.svg";
   static const String assetplatform = "assets/images/tagplatform.svg";
-  static const  String  assetlogodark = "assets/images/headerLogoDark.svg";
+  static const String assetlogodark = "assets/images/headerLogoDark.svg";
   static const String assetdirect = "assets/images/tagdirectcont.svg";
 
   static String assetaccept = "assets/images/accept.svg";
 
- 
-  static String assetpendcer = "assets/images/pendCer.svg";
-  static String assetpend = "assets/images/pend.svg";
-  static String assetacceptcer = "assets/images/doneCer.svg";}
+  static String assetcertificatesDark = "assets/images/certificatesDark.svg";
+  static String assetcertificatesLight = "assets/images/certificatesLight.svg";
+  static String assetjobDark = "assets/images/jobDark.svg";
+  static String assetjobLight = "assets/images/jobLight.svg";
 
+  static String assetpendcer = "assets/images/pendCer.svg";
+  static String assetdarkNote = "assets/images/darkNote.svg";
+  static String assetNote = "assets/images/lightNote.svg";
+
+  static String assetpend = "assets/images/pend.svg";
+  static String assetacceptcer = "assets/images/doneCer.svg";
+}

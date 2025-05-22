@@ -19,6 +19,7 @@ import 'package:iti_freelancing_hub/data/presentation/manger/cubit/reset-passwor
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/verify-code/cubit/verifycode_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/aboutItScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/addNewJob.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/add_note.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/changePassword.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/change_profile.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/chats.dart';
@@ -28,9 +29,9 @@ import 'package:iti_freelancing_hub/data/presentation/views/signIn.dart';
 import 'package:provider/provider.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
-
+//corosempi@gmail.com
 void main() {
-    CashHelper.init();
+  CashHelper.init();
 
   DioHelper.init();
 
@@ -58,23 +59,27 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => ProfileCubit()),
             BlocProvider(create: (context) => NotificationsCubit()),
             BlocProvider(create: (context) => ChangePasswordCubit()),
-                    BlocProvider(
-            create: (context) => ForgetpasswordCubit(),
-          ),
-         
+            BlocProvider(create: (context) => ForgetpasswordCubit()),
 
-         BlocProvider(create: (_) => VerifycodeCubit()),
-   
-         
-         BlocProvider(create: (context) => ResetpasswordCubit(),),
-         
+            BlocProvider(create: (_) => VerifycodeCubit()),
 
-         BlocProvider(create: (context) => GetstudentdataCubit()..getStudentData(),),
+            BlocProvider(create: (context) => ResetpasswordCubit()),
 
+            BlocProvider(
+              create: (context) => GetstudentdataCubit()..getStudentData(),
+            ),
 
-         BlocProvider(create: (context) => GetalljobsCubit()..getAllJobs()..getDataPreference(),),
+            BlocProvider(
+              create:
+                  (context) =>
+                      GetalljobsCubit()
+                        ..getAllJobs()
+                        ..getDataPreference(),
+            ),
 
-         BlocProvider(create: (context) => GetcertificateCubit()..getCertificate(),),
+            BlocProvider(
+              create: (context) => GetcertificateCubit()..getCertificate(),
+            ),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -97,6 +102,8 @@ class MyApp extends StatelessWidget {
                   return MaterialPageRoute(builder: (_) => HomeScreen());
                 case AddNewJobScreen.routeName:
                   return MaterialPageRoute(builder: (_) => AddNewJobScreen());
+                  case AddNewJobScreen.routeName:
+                  return MaterialPageRoute(builder: (_) => AddNote());
                 case ChangeProfile.routeName:
                   final args = settings.arguments as Map<String, dynamic>?;
                   final userId = args?['userId'] ?? '';

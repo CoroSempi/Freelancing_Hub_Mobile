@@ -4,21 +4,38 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:iti_freelancing_hub/constants.dart';
+import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/getAll-jobs/cubit/getalljobs_cubit.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/getStudent-data/cubit/getstudentdata_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/addNewJob.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/add_note.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/chat.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/cardOfCertificate.dart';
- import 'package:iti_freelancing_hub/data/presentation/widgets/cardOfFreelancerJob.dart';
+import 'package:iti_freelancing_hub/data/presentation/widgets/cardOfFreelancerJob.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/getStudentData.dart';
- 
-class CustomeHome extends StatelessWidget {
+import 'package:provider/provider.dart';
+
+class CustomeHome extends StatefulWidget {
   const CustomeHome({super.key});
- 
+
+  @override
+  State<CustomeHome> createState() => _CustomeHomeState();
+}
+
+class _CustomeHomeState extends State<CustomeHome> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<GetstudentdataCubit>().getStudentData();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final settingsProviders = Provider.of<SettingsProvider>(context);
+
     return BlocConsumer<GetalljobsCubit, GetalljobsState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -29,19 +46,19 @@ class CustomeHome extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GetStudentData(),
-              
-              
                 SizedBox(height: 20.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SvgPicture.asset(Assets.assettag),
+                    settingsProviders.isDark
+                        ? SvgPicture.asset(Assets.assetjobDark)
+                        : SvgPicture.asset(Assets.assetjobLight),
                     Container(
                       padding: EdgeInsets.all(4),
                       decoration: ShapeDecoration(
-                        color: const Color(0x3344B40D),
+                        color: Colors.white,
                         shape: RoundedRectangleBorder(
-                          side: const BorderSide(color: Color(0xFF44B30C)),
+                          side: BorderSide(color: Color(0xFF44B30C)),
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
@@ -61,7 +78,7 @@ class CustomeHome extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AddNewJobScreen(),
+                                builder: (context) => AddNote(),
                               ),
                             );
                           },
@@ -72,6 +89,10 @@ class CustomeHome extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 CardOfFreelancerJob(),
+                SizedBox(height: 16),
+                settingsProviders.isDark
+                    ? SvgPicture.asset(Assets.assetcertificatesDark)
+                    : SvgPicture.asset(Assets.assetcertificatesLight),
                 SizedBox(height: 16),
                 Cardofcertificate(),
                 SizedBox(height: 16),
@@ -89,15 +110,16 @@ class CustomeHome extends StatelessWidget {
                         TextSpan(
                           text: 'Chat',
                           style: TextStyle(color: kColors[0]),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Chat(),
-                                ),
-                              );
-                            },
+                          recognizer:
+                              TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Chat(),
+                                    ),
+                                  );
+                                },
                         ),
                         TextSpan(text: ' feature for assistance.'),
                       ],
@@ -112,4 +134,3 @@ class CustomeHome extends StatelessWidget {
     );
   }
 }
-

@@ -177,17 +177,19 @@ class _ChangeProfileState extends State<ChangeProfile> {
                       color:
                           settingsProvider.isDark ? kColors[0] : Colors.black,
                       textcolor: Colors.white,
-                      onPressed:
-                          () => Navigator.pushNamed(context, '/settings'),
+                      onPressed: () {
+                        Navigator.pop(context, true);
+                      },
                     ),
                   ],
                 ),
               ),
-
               if (state is ProfileLoading)
                 Container(
                   color: Colors.black.withOpacity(0.3),
-                  child:  Center(child: CircularProgressIndicator(color:kColors[0] ,)),
+                  child: Center(
+                    child: CircularProgressIndicator(color: kColors[0]),
+                  ),
                 ),
             ],
           ),
@@ -202,7 +204,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
         final decoded = _decodeBase64Image(url);
         return Image.memory(decoded, fit: BoxFit.cover);
       } catch (e) {
-        return  Icon(Icons.error, color: kColors[0]);
+        return Icon(Icons.error, color: kColors[0]);
       }
     } else {
       return Image.network(url, fit: BoxFit.cover);

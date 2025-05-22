@@ -36,6 +36,6 @@ Future<void> getAllJobs() async {
   Future<void> getDataPreference() async {
     studentData = await CashHelper.getData(key: 'studentData');
     loginResponse = loginResponseFromJson(studentData!);
-    print("studentData: $studentData");
+    // print("studentData: $studentData");
   }
 }

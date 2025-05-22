@@ -3,14 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iti_freelancing_hub/constants.dart';
+import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/models/certificationModel.dart';
 import 'package:iti_freelancing_hub/data/models/jobModel.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/cubit/certificate_details_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/get-all-certificate/cubit/getcertificate_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/getAll-jobs/cubit/getalljobs_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/addNewJob.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/certificate_details.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/details.dart';
+import 'package:provider/provider.dart';
+
 class Cardofcertificate extends StatefulWidget {
   const Cardofcertificate({super.key});
 
@@ -24,20 +29,27 @@ class _CardofcertificateState extends State<Cardofcertificate> {
   @override
   void initState() {
     super.initState();
-    _certificatesFuture = context.read<GetcertificateCubit>().getCertificate().then((_) {
-      return context.read<GetcertificateCubit>().certificates;
-    });
+    _certificatesFuture = context
+        .read<GetcertificateCubit>()
+        .getCertificate()
+        .then((_) {
+          return context.read<GetcertificateCubit>().certificates;
+        });
   }
 
   @override
   Widget build(BuildContext context) {
+    final settingsProviders = Provider.of<SettingsProvider>(context);
+
     return FutureBuilder<List<CertificateData>>(
       future: _certificatesFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error loading certificates: ${snapshot.error}'));
+          return Center(
+            child: Text('Error loading certificates: ${snapshot.error}'),
+          );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return const Center(child: Text('No certificates available'));
         } else {
@@ -51,45 +63,54 @@ class _CardofcertificateState extends State<Cardofcertificate> {
               return Container(
                 margin: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: settingsProviders.isDark ? kColors[11] : Colors.white,
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
+                      color:
+                          settingsProviders.isDark ? kColors[11] : Colors.white,
                       blurRadius: 6,
                       offset: const Offset(0, 3),
                     ),
                   ],
-                
                 ),
                 child: Stack(
                   children: [
                     Positioned(
                       bottom: 0,
                       left: 0,
-                      child:  certificate.verified == 'true'
-                          ? SvgPicture.asset(
-                        'assets/images/doneCer.svg',
-                        width: 100.w,
-                        height: 100.h,
-                        color: Colors.green.withOpacity(0.12),
-                      )
-                          : SvgPicture.asset(
-                              Assets.assetpendcer,
-                              width: 100.w,
-                              height: 100.h,
-                            ),
-                      
+                      child:
+                          certificate.verified == 'true'
+                              ? SvgPicture.asset(
+                                'assets/images/doneCer.svg',
+                                width: 100.w,
+                                height: 100.h,
+                                color: Colors.green.withOpacity(0.12),
+                              )
+                              : SvgPicture.asset(
+                                Assets.assetpendcer,
+                                width: 100.w,
+                                height: 100.h,
+                              ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 16.h,
+                        horizontal: 16.w,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Center(
                             child: Text(
                               "${certificate.company ?? ''}'s Certificate",
-                              style: TextStyles.black10SemiBold.copyWith(fontWeight: FontWeight.bold),
+                              style: TextStyles.black10SemiBold.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color:
+                                    settingsProviders.isDark
+                                        ? Colors.white
+                                        : Colors.black,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -114,27 +135,83 @@ class _CardofcertificateState extends State<Cardofcertificate> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SvgPicture.asset(Assets.assetdate, width: 18.w, height: 18.h),
+                              SvgPicture.asset(
+                                Assets.assetdate,
+                                width: 18.w,
+                                height: 18.h,
+                              ),
                               SizedBox(width: 6.w),
+                              // Text(
+                              //   'Start:',
+                              //   style: TextStyles.black12SemiBold.copyWith(
+                              //     fontSize: 8.sp,
+                              //     color:
+                              //         settingsProviders.isDark
+                              //             ? Colors.white
+                              //             : Colors.black,
+                              //   ),
+                              // ),
+                              // SizedBox(width: 5.w),
                               Text(
                                 certificate.startDate ?? '',
-                                style: TextStyles.black12SemiBold,
+                                style: TextStyles.black12SemiBold.copyWith(
+                                  color:
+                                      settingsProviders.isDark
+                                          ? Colors.white
+                                          : Colors.black,
+                                ),
                               ),
                               SizedBox(width: 20.w),
-                              SvgPicture.asset(Assets.assetdate, width: 18.w, height: 18.h),
+                              SvgPicture.asset(
+                                Assets.assetdate,
+                                width: 18.w,
+                                height: 18.h,
+                              ),
                               SizedBox(width: 6.w),
+                              // Text(
+                              //   'Completion:',
+                              //   style: TextStyles.black12SemiBold.copyWith(
+                              //     fontSize: 8.sp,
+                              //     color:
+                              //         settingsProviders.isDark
+                              //             ? Colors.white
+                              //             : Colors.black,
+                              //   ),
+                              // ),
+                              // SizedBox(width: 5.w),
                               Text(
                                 certificate.endDate ?? '',
-                                style: TextStyles.black12SemiBold,
+                                style: TextStyles.black12SemiBold.copyWith(
+                                  color:
+                                      settingsProviders.isDark
+                                          ? Colors.white
+                                          : Colors.black,
+                                ),
                               ),
                             ],
                           ),
                           SizedBox(height: 12.h),
                           Align(
                             alignment: Alignment.centerRight,
-                            child: GestureDetector(
+                            child: InkWell(
                               onTap: () {
-                                // navigation or dialog here
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (_) => BlocProvider(
+                                          create:
+                                              (_) =>
+                                                  CertificateDetailsCubit()
+                                                    ..getCertificateDetails(
+                                                      certificate.id!,
+                                                    ),
+                                          child: CertificateDetails(
+                                            certificateId: certificate.id!,
+                                          ),
+                                        ),
+                                  ),
+                                );
                               },
                               child: Text(
                                 'Read More',

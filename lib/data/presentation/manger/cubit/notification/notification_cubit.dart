@@ -8,6 +8,10 @@ class NotificationsCubit extends Cubit<NotificationsState> {
 
   List<NotificationModel> _notifications = [];
 
+  // عدد الاشعارات غير المقروءة
+  int get unseenCount =>
+      _notifications.where((notification) => !notification.seen).length;
+
   void fetchNotifications() async {
     emit(NotificationsLoading());
     try {
@@ -19,7 +23,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
               .toList();
       emit(NotificationsLoaded(_notifications));
     } catch (e) {
-      emit(NotificationsError('Failed to load notifications:'));
+      emit(NotificationsError('Failed to load notifications: $e'));
     }
   }
 
@@ -27,16 +31,16 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     try {
       await DioHelper.NotificationAsSeen(notificationId);
 
-      // Update locally:
+      // تحديث الحالة محليًا
       final index = _notifications.indexWhere((n) => n.id == notificationId);
       if (index != -1) {
         _notifications[index] = _notifications[index].copyWith(seen: true);
         emit(
           NotificationsLoaded(List.from(_notifications)),
-        ); // Force UI rebuild
+        ); // إجبار إعادة بناء الواجهة
       }
     } catch (e) {
-      print('Failed to mark notification as seen');
+      print('Failed to mark notification as seen: $e');
     }
   }
 }

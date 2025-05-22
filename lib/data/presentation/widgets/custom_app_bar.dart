@@ -11,13 +11,16 @@ class CustomAppBar extends StatelessWidget {
   final String? backText;
   final VoidCallback? onBackPressed;
   final bool showPendingButton;
-
+  final String? statusText;  
+final Color? color;
   const CustomAppBar({
     Key? key,
     this.title,
     this.backText,
     this.onBackPressed,
     this.showPendingButton = false,
+    this.statusText,   
+    this.color,
   }) : super(key: key);
 
   @override
@@ -58,27 +61,21 @@ class CustomAppBar extends StatelessWidget {
               ),
             ),
 
-          if (showPendingButton) ...[
-            const Spacer(),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey[300],
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 10,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                elevation: 0,
-              ),
-              child: const Text(
-                'Pending',
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-          ],
+         if (showPendingButton && statusText != null) ...[
+  const Spacer(),
+  Container(
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+    decoration: BoxDecoration(
+      color: color,
+      borderRadius: BorderRadius.circular(30),
+    ),
+    child: Text(
+      statusText!, 
+      style: const TextStyle(color: Colors.black),
+    ),
+  ),
+],
+
         ],
       ),
     );

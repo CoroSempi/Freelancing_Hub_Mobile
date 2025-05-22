@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:iti_freelancing_hub/constants.dart';
+import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/models/jobModel.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/details/details_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/getAll-jobs/cubit/getalljobs_cubit.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/addNewJob.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/add_note.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/details.dart';
+import 'package:provider/provider.dart';
 
 class CardOfFreelancerJob extends StatefulWidget {
   const CardOfFreelancerJob({super.key});
@@ -28,8 +32,14 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
     });
   }
 
+  String formatDate(DateTime date) {
+    return DateFormat('MMM d, yyyy').format(date);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final settingsProviders = Provider.of<SettingsProvider>(context);
+
     return FutureBuilder<List<JobData>>(
       future: jobsFuture,
       builder: (context, snapshot) {
@@ -50,193 +60,262 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
               return Container(
                 margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
                 padding: EdgeInsets.all(12.w),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(12.r),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.15),
-          blurRadius: 6,
-          offset: const Offset(0, 3),
-        ),
-      ],
-      border: Border(
-        left: BorderSide(
-          color: job.verified == true ? kColors[8] : Colors.transparent,
-          width: 5.w,
-        ),
-      ),
-    ),
-                
+                decoration: BoxDecoration(
+                  color: settingsProviders.isDark ? kColors[11] : Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(12.r),
+                    bottomRight: Radius.circular(12.r),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color:
+                          settingsProviders.isDark ? kColors[11] : Colors.white,
+                    ),
+                  ],
+                  border: Border(
+                    left: BorderSide(
+                      color: job.verified == true ? kColors[8] : kColors[3],
+                      width: 3.w,
+                    ),
+                  ),
+                ),
                 child: Stack(
                   children: [
-                    // Positioned accept/check mark svg bottom right
                     Positioned(
                       bottom: 0,
                       right: 0,
-                      child: job.verified == true
-                          ?    SvgPicture.asset(
-                                         'assets/images/accept.svg',
+                      child: SvgPicture.asset(
+                        job.verified == true
+                            ? 'assets/images/accept.svg'
+                            : 'assets/images/pend.svg',
                         width: 80.w,
                         height: 80.h,
                         fit: BoxFit.contain,
-                      )
-                          :    SvgPicture.asset(
-                                         'assets/images/pend.svg',
-                        width: 80.w,
-                        height: 80.h,
-                        fit: BoxFit.contain,
-                      ),    
-                      
-                   
+                      ),
                     ),
-
-                    // Main content column
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Title + Edit button row
                         Row(
                           children: [
                             Expanded(
                               child: Text(
                                 job.jobTitle ?? 'No Title',
-                                style: TextStyles.black15SemiBold.copyWith(fontSize: 14.sp),
+                                style: TextStyles.black15SemiBold.copyWith(
+                                  fontSize: 14.sp,
+                                  color:
+                                      settingsProviders.isDark
+                                          ? Colors.white
+                                          : Colors.black,
+                                ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             InkWell(
                               onTap: () {
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder:
+                                //         (_) => BlocProvider(
+                                //           create:
+                                //               (_) =>
+                                //                   DetailsCubit()
+                                //                     ..fetchJobDetails(job.id!),
+                                //           child: JobDetails(jobId: job.id!),
+                                //         ),
+                                //   ),
+                                // );
+
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => AddNewJobScreen()),
+                                  MaterialPageRoute(
+                                    builder: (context) => AddNote(),
+                                  ),
                                 );
                               },
-                              child: Text('Edit', style: TextStyles.red15SemiBold.copyWith(fontSize: 14.sp)),
+                              child: Text(
+                                'Edit',
+                                style: TextStyles.red15SemiBold.copyWith(
+                                  fontSize: 14.sp,
+                                  // color: kColors[5],
+                                ),
+                              ),
                             ),
                           ],
                         ),
-
                         SizedBox(height: 8.h),
-   Text(
+                        Text(
                           job.platform ?? 'No platform available',
-                          style: TextStyles.red15SemiBold.copyWith(color: TextStyles.red15SemiBold.color?.withOpacity(0.5), fontSize: 12.sp),
+                          style: TextStyles.red15SemiBold.copyWith(
+                            color: kColors[5],
+                            fontSize: 12.sp,
+                          ),
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),
-                                                SizedBox(height: 8.h),
-
-                        // Description
+                        SizedBox(height: 8.h),
                         Text(
                           job.jobDescription ?? 'No description available',
-                          style: TextStyles.grey12Medium.copyWith(fontSize: 12.sp),
+                          style: TextStyles.grey12Medium.copyWith(
+                            fontSize: 12.sp,
+                          ),
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),
-
                         SizedBox(height: 12.h),
-
-                        // Contributors
                         Row(
                           children: [
-                            Text('Contributors: ', style: TextStyles.black12SemiBold.copyWith(fontSize: 12.sp)),
+                            Text(
+                              'Contributors: ',
+                              style: TextStyles.black12SemiBold.copyWith(
+                                fontSize: 12.sp,
+                                color:
+                                    settingsProviders.isDark
+                                        ? Colors.white
+                                        : Colors.black,
+                              ),
+                            ),
                             Flexible(
                               child: Text(
-  (job.teamMembers != null && job.teamMembers!.isNotEmpty)
-      ? job.teamMembers!.first.studentName ?? 'Unknown'
-      : 'Unknown',
-  style: TextStyles.grey12Medium.copyWith(fontSize: 12.sp),
-  overflow: TextOverflow.ellipsis,
-),
+                                (job.teamMembers != null &&
+                                        job.teamMembers!.isNotEmpty)
+                                    ? job.teamMembers!.first.studentName ??
+                                        'Unknown'
+                                    : 'Unknown',
+                                style: TextStyles.grey12Medium.copyWith(
+                                  fontSize: 12.sp,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ],
                         ),
-
                         SizedBox(height: 12.h),
-
-                        // Dates Row
                         Row(
                           children: [
-                           
-                          Expanded(
-                              child: Row(
-                                children: [
-                                   SvgPicture.asset(Assets.assetdate, width: 16.w, height: 16.h),
-                            SizedBox(width: 5.w),
-                            Text('Start:', style: TextStyles.black12SemiBold.copyWith(fontSize: 8.sp)),
-                            SizedBox(width: 5.w),
-                            Text(
-                              job.startDate != null
-                                  ? (job.startDate is DateTime
-                                      ? (job.startDate as DateTime).toIso8601String().split('T').first
-                                      : job.startDate.toString().split('T').first)
-                                  : '',
-                              style: TextStyles.grey12Medium.copyWith(fontSize: 8.sp),
-                            ),
-                                ],
-                              ),
-                            ) ,
-
-
                             Expanded(
                               child: Row(
                                 children: [
-                                    SvgPicture.asset(Assets.assetdate, width: 16.w, height: 16.h),
-                            SizedBox(width: 5.w),
-                            Text('Completion:', style: TextStyles.black12SemiBold.copyWith(fontSize: 8.sp)),
-                            SizedBox(width: 5.w),
-                            Text(
-                              job.endDate != null
-                                  ? (job.endDate is DateTime
-                                      ? (job.endDate as DateTime).toIso8601String().split('T').first
-                                      : job.endDate.toString().split('T').first)
-                                  : '',
-                              style: TextStyles.grey12Medium.copyWith(fontSize: 8.sp),
-                            ),
+                                  SvgPicture.asset(
+                                    Assets.assetdate,
+                                    width: 16.w,
+                                    height: 16.h,
+                                  ),
+                                  SizedBox(width: 5.w),
+                                  Text(
+                                    'Start:',
+                                    style: TextStyles.black12SemiBold.copyWith(
+                                      fontSize: 8.sp,
+                                      color:
+                                          settingsProviders.isDark
+                                              ? Colors.white
+                                              : Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(width: 5.w),
+                                  Text(
+                                    formatDate(job.startDate),
+                                    style: TextStyles.grey12Medium.copyWith(
+                                      fontSize: 8.sp,
+                                    ),
+                                  ),
                                 ],
                               ),
-                            ) ,
-                          
+                            ),
+                            if (job.endDate != null)
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      Assets.assetdate,
+                                      width: 16.w,
+                                      height: 16.h,
+                                    ),
+                                    SizedBox(width: 5.w),
+                                    Text(
+                                      'Completion:',
+                                      style: TextStyles.black12SemiBold
+                                          .copyWith(
+                                            fontSize: 8.sp,
+                                            color:
+                                                settingsProviders.isDark
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                          ),
+                                    ),
+                                    SizedBox(width: 5.w),
+                                    Text(
+                                      formatDate(job.endDate!),
+                                      style: TextStyles.grey12Medium.copyWith(
+                                        fontSize: 8.sp,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                           ],
                         ),
-
                         SizedBox(height: 12.h),
-
-                        // Budget + Comments + Read More Row
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // Budget Row
                             Expanded(
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  SvgPicture.asset(Assets.assetsusd, width: 8.w, height: 13.h),
+                                  SvgPicture.asset(
+                                    Assets.assetsusd,
+                                    width: 8.w,
+                                    height: 13.h,
+                                  ),
                                   SizedBox(width: 4.w),
-                                  Text('${job.costInUSD ?? 0} ', style: TextStyles.black12SemiBold.copyWith(fontSize: 7.sp)),
+                                  Text(
+                                    '${job.costInUSD ?? 0} ',
+                                    style: TextStyles.black12SemiBold.copyWith(
+                                      fontSize: 7.sp,
+                                      color:
+                                          settingsProviders.isDark
+                                              ? Colors.white
+                                              : Colors.black,
+                                    ),
+                                  ),
                                   SizedBox(width: 10.w),
-                                  SvgPicture.asset(Assets.assetsegp, width: 22.w, height: 13.h),
+                                  SvgPicture.asset(
+                                    Assets.assetsegp,
+                                    width: 22.w,
+                                    height: 13.h,
+                                  ),
                                   SizedBox(width: 4.w),
-                                  Text('${job.costInEGP ?? 0} ', style: TextStyles.black12SemiBold ),
+                                  Text(
+                                    '${job.costInEGP ?? 0} ',
+                                    style: TextStyles.black12SemiBold.copyWith(
+                                      color:
+                                          settingsProviders.isDark
+                                              ? Colors.white
+                                              : Colors.black,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-
- 
-
-
-                            // Comments + Read More
                             Expanded(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Icon(Icons.comment, size: 16.sp, color: Colors.black54),
+                                  Icon(
+                                    Icons.comment,
+                                    size: 16.sp,
+                                    color:
+                                        settingsProviders.isDark
+                                            ? Colors.white
+                                            : Colors.black,
+                                  ),
                                   SizedBox(width: 6.w),
                                   Flexible(
                                     child: Text(
                                       '${job.comments?.length ?? 0} Comments',
-                                      style: TextStyles.grey12Medium ,
+                                      style: TextStyles.grey12Medium,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
@@ -245,10 +324,28 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                                     onTap: () {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => JobDetails()),
+                                        MaterialPageRoute(
+                                          builder:
+                                              (_) => BlocProvider(
+                                                create:
+                                                    (_) =>
+                                                        DetailsCubit()
+                                                          ..fetchJobDetails(
+                                                            job.id!,
+                                                          ),
+                                                child: JobDetails(
+                                                  jobId: job.id!,
+                                                ),
+                                              ),
+                                        ),
                                       );
                                     },
-                                    child: Text('Read More', style: TextStyles.red15SemiBold ),
+                                    child: Text(
+                                      'Read More',
+                                      style: TextStyles.red15SemiBold.copyWith(
+                                        // color: kColors[5],
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -260,8 +357,6 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                   ],
                 ),
               );
-         
-         
             },
           );
         }
