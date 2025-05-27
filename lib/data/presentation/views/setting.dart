@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iti_freelancing_hub/constants.dart';
 import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
-import 'package:iti_freelancing_hub/core/providers/thems_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/getStudent-data/cubit/getstudentdata_cubit.dart';
@@ -14,7 +13,6 @@ import 'package:iti_freelancing_hub/data/presentation/widgets/custom_app_bar.dar
 import 'package:provider/provider.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/changePassword.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/change_profile.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/chat.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/chats.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
 

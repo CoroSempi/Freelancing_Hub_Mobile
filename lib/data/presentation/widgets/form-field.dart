@@ -1,67 +1,39 @@
-
 import 'package:flutter/material.dart';
+import 'package:iti_freelancing_hub/data/presentation/widgets/text_field.dart';
+
 class FormFieldWidget extends StatelessWidget {
   static const routeName = '/form-field';
-String title;
-String subtitle;
-String hintText;
-FormFieldWidget({
+
+  final String title;
+  final String subtitle;
+  final String? hintText;
+
+  FormFieldWidget({
     Key? key,
     required this.title,
     required this.subtitle,
-    required this.hintText,
+     this.hintText,
   }) : super(key: key);
-   @override
+
+  @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: double.infinity,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 5,
+        Text.rich(
+          TextSpan(
             children: [
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: title,
-                      style: TextStyle(
-                        color: const Color(0xFF2D2D2D),
-                        fontSize: 12,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    TextSpan(
-                      text:  subtitle,
-                      style: TextStyle(
-                        color: const Color(0xFFA6A4A4),
-                        fontSize: 10,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
+              TextSpan(
+                text: title,
+                style: TextStyle(
+                  color: const Color(0xFF2D2D2D),
+                  fontSize: 12,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-              Container(
-                width: 350,
-                height: 40,
-                decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      width: 1,
-                      color: const Color(0x7FBF272D),
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-              Text(
-                 hintText,
+              TextSpan(
+                text: subtitle,
                 style: TextStyle(
                   color: const Color(0xFFA6A4A4),
                   fontSize: 10,
@@ -70,6 +42,20 @@ FormFieldWidget({
                 ),
               ),
             ],
+          ),
+        ),
+        const SizedBox(height: 5),
+
+        CustomTextFiled(),
+
+        const SizedBox(height: 5),
+        Text(
+          hintText!,
+          style: TextStyle(
+            color: const Color(0xFFA6A4A4),
+            fontSize: 10,
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w400,
           ),
         ),
       ],

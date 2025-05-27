@@ -5,24 +5,31 @@ import 'package:iti_freelancing_hub/constants.dart';
 class CustomTextFiled extends StatefulWidget {
   const CustomTextFiled({
     super.key,
-    required this.hittext,
+    this.hittext,
     this.prefixIcon,
     this.suffixIcon,
     this.prefixImage,
+    this.suffixImage,
     this.controller,
     this.validator,
     this.isPassword = false,
     this.hitcolor,
+    this.onTap,
+    this.readOnly = false,
   });
 
-  final Icon? prefixIcon;
-  final Icon? suffixIcon;
-  final String hittext;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final String? hittext;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final bool isPassword;
   final Color? hitcolor;
   final String? prefixImage;
+  final String? suffixImage;
+
+  final VoidCallback? onTap;
+  final bool readOnly;
 
   @override
   State<CustomTextFiled> createState() => _CustomTextFiledState();
@@ -37,12 +44,11 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
       controller: widget.controller,
       validator: widget.validator,
       obscureText: widget.isPassword ? obscureText : false,
-
-      // style: TextStyle(color: Colors.white),
+      readOnly: widget.readOnly,
+      onTap: widget.onTap,
       decoration: InputDecoration(
         hintText: widget.hittext,
         hintStyle: TextStyle(color: widget.hitcolor),
-
         prefixIcon:
             widget.prefixImage != null
                 ? Padding(
@@ -50,7 +56,6 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
                   child: SvgPicture.asset(widget.prefixImage!),
                 )
                 : widget.prefixIcon,
-
         suffixIcon:
             widget.isPassword
                 ? IconButton(
@@ -64,8 +69,11 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
                   },
                 )
                 : widget.suffixIcon,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: kColors[5]),
+        ),
 
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: kColors[0]),

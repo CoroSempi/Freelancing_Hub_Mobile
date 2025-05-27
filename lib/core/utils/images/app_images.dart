@@ -75,4 +75,21 @@ class Assets {
 
   static String assetpend = "assets/images/pend.svg";
   static String assetacceptcer = "assets/images/doneCer.svg";
+
+  static String assetsAddCertDark = "assets/images/CertificateDark.svg";
+  static String assetsAddCertLigth = "assets/images/CertificateLight.svg";
+  static String assetsChosseDark = "assets/images/chooseDark.svg";
+  static String assetsChosseLight = "assets/images/chooseLight.svg";
+
+  static String assetsDircDark = "assets/images/directDark.svg";
+  static String assetsDircLight = "assets/images/directLight.svg";
+
+  static String assetsDonrCer = "assets/images/doneCri.svg";
+  static String assetsPendCer = "assets/images/pendCri.svg";
+
+  static String assetsPlatFormDark = "assets/images/platformDark.svg";
+  static String assetsPlatFormLight = "assets/images/platformLight.svg";
+
+  static String assetsRemotDark = "assets/images/RemoteDark.svg";
+  static String assetsRemotLight = "assets/images/RemoteLight.svg";
 }

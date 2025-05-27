@@ -9,7 +9,8 @@ import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
 import 'package:iti_freelancing_hub/core/utils/remote/Dio-Helper.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
-import 'package:iti_freelancing_hub/data/presentation/manger/cubit/cubit/certificate_details_cubit.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/certificate-details/certificate_details_cubit.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/add_certificate.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/homeScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -265,9 +266,7 @@ class CertificateDetails extends StatelessWidget {
                                               width: double.infinity,
                                               child: ElevatedButton(
                                                 onPressed: () async {
-                                                  Navigator.of(
-                                                    context,
-                                                  ).pop(); 
+                                                  Navigator.of(context).pop();
                                                   try {
                                                     await DioHelper.deleteCertificate(
                                                       certificateId,
@@ -341,7 +340,34 @@ class CertificateDetails extends StatelessWidget {
                           ),
                           SizedBox(width: 10.w),
                           ElevatedButton(
-                            onPressed: () => print('Edit Pressed'),
+                            onPressed: () async {
+                              final updated = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => AddCertificate(
+                                        certificate: {
+                                          "_id": cert.id,
+                                          "certificateId": cert.certificateId,
+                                          "certificateDescription":
+                                              cert.certificateDescription,
+                                          "startDate": cert.startDate,
+                                          "endDate": cert.endDate,
+                                          "Company": cert.company,
+                                          "proofOfCertificate":
+                                              cert.proofOfCertificate,
+                                          "approach": cert.approach,
+                                        },
+                                      ),
+                                ),
+                              );
+
+                              if (updated == true) {
+                                context
+                                    .read<CertificateDetailsCubit>()
+                                    .getCertificateDetails(certificateId);
+                              }
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: kColors[1],
                               foregroundColor: kColors[2],

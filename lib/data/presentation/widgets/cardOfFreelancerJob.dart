@@ -112,42 +112,11 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            InkWell(
-                              onTap: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder:
-                                //         (_) => BlocProvider(
-                                //           create:
-                                //               (_) =>
-                                //                   DetailsCubit()
-                                //                     ..fetchJobDetails(job.id!),
-                                //           child: JobDetails(jobId: job.id!),
-                                //         ),
-                                //   ),
-                                // );
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AddNote(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'Edit',
-                                style: TextStyles.red15SemiBold.copyWith(
-                                  fontSize: 14.sp,
-                                  // color: kColors[5],
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                         SizedBox(height: 8.h),
                         Text(
-                          job.platform ?? 'No platform available',
+                          job.jobType ?? 'No platform available',
                           style: TextStyles.red15SemiBold.copyWith(
                             color: kColors[5],
                             fontSize: 12.sp,
@@ -168,7 +137,9 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                         Row(
                           children: [
                             Text(
-                              'Contributors: ',
+                              job.jobType == 'Remote monthly job'
+                                  ? 'Company Name: '
+                                  : 'Contributors: ',
                               style: TextStyles.black12SemiBold.copyWith(
                                 fontSize: 12.sp,
                                 color:
@@ -179,10 +150,15 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                             ),
                             Flexible(
                               child: Text(
-                                (job.teamMembers != null &&
+                                job.jobType == 'Remote monthly job'
+                                    ? (job.companytName != null ||
+                                            job.companyCountry != null
+                                        ? '${job.companytName ?? ''}${job.companytName != null && job.companyCountry != null ? ' - ' : ''}${job.companyCountry ?? ''}'
+                                        : 'Unknown')
+                                    : (job.teamMembers != null &&
                                         job.teamMembers!.isNotEmpty)
-                                    ? job.teamMembers!.first.studentName ??
-                                        'Unknown'
+                                    ? (job.teamMembers!.first.studentName ??
+                                        'Unknown')
                                     : 'Unknown',
                                 style: TextStyles.grey12Medium.copyWith(
                                   fontSize: 12.sp,
@@ -266,14 +242,14 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                                 children: [
                                   SvgPicture.asset(
                                     Assets.assetsusd,
-                                    width: 8.w,
-                                    height: 13.h,
+                                    width: 10,
+                                    height: 10,
                                   ),
                                   SizedBox(width: 4.w),
                                   Text(
-                                    '${job.costInUSD ?? 0} ',
+                                    '${job.paymentInUSD ?? 0} ',
                                     style: TextStyles.black12SemiBold.copyWith(
-                                      fontSize: 7.sp,
+                                      fontSize: 12,
                                       color:
                                           settingsProviders.isDark
                                               ? Colors.white
@@ -281,15 +257,22 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                                     ),
                                   ),
                                   SizedBox(width: 10.w),
-                                  SvgPicture.asset(
-                                    Assets.assetsegp,
-                                    width: 22.w,
-                                    height: 13.h,
+
+                                  Padding(
+                                    padding: EdgeInsets.all(0.0),
+                                    child: SvgPicture.asset(
+                                      Assets.assetsegp,
+
+                                      width: 8,
+                                      height: 8,
+                                    ),
                                   ),
                                   SizedBox(width: 4.w),
                                   Text(
-                                    '${job.costInEGP ?? 0} ',
+                                    '${job.paymentInEGP ?? 0} ',
                                     style: TextStyles.black12SemiBold.copyWith(
+                                      fontSize: 12,
+
                                       color:
                                           settingsProviders.isDark
                                               ? Colors.white

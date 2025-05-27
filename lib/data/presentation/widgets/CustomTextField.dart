@@ -33,56 +33,59 @@ class CustomTextFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 50,
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            width: 1,
-            color: Color(0xFFA6A4A4),
-          ),
-          borderRadius: BorderRadius.circular(15),
-        ),
+    return TextFormField(
+      controller: controller,
+      onChanged: onChanged,
+      onSaved: onSaved,
+      validator:
+          validator ??
+          (value) {
+            if (value?.isEmpty ?? true) {
+              return 'Field is required';
+            } else {
+              return null;
+            }
+          },
+      maxLines: maxLines,
+      obscureText: obscureText,
+      keyboardType: keyboardType,
+      cursorColor: cursorColor,
+      cursorRadius: cursorRadius,
+      style: TextStyle(
+        color: Colors.grey,
+        fontSize: 12,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w500,
       ),
-      alignment: Alignment.centerLeft,
-      child: TextFormField(
-        controller: controller,
-        onChanged: onChanged,
-        onSaved: onSaved,
-        validator: validator ?? (value) {
-          if (value?.isEmpty ?? true) {
-            return 'Field is required';
-          } else {
-            return null;
-          }
-        },
-        maxLines: maxLines,
-        obscureText: obscureText,
-        keyboardType: keyboardType,
-        cursorColor: cursorColor,
-        cursorRadius: cursorRadius,
-        style: const TextStyle(
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 18,
+          horizontal: 10,
+        ),
+        hintText: hint,
+        hintStyle: const TextStyle(
           color: Color(0xFFA6A4A4),
           fontSize: 12,
           fontFamily: 'Poppins',
           fontWeight: FontWeight.w500,
         ),
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 18),
-
-          border: InputBorder.none,
-          hintText: hint,
-          hintStyle: const TextStyle(
-            color: Color(0xFFA6A4A4),
-            fontSize: 12,
-            
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w500,
-          ),
-          prefixIcon: prefixIcon,
-          suffixIcon: suffixIcon,
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: Color(0xFFA6A4A4), width: 1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: Colors.red, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: Colors.red, width: 1.5),
         ),
       ),
     );

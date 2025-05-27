@@ -1,124 +1,606 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:iti_freelancing_hub/constants.dart';
+import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
+import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/CustomButtonWidget.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/form-field.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/formFieldWithDropdown.dart';
+import 'package:iti_freelancing_hub/data/presentation/widgets/text_field.dart';
+import 'package:provider/provider.dart';
 
 class PlatformScreen extends StatelessWidget {
-  const PlatformScreen({super.key});
-
+  PlatformScreen({super.key});
+  TextEditingController dateController = TextEditingController();
+  final List<String> worldCountries = [
+    'Afghanistan',
+    'Albania',
+    'Algeria',
+    'Andorra',
+    'Angola',
+    'Antigua and Barbuda',
+    'Argentina',
+    'Armenia',
+    'Australia',
+    'Austria',
+    'Azerbaijan',
+    'Bahamas',
+    'Bahrain',
+    'Bangladesh',
+    'Barbados',
+    'Belarus',
+    'Belgium',
+    'Belize',
+    'Benin',
+    'Bhutan',
+    'Bolivia',
+    'Bosnia and Herzegovina',
+    'Botswana',
+    'Brazil',
+    'Brunei',
+    'Bulgaria',
+    'Burkina Faso',
+    'Burundi',
+    'Cabo Verde',
+    'Cambodia',
+    'Cameroon',
+    'Canada',
+    'Central African Republic',
+    'Chad',
+    'Chile',
+    'China',
+    'Colombia',
+    'Comoros',
+    'Congo (Congo-Brazzaville)',
+    'Costa Rica',
+    'Croatia',
+    'Cuba',
+    'Cyprus',
+    'Czechia (Czech Republic)',
+    'Democratic Republic of the Congo',
+    'Denmark',
+    'Djibouti',
+    'Dominica',
+    'Dominican Republic',
+    'Ecuador',
+    'Egypt',
+    'El Salvador',
+    'Equatorial Guinea',
+    'Eritrea',
+    'Estonia',
+    'Eswatini (fmr. "Swaziland")',
+    'Ethiopia',
+    'Fiji',
+    'Finland',
+    'France',
+    'Gabon',
+    'Gambia',
+    'Georgia',
+    'Germany',
+    'Ghana',
+    'Greece',
+    'Grenada',
+    'Guatemala',
+    'Guinea',
+    'Guinea-Bissau',
+    'Guyana',
+    'Haiti',
+    'Holy See',
+    'Honduras',
+    'Hungary',
+    'Iceland',
+    'India',
+    'Indonesia',
+    'Iran',
+    'Iraq',
+    'Ireland',
+    'Israel',
+    'Italy',
+    'Jamaica',
+    'Japan',
+    'Jordan',
+    'Kazakhstan',
+    'Kenya',
+    'Kiribati',
+    'Kuwait',
+    'Kyrgyzstan',
+    'Laos',
+    'Latvia',
+    'Lebanon',
+    'Lesotho',
+    'Liberia',
+    'Libya',
+    'Liechtenstein',
+    'Lithuania',
+    'Luxembourg',
+    'Madagascar',
+    'Malawi',
+    'Malaysia',
+    'Maldives',
+    'Mali',
+    'Malta',
+    'Marshall Islands',
+    'Mauritania',
+    'Mauritius',
+    'Mexico',
+    'Micronesia',
+    'Moldova',
+    'Monaco',
+    'Mongolia',
+    'Montenegro',
+    'Morocco',
+    'Mozambique',
+    'Myanmar (formerly Burma)',
+    'Namibia',
+    'Nauru',
+    'Nepal',
+    'Netherlands',
+    'New Zealand',
+    'Nicaragua',
+    'Niger',
+    'Nigeria',
+    'North Korea',
+    'North Macedonia',
+    'Norway',
+    'Oman',
+    'Pakistan',
+    'Palau',
+    'Palestine State',
+    'Panama',
+    'Papua New Guinea',
+    'Paraguay',
+    'Peru',
+    'Philippines',
+    'Poland',
+    'Portugal',
+    'Qatar',
+    'Romania',
+    'Russia',
+    'Rwanda',
+    'Saint Kitts and Nevis',
+    'Saint Lucia',
+    'Saint Vincent and the Grenadines',
+    'Samoa',
+    'San Marino',
+    'Sao Tome and Principe',
+    'Saudi Arabia',
+    'Senegal',
+    'Serbia',
+    'Seychelles',
+    'Sierra Leone',
+    'Singapore',
+    'Slovakia',
+    'Slovenia',
+    'Solomon Islands',
+    'Somalia',
+    'South Africa',
+    'South Korea',
+    'South Sudan',
+    'Spain',
+    'Sri Lanka',
+    'Sudan',
+    'Suriname',
+    'Sweden',
+    'Switzerland',
+    'Syria',
+    'Tajikistan',
+    'Tanzania',
+    'Thailand',
+    'Timor-Leste',
+    'Togo',
+    'Tonga',
+    'Trinidad and Tobago',
+    'Tunisia',
+    'Turkey',
+    'Turkmenistan',
+    'Tuvalu',
+    'Uganda',
+    'Ukraine',
+    'United Arab Emirates',
+    'United Kingdom',
+    'United States of America',
+    'Uruguay',
+    'Uzbekistan',
+    'Vanuatu',
+    'Venezuela',
+    'Vietnam',
+    'Yemen',
+    'Zambia',
+    'Zimbabwe',
+  ];
+  final List<String> freelancingPlatforms = [
+    "Mostaql",
+    "Khamsat",
+    "Nafathly",
+    "BeFreelancr",
+    "Ureed",
+    "FreelanceME",
+    "Muwazi",
+    "TasmeemME",
+    "Upwork",
+    "Freelancer",
+    "Toptal",
+    "PeoplePerHour",
+    "Guru",
+    "99designs",
+    "DesignCrowd",
+    "Others",
+  ];
   @override
   Widget build(BuildContext context) {
+    final settingsProviders = Provider.of<SettingsProvider>(context);
+
     return MainScaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SvgPicture.asset(Assets.assetplatform),
+            Text('Add New Job', style: TextStyles.black15Medium.copyWith(
+               fontWeight: FontWeight.bold,
+                color: settingsProviders.isDark?Colors.white: Colors.black,
+            )),
+            SizedBox(height: 8.h),
+            settingsProviders.isDark
+                        ? SvgPicture.asset(Assets.assetsPlatFormDark)
+                        : SvgPicture.asset(Assets.assetsPlatFormLight),
             SizedBox(height: 16.h),
-            FormFieldWidget(
-              title: 'Job Title',
-              subtitle: 'Enter the title of the job',
-              hintText: 'Enter the title of the job',
+            Row(
+              children: [
+                Text(
+                  'Job Title ',
+                  style: TextStyles.black10SemiBold.copyWith(
+                    fontSize: 14,
+                    color:
+                        settingsProviders.isDark ? Colors.white : Colors.black,
+                  ),
+                ),
+                Text(
+                  ' (Required)',
+                  style: TextStyles.grey12Medium.copyWith(fontSize: 12),
+                ),
+              ],
+            ),
+            SizedBox(height: 2.h),
+            CustomTextFiled(hittext: 'Job Title'),
+            SizedBox(height: 2.h),
+            Text(
+              'Ensure that the title clearly describes the Job.',
+              style: TextStyles.grey12Medium.copyWith(fontSize: 12),
             ),
             SizedBox(height: 16.h),
-            FormFieldWidget(
-              title: 'Client Name',
-              subtitle: 'Enter the client\'s name',
-              hintText: 'Enter the client\'s name',
+            Row(
+              children: [
+                Text(
+                  'Job Description ',
+                  style: TextStyles.black10SemiBold.copyWith(
+                    fontSize: 14,
+                    color:
+                        settingsProviders.isDark ? Colors.white : Colors.black,
+                  ),
+                ),
+                Text(
+                  ' (Required)',
+                  style: TextStyles.grey12Medium.copyWith(fontSize: 12),
+                ),
+              ],
             ),
-
+            SizedBox(height: 2.h),
+            CustomTextFiled(hittext: 'Job Description'),
+            SizedBox(height: 2.h),
+            Text(
+              'Ensure that the description clearly describes the Job.',
+              style: TextStyles.grey12Medium.copyWith(fontSize: 12),
+            ),
             SizedBox(height: 16.h),
 
             Row(
               children: [
                 Expanded(
-                  child: FormFieldWidget(
-                    title: 'Start Date',
-                    subtitle: 'Enter the start date',
-                    hintText: 'DD/MM/YYYY',
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'Start Date ',
+                            style: TextStyles.black10SemiBold.copyWith(
+                              fontSize: 14,
+                              color:
+                                  settingsProviders.isDark
+                                      ? Colors.white
+                                      : Colors.black,
+                            ),
+                          ),
+                          Text(
+                            ' (Required)',
+                            style: TextStyles.grey12Medium.copyWith(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 2.h),
+                      CustomTextFiled(
+                        controller: dateController,
+                        hittext: 'DD/MM/YYYY',
+                        suffixIcon: Icon(Icons.date_range_outlined),
+                        readOnly: true,
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2100),
+                          );
+
+                          if (pickedDate != null) {
+                            String formattedDate =
+                                "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+                            dateController.text = formattedDate;
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(width: 16.w),
                 Expanded(
-                  child: FormFieldWidget(
-                    title: 'End Date',
-                    subtitle: 'Enter the end date',
-                    hintText: 'DD/MM/YYYY',
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'End Date ',
+                            style: TextStyles.black10SemiBold.copyWith(
+                              fontSize: 14,
+                              color:
+                                  settingsProviders.isDark
+                                      ? Colors.white
+                                      : Colors.black,
+                            ),
+                          ),
+                          Text(
+                            ' (Required)',
+                            style: TextStyles.grey12Medium.copyWith(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 2.h),
+                      CustomTextFiled(
+                        controller: dateController,
+                        hittext: 'DD/MM/YYYY',
+                        suffixIcon: Icon(Icons.date_range_outlined),
+                        readOnly: true,
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2100),
+                          );
+
+                          if (pickedDate != null) {
+                            String formattedDate =
+                                "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+                            dateController.text = formattedDate;
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ],
+            ),
+            SizedBox(height: 16.h),
+
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'Cost in USD ',
+                            style: TextStyles.black10SemiBold.copyWith(
+                              fontSize: 14,
+                              color:
+                                  settingsProviders.isDark
+                                      ? Colors.white
+                                      : Colors.black,
+                            ),
+                          ),
+                          Text(
+                            ' (Required)',
+                            style: TextStyles.grey12Medium.copyWith(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 2.h),
+                      CustomTextFiled(
+                        controller: dateController,
+                        hittext: 'Cost in USD',
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SvgPicture.asset(
+                            Assets.assetsusd,
+                            width: 20,
+                            height: 20,
+                            fit: BoxFit.scaleDown,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 16.w),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'Cost in EGP ',
+                            style: TextStyles.black10SemiBold.copyWith(
+                              fontSize: 14,
+                              color:
+                                  settingsProviders.isDark
+                                      ? Colors.white
+                                      : Colors.black,
+                            ),
+                          ),
+                          Text(
+                            ' (Required)',
+                            style: TextStyles.grey12Medium.copyWith(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 2.h),
+                      CustomTextFiled(
+                        hittext: '00.0',
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SvgPicture.asset(
+                            Assets.assetsegp,
+                            width: 20,
+                            height: 20,
+                            fit: BoxFit.scaleDown,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(height: 24.h),
+            // FormFieldWithDropdown(
+            //   title: 'Team members ',
+            //   subtitle: '(Required)',
+            //   dropDownText: 'dropDownText',
+            //   items: ['Online', 'Offline', 'Both'],
+            //   backgroundColor: kColors[5],
+            // ),
+            SizedBox(height: 24.h),
+            // FormFieldWithDropdown(
+            //   title: 'Platform ',
+            //   subtitle: '(Required)',
+            //   dropDownText: 'dropDownText',
+            //   items: freelancingPlatforms,
+            //   backgroundColor: kColors[0],
+            // ),
+            SizedBox(height: 16.h),
+            Row(
+              children: [
+                Text(
+                  'Your Profile on The Platform  ',
+                  style: TextStyles.black10SemiBold.copyWith(
+                    fontSize: 14,
+                    color:
+                        settingsProviders.isDark ? Colors.white : Colors.black,
+                  ),
+                ),
+                Text(
+                  ' (Required)',
+                  style: TextStyles.grey12Medium.copyWith(fontSize: 12),
+                ),
+              ],
+            ),
+            SizedBox(height: 2.h),
+            CustomTextFiled(hittext: 'Your Profile on The Platform '),
+            SizedBox(height: 2.h),
+            Text(
+              'Provide the link to your profile on the chosen platform.',
+              style: TextStyles.grey12Medium.copyWith(fontSize: 12),
             ),
             SizedBox(height: 16.h),
             Row(
               children: [
-                Expanded(
-                  child: FormFieldWidget(
-                    title: 'Budget',
-                    subtitle: 'Enter the budget',
-                    hintText: 'Enter the budget',
+                Text(
+                  'Client Name ',
+                  style: TextStyles.black10SemiBold.copyWith(
+                    fontSize: 14,
+                    color:
+                        settingsProviders.isDark ? Colors.white : Colors.black,
                   ),
                 ),
-                SizedBox(width: 16.w),
-                Expanded(
-                  child: FormFieldWidget(
-                    title: 'Currency',
-                    subtitle: 'Enter the currency',
-                    hintText: 'Enter the currency',
-                  ),
+                Text(
+                  ' (Required)',
+                  style: TextStyles.grey12Medium.copyWith(fontSize: 12),
                 ),
               ],
             ),
+            SizedBox(height: 2.h),
+            CustomTextFiled(hittext: 'Client Name'),
+
+            SizedBox(height: 24.h),
+            // FormFieldWithDropdown(
+            //   title: 'Client Country ',
+            //   subtitle: '(Required)',
+            //   dropDownText: 'dropDownText',
+            //   items: worldCountries,
+            //   backgroundColor: kColors[0],
+            // ),
             SizedBox(height: 16.h),
-
-            FormFieldWithDropdown(
-              title: 'Team members ',
-              subtitle: '(optional )',
-              dropDownText: 'dropDownText',
+            Row(
+              children: [
+                Text(
+                  'Client Profile on The Platform ',
+                  style: TextStyles.black10SemiBold.copyWith(
+                    fontSize: 14,
+                    color:
+                        settingsProviders.isDark ? Colors.white : Colors.black,
+                  ),
+                ),
+                Text(
+                  ' (Required)',
+                  style: TextStyles.grey12Medium.copyWith(fontSize: 12),
+                ),
+              ],
             ),
-            FormFieldWidget(
-              title: 'Client Name ',
-              subtitle: '(Required)',
-              hintText: '',
+            SizedBox(height: 2.h),
+            CustomTextFiled(hittext: 'Client Profile on The Platform'),
+            SizedBox(height: 2.h),
+            Text(
+              'Provide the link to your profile on the chosen platform.',
+              style: TextStyles.grey12Medium.copyWith(fontSize: 12),
             ),
-            SizedBox(height: 24.h),
-            FormFieldWithDropdown(
-              title: 'Client Country ',
-              subtitle: '(Required)',
-              dropDownText: 'dropDownText',
-            ),
-
             SizedBox(height: 16.h),
+            Row(
+              children: [
+                Text(
+                  'Proof of Work ',
+                  style: TextStyles.black10SemiBold.copyWith(
+                    fontSize: 14,
+                    color:
+                        settingsProviders.isDark ? Colors.white : Colors.black,
+                  ),
+                ),
+                Text(
+                  ' (Required)',
+                  style: TextStyles.grey12Medium.copyWith(fontSize: 12),
+                ),
+              ],
+            ),
+            SizedBox(height: 2.h),
+            CustomTextFiled(hittext: 'Proof of Work'),
 
-            FormFieldWithDropdown(
-              title: 'Platform',
-              subtitle: '(Required)',
-              dropDownText: 'dropDownText',
-            ),
-
-            FormFieldWidget(
-              title: 'Client Profile  on The Platform ',
-              subtitle: '(Required)',
-              hintText: 'Ensure to put the amount in USD currency.',
-            ),
             SizedBox(height: 24.h),
-            FormFieldWidget(
-              title: 'Your Profile on The Platform',
-              subtitle: ' (Required)',
-              hintText:
-                  'Provide the link to your profile on the chosen platform.',
+            Text(
+              'Prepare a PDF document that includes screenshots of chats between you and the client, samples of the work completed, and proof of payment or invoices. Once you have compiled everything into a single PDF, upload it to Google Drive, copy the link, and paste it in here. Make sure the link is set to Anyone with the link can view so that admin can access it.',
+              style: TextStyles.grey12Medium.copyWith(fontSize: 14),
             ),
-            SizedBox(height: 24.h),
-            FormFieldWidget(
-              title: 'Proof of Work',
-              subtitle: '(Required)',
-              hintText:
-                  "Prepare a PDF document that includes screenshots of chats between you and the client, samples of the work completed, and proof of payment or invoices. Once you've compiled everything into a single PDF, upload it to Google Drive, copy the link, and paste it in here. Make sure the link is set to Anyone with the link can view so that admin can access it.",
-            ),
+            SizedBox(height: 8.h),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

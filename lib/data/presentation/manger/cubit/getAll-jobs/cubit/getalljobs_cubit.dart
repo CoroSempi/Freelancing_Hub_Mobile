@@ -10,26 +10,27 @@ part 'getalljobs_state.dart';
 class GetalljobsCubit extends Cubit<GetalljobsState> {
   GetalljobsCubit() : super(GetalljobsInitial());
 
-List<JobData> jobs = [];
+  List<JobData> jobs = [];
 
-Future<void> getAllJobs() async {
-  emit(GetalljobsLoading());
-  try {
-    final response = await DioHelper.getAllJobs();
-     if (response.data != null && response.data.isNotEmpty) {
-   jobs = (response.data as List<dynamic>)
-    .map((item) => JobData.fromJson(item['jobData']))
-    .toList();
-
-       emit(GetalljobsSuccess(jobs)); 
-    } else {
-      emit(GetalljobsFailure('No jobs found'));
+  Future<void> getAllJobs() async {
+    emit(GetalljobsLoading());
+    try {
+      final response = await DioHelper.getAllJobs();
+      if (response.data != null && response.data.isNotEmpty) {
+        jobs =
+            (response.data as List<dynamic>)
+                .map((item) => JobData.fromJson(item['jobData']))
+                .toList();
+        print(GetalljobsSuccess(jobs));
+        emit(GetalljobsSuccess(jobs));
+      } else {
+        print(('No jobs found'));
+        emit(GetalljobsFailure('No jobs found'));
+      }
+    } catch (e) {
+      emit(GetalljobsFailure(e.toString()));
     }
-  } catch (e) {
-     emit(GetalljobsFailure(e.toString()));
   }
-}
-
 
   String? studentData;
   LoginResponse? loginResponse;

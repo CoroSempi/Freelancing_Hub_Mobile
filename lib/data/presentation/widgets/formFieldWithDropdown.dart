@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
-import 'dart:collection';
+import 'package:provider/provider.dart';
+import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 
 class FormFieldWithDropdown extends StatelessWidget {
-  static const routeName = '/form-field';
   final String title;
   final String subtitle;
-  final String dropDownText;
+  final String? dropDownText;
+  final List<String> items;
+  final Color backgroundColor;
+  final void Function(String?) onChanged;
 
-  FormFieldWithDropdown({
+  const FormFieldWithDropdown({
     Key? key,
     required this.title,
     required this.subtitle,
     required this.dropDownText,
+    required this.items,
+    required this.backgroundColor,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final settingsProviders = Provider.of<SettingsProvider>(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -24,8 +32,8 @@ class FormFieldWithDropdown extends StatelessWidget {
             children: [
               TextSpan(
                 text: title,
-                style: const TextStyle(
-                  color: Color(0xFF2D2D2D),
+                style: TextStyle(
+                  color: settingsProviders.isDark ? Colors.white : Colors.black,
                   fontSize: 12,
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.w600,
@@ -46,63 +54,88 @@ class FormFieldWithDropdown extends StatelessWidget {
         const SizedBox(height: 8),
         Container(
           width: 350,
-          height: 40,
-          child: const DropdownMenuExample(),
+          height: 50,
+          child: DropdownMenuExample(
+            selectedValue: dropDownText,
+            items: items,
+            backgroundColor: backgroundColor,
+            onChanged: onChanged,
+          ),
         ),
       ],
     );
   }
 }
 
- 
-
 class DropdownMenuExample extends StatefulWidget {
-  const DropdownMenuExample({super.key});
+  final String? selectedValue;
+  final List<String> items;
+  final Color backgroundColor;
+  final void Function(String?) onChanged;
+
+  const DropdownMenuExample({
+    Key? key,
+    required this.selectedValue,
+    required this.items,
+    required this.backgroundColor,
+    required this.onChanged,
+  }) : super(key: key);
 
   @override
   State<DropdownMenuExample> createState() => _DropdownMenuExampleState();
 }
 
-typedef MenuEntry = DropdownMenuEntry<String>;
-const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
-
 class _DropdownMenuExampleState extends State<DropdownMenuExample> {
-  static final List<MenuEntry> menuEntries = UnmodifiableListView<MenuEntry>(
-    list.map<MenuEntry>((String name) => MenuEntry(value: name, label: name)),
-  );
+  late String dropdownValue;
 
-  String dropdownValue = list.first;
+  @override
+  void initState() {
+    super.initState();
+    dropdownValue = widget.selectedValue ?? widget.items.first;
+  }
+
+  @override
+  void didUpdateWidget(covariant DropdownMenuExample oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.selectedValue != oldWidget.selectedValue &&
+        widget.selectedValue != dropdownValue) {
+      dropdownValue = widget.selectedValue ?? widget.items.first;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final settingsProviders = Provider.of<SettingsProvider>(context);
+
     return Container(
-      width: 350,
+      width: double.infinity,
       height: 40,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: ShapeDecoration(
-        color: const Color(0xFFBF272D),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        color: widget.backgroundColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: dropdownValue,
           iconEnabledColor: Colors.white,
-          dropdownColor:  Colors. grey.shade900,
+          dropdownColor: settingsProviders.isDark ? Colors.black : Colors.white,
           isExpanded: true,
-          style: const TextStyle(
-            color: Color(0xFFF6F6F6),
+          style: TextStyle(
+            color: settingsProviders.isDark ? Colors.white : Colors.black,
             fontSize: 12,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w600,
           ),
           onChanged: (String? value) {
-            setState(() {
-              dropdownValue = value!;
-            });
+            if (value != null) {
+              setState(() {
+                dropdownValue = value;
+              });
+              widget.onChanged(value);
+            }
           },
-          items: list.map<DropdownMenuItem<String>>((String value) {
+          items: widget.items.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value),

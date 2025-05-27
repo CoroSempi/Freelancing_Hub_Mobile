@@ -8,10 +8,10 @@ part 'certificate_details_state.dart';
 class CertificateDetailsCubit extends Cubit<CertificateDetailsState> {
   CertificateDetailsCubit() : super(CertificateDetailsInitial());
 
-  Future<void> getCertificateDetails(String certificateId) async {
+  Future<void> getCertificateDetails(String id) async {
     emit(CertificateDetailsLoading());
     try {
-      final response = await DioHelper.getCertificateDetails(certificateId);
+      final response = await DioHelper.getCertificateDetails(id);
       final certificate = CertificateModel.fromJson(response.data);
       emit(CertificateDetailsSuccess(certificate));
     } catch (e) {

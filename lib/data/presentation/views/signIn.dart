@@ -97,11 +97,15 @@ class SignIn extends StatelessWidget {
                                 return null;
                               },
                               keyboardType: TextInputType.visiblePassword,
-                              prefixIcon: SvgPicture.asset(
-                                Assets.assetsImagesCarbonPassword,
-                                width: 10,
-                                height: 10,
+                              prefixIcon: Padding(
+                                padding:  EdgeInsets.all(12.0),
+                                child: SvgPicture.asset(
+                                  Assets.assetsImagesCarbonPassword,
+                                  width: 20,
+                                  height: 20,
+                                ),
                               ),
+
                               suffixIcon: IconButton(
                                 onPressed: () => Bloc1.changePassword(),
                                 icon: Icon(

@@ -11,11 +11,16 @@ class JobData {
   final int? costInUSD;
   final int? costInEGP;
   final int? studentShare;
+  final int? paymentInUSD;
+  final int? paymentInEGP;
   final String? clientName;
   final String? clientCountry;
   final String? platform;
   final String? clientContact;
   final String? proofOfWork;
+  final String? companytName;
+  final String? companyCountry;
+  final String? companyContact;
   final bool? verified;
   final List<dynamic>? comments;
   final List<TeamMemberModel>? teamMembers;
@@ -34,11 +39,16 @@ class JobData {
     this.costInUSD,
     this.costInEGP,
     this.studentShare,
+    this.paymentInUSD,
+    this.paymentInEGP,
     this.clientName,
     this.clientCountry,
     this.platform,
     this.clientContact,
     this.proofOfWork,
+    this.companytName,
+    this.companyCountry,
+    this.companyContact,
     this.verified,
     this.comments,
     this.teamMembers,
@@ -59,11 +69,16 @@ class JobData {
       costInUSD: (json['costInUSD'] as num?)?.toInt(),
       costInEGP: (json['costInEGP'] as num?)?.toInt(),
       studentShare: (json['studentShare'] as num?)?.toInt(),
+      paymentInUSD: (json['paymentInUSD'] as num?)?.toInt(),
+      paymentInEGP: (json['paymentInEGP'] as num?)?.toInt(),
       clientName: json['clientName']?.toString(),
       clientCountry: json['clientCountry']?.toString(),
       platform: json['platform']?.toString(),
       clientContact: json['clientContact']?.toString(),
       proofOfWork: json['proofOfWork']?.toString(),
+      companytName: json['companytName']?.toString(),
+      companyCountry: json['companyCountry']?.toString(),
+      companyContact: json['companyContact']?.toString(),
       verified: json['verified'] as bool?,
       comments: json['comments'] is List ? List<dynamic>.from(json['comments']) : [],
       teamMembers: json['teamMembers'] != null
@@ -89,11 +104,16 @@ class JobData {
       'costInUSD': costInUSD,
       'costInEGP': costInEGP,
       'studentShare': studentShare,
+      'paymentInUSD': paymentInUSD,
+      'paymentInEGP': paymentInEGP,
       'clientName': clientName,
       'clientCountry': clientCountry,
       'platform': platform,
       'clientContact': clientContact,
       'proofOfWork': proofOfWork,
+      'companytName': companytName,
+      'companyCountry': companyCountry,
+      'companyContact': companyContact,
       'verified': verified,
       'comments': comments,
       'teamMembers': teamMembers?.map((e) => e.toJson()).toList(),
@@ -103,9 +123,10 @@ class JobData {
 
   @override
   String toString() {
-    return 'JobData{id: $id, jobTitle: $jobTitle, jobType: $jobType, uploadedBy: $uploadedBy, studentName: $studentName, branch: $branch, jobDescription: $jobDescription, startDate: $startDate, endDate: $endDate, costInUsd: $costInUSD, costInEgp: $costInEGP, studentShare: $studentShare, clientName: $clientName, clientCountry: $clientCountry, platform: $platform, clientContact: $clientContact, proofOfWork: $proofOfWork, verified: $verified, comments: $comments, v: $v}';
+    return 'JobData{id: $id, jobTitle: $jobTitle, jobType: $jobType, uploadedBy: $uploadedBy, studentName: $studentName, branch: $branch, jobDescription: $jobDescription, startDate: $startDate, endDate: $endDate, costInUsd: $costInUSD, costInEgp: $costInEGP, studentShare: $studentShare, paymentInUSD: $paymentInUSD, paymentInEGP: $paymentInEGP, clientName: $clientName, clientCountry: $clientCountry, platform: $platform, clientContact: $clientContact, proofOfWork: $proofOfWork, companytName: $companytName, companyCountry: $companyCountry, companyContact: $companyContact, verified: $verified, comments: $comments, v: $v}';
   }
 }
+
 class TeamMemberModel {
   final String studentID;
   final String studentName;

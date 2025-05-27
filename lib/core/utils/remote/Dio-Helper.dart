@@ -285,9 +285,101 @@ class DioHelper {
         'students/certificate/$certificateId',
         options: options,
       );
+      print(response.data);
       return response;
     } catch (e) {
       throw Exception('Failed to delete certificate: $e');
     }
   }
+
+  static Future<Response> addCertificate(
+    Map<String, dynamic> certificateData,
+  ) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString(kAccessTokenKey);
+
+      Options? options;
+      if (token != null) {
+        options = Options(headers: {'Authorization': 'Bearer $token'});
+      }
+
+      final response = await dio.post(
+        'students/certificate',
+        data: certificateData,
+        options: options,
+      );
+
+      return response;
+    } catch (e) {
+      throw Exception('Failed to add certificate: $e');
+    }
+  }
+
+  static Future<Response> updateCertificate(
+    String id,
+    Map<String, dynamic> data,
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString(kAccessTokenKey);
+
+    Options? options;
+    if (token != null) {
+      options = Options(headers: {'Authorization': 'Bearer $token'});
+    }
+
+    final response = await dio.put(
+      'students/certificate/$id',
+      data: data,
+      options: options,
+    );
+
+    return response;
+  }
+
+  static Future<Response> addRemoteJob(Map<String, dynamic> jobData) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString(kAccessTokenKey);
+
+      Options? options;
+      if (token != null) {
+        options = Options(headers: {'Authorization': 'Bearer $token'});
+      }
+
+      final response = await dio.post(
+        'students/remoteJob',
+        data: jobData,
+        options: options,
+      );
+      print('addremote $response');
+      print(response.data);
+      return response;
+    } catch (e) {
+      print('Failed to add remote job: $e');
+      throw Exception('Failed to add remote job: $e');
+    }
+  }
+
+static Future<Response> updateRemoteJob(
+  String id,
+  Map<String, dynamic> data,
+) async {
+  final prefs = await SharedPreferences.getInstance();
+  final token = prefs.getString(kAccessTokenKey);
+
+  Options? options;
+  if (token != null) {
+    options = Options(headers: {'Authorization': 'Bearer $token'});
+  }
+
+  final response = await dio.put(
+    'students/remoteJob/$id',
+    data: data,
+    options: options,
+  );
+
+  return response;
+}
+
 }

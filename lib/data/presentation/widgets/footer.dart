@@ -9,13 +9,10 @@ class Footer extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 16),
-        child: const Center(
+      child: const Center(
         child: Text(
           '© 2025 ITI Freelancing Hub. All rights reserved.',
-          style: TextStyle(
-            fontSize: 14,
-            color: kPrimaryColor,  
-          ),
+          style: TextStyle(fontSize: 12, color: kPrimaryColor),
         ),
       ),
     );

@@ -33,7 +33,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
                 Text(
                   'Chat with Us!',
-                  style: TextStyles.black12SemiBold.copyWith(fontSize: 16),
+                  style: TextStyles.black12SemiBold.copyWith(fontSize: 16,
+                  color: settingsProviders.isDark ? Colors.white : Colors.black
+                  ),
                 ),
               ],
             ),

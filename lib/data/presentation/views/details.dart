@@ -10,6 +10,7 @@ import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/details/details_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/add_note.dart';
+import 'package:iti_freelancing_hub/data/presentation/views/remoteMonthlyJob.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -392,12 +393,48 @@ class JobDetails extends StatelessWidget {
                             SizedBox(width: 10.w),
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AddNote(),
-                                  ),
-                                );
+                                if (clean(job.jobType) ==
+                                    'Remote monthly job') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) => Remotemonthlyjob(
+                                            jobId: jobId,
+                                            existingJobData: {
+                                              'jobTitle': job.jobTitle,
+                                              'jobDescription':
+                                                  job.jobDescription,
+                                              'startDate':
+                                                  job.startDate
+                                                      .toIso8601String(),
+                                              'paymentInUSD':
+                                                  job.paymentInUSD ?? '',
+                                              'paymentInEGP':
+                                                  job.paymentInEGP ?? '',
+                                              'companytName':
+                                                  job.companytName ?? '',
+                                              'companyCountry':
+                                                  job.companyCountry ?? '',
+                                              'companyContact':
+                                                  job.companyContact ?? '',
+                                              'proofOfWork':
+                                                  job.proofOfWork ?? '',
+                                            },
+                                          ),
+                                    ),
+                                  );
+                                } else {
+                                  // Navigate to other job edit screen if needed
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) =>
+                                              AddNote(), // أو شاشة التعديل الخاصة بنوع الوظيفة التاني
+                                    ),
+                                  );
+                                }
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: kColors[1],

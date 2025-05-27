@@ -105,10 +105,7 @@ class _GetStudentDataState extends State<GetStudentData> {
                                 child: Container(
                                   padding: EdgeInsets.all(4),
                                   decoration: BoxDecoration(
-                                    color:
-                                        unseenCount == 0
-                                            ? Colors.grey
-                                            : Colors.red,
+                                    color : Colors.red,
                                     shape: BoxShape.circle,
                                   ),
                                   child: Text(
