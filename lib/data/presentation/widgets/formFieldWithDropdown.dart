@@ -7,12 +7,12 @@ class FormFieldWithDropdown extends StatelessWidget {
   final String subtitle;
   final String dropDownText;
 
-  FormFieldWithDropdown({
-    Key? key,
+  const FormFieldWithDropdown({
+    super.key,
     required this.title,
     required this.subtitle,
     required this.dropDownText,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class FormFieldWithDropdown extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Container(
+        SizedBox(
           width: 350,
           height: 40,
           child: const DropdownMenuExample(),

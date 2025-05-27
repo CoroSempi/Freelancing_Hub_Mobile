@@ -7,6 +7,8 @@ import 'package:iti_freelancing_hub/data/presentation/manger/cubit/chat/chat_cub
 import 'package:iti_freelancing_hub/data/presentation/widgets/chat_buble.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_app_bar.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/text_field.dart';
+// Add import for localization
+import 'package:iti_freelancing_hub/generated/l10n.dart';
 
 class Chat extends StatefulWidget {
   const Chat({super.key});
@@ -17,29 +19,34 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
-  final _usernameController = TextEditingController();
+  final _messageController = TextEditingController();  
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    context.read<ChatCubitCubit>().fetchChat();
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ChatCubitCubit>().fetchChat();
+    });
   }
 
   @override
   void dispose() {
+    _messageController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context); 
+
     return MainScaffold(
       body: Column(
         children: [
           CustomAppBar(
-            title: 'Chat with Admin',
-            backText: 'Back',
+            title: s.chatWithAdminTitle,  
+            backText: s.backButton,  
             onBackPressed: () {
               Navigator.of(context).pop();
             },
@@ -60,8 +67,7 @@ class _ChatState extends State<Chat> {
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Text(
-                          'Welcome! If you have any questions or problems, feel free to chat with our admin here. '
-                          'Just type your message below, and we’ll get back to you as soon as possible. We\'re here to help!',
+                          s.chatWelcomeMessage,  
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16.sp,
@@ -91,7 +97,11 @@ class _ChatState extends State<Chat> {
                     },
                   );
                 } else if (state is ChatError) {
-                  return Center(child: Text('Error: ${state.error}'));
+                  return Center(
+                    child: Text(
+                      s.chatError,  
+                    ),
+                  );
                 }
                 return const SizedBox();
               },
@@ -103,19 +113,20 @@ class _ChatState extends State<Chat> {
               children: [
                 Expanded(
                   child: CustomTextFiled(
-                    hittext: 'Ask about anything ... ',
-                    controller: _usernameController,
+                    hittext: s.chatInputHint,  
+                    controller: _messageController,
                   ),
                 ),
                 SizedBox(width: 8.w),
-                GestureDetector(
+                InkWell(  
                   onTap: () {
-                    final text = _usernameController.text.trim();
+                    final text = _messageController.text.trim();
                     if (text.isNotEmpty) {
                       context.read<ChatCubitCubit>().sendMessage(text);
-                      _usernameController.clear();
+                      _messageController.clear();
                     }
                   },
+                  splashColor: kColors[0].withOpacity(0.3),
                   child: Container(
                     width: 50,
                     height: 50,
@@ -123,7 +134,11 @@ class _ChatState extends State<Chat> {
                       shape: BoxShape.circle,
                       color: kColors[0],
                     ),
-                    child: Icon(Icons.send, color: Colors.white, size: 30),
+                    child: const Icon(
+                      Icons.send,
+                      color: Colors.white,
+                      size: 30,
+                    ),
                   ),
                 ),
               ],

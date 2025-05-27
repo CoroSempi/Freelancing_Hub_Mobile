@@ -12,6 +12,9 @@ import 'package:iti_freelancing_hub/data/presentation/views/signIn.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/CustomButtonWidget.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/footer.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/CustomTextField.dart';
+// Add import for localization
+import 'package:iti_freelancing_hub/generated/l10n.dart';
+
 class ForgetPassword extends StatefulWidget {
   static const routeName = '/forget-password';
 
@@ -39,96 +42,97 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         },
         builder: (context, state) {
           final bloc = ForgetpasswordCubit.get(context);
-return Scaffold(
-  resizeToAvoidBottomInset: true,
-  body: SafeArea(
-    child: LayoutBuilder(
-      builder: (context, constraints) {
-        return SingleChildScrollView(
-          padding: EdgeInsets.only(
-            left: 35,
-            right: 35,
-            bottom: MediaQuery.of(context).viewInsets.bottom + 20,
-          ),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: constraints.maxHeight),
-            child: IntrinsicHeight(
-              child: Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 60),
-                    Center(
-                      child: Column(
-                        children: [
-                          SvgPicture.asset(Assets.assetsImagesIti, width: 93, height: 150),
-                          SvgPicture.asset(Assets.assetsImagesFreelancingHub, width: 166, height: 30),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 30),
+          final s = S.of(context);  
 
-                    CustomTextFields(
-                      hint: 'Email Address',
-                      maxLines: 1,
-                      controller: emailController,
-                      validator: (val) {
-                        if (val == null || val.isEmpty) return 'Please enter your email';
-                        return null;
-                      },
+          return Scaffold(
+            resizeToAvoidBottomInset: true,
+            body: SafeArea(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    padding: EdgeInsets.only(
+                      left: 35,
+                      right: 35,
+                      bottom: MediaQuery.of(context).viewInsets.bottom + 20,
                     ),
-                    const SizedBox(height: 10),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                      child: IntrinsicHeight(
+                        child: Form(
+                          key: formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 60),
+                              Center(
+                                child: Column(
+                                  children: [
+                                    SvgPicture.asset(Assets.assetsImagesIti, width: 93, height: 150),
+                                    SvgPicture.asset(Assets.assetsImagesFreelancingHub, width: 166, height: 30),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 30),
 
-                    Text(
-                      "If you've forgotten your password, please enter the email address...",
-                      style: TextStyles.grey12Medium,
-                    ),
-                    const SizedBox(height: 16),
+                              CustomTextFields(
+                                hint: s.forgetPassword_fields_email_label,
+                                maxLines: 1,
+                                controller: emailController,
+                                validator: (val) {
+                                  if (val == null || val.isEmpty) return s.errors_emailRequired;
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(height: 10),
 
-                    ConditionalBuilderRec(
-                      condition: state is! ForgetpasswordLoading,
-                      builder: (_) => CustomButtonWidget(
-                        text: 'Send Code',
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            final email = emailController.text.trim();
-                            bloc.forgetPassword(email);
-                          }
-                        },
-                      ),
-                      fallback: (_) => const Center(child: CircularProgressIndicator()),
-                    ),
-                    const SizedBox(height: 16),
+                              Text(
+                                s.forgetPassword_notice,
+                                style: TextStyles.grey12Medium,
+                              ),
+                              const SizedBox(height: 16),
 
-                    Center(
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Back to Sign In Page',
-                          style: TextStyles.red15SemiBold,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => SignIn()),
-                            ),
+                              ConditionalBuilderRec(
+                                condition: state is! ForgetpasswordLoading,
+                                builder: (_) => CustomButtonWidget(
+                                  text: s.forgetPassword_button,
+                                  onPressed: () {
+                                    if (formKey.currentState!.validate()) {
+                                      final email = emailController.text.trim();
+                                      bloc.forgetPassword(email);
+                                    }
+                                  },
+                                ),
+                                fallback: (_) => const Center(child: CircularProgressIndicator()),
+                              ),
+                              const SizedBox(height: 16),
+
+                              Center(
+                                child: RichText(
+                                  text: TextSpan(
+                                    text: s.forgetPassword_signIn,
+                                    style: TextStyles.red15SemiBold,
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (_) => SignIn()),
+                                      ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(height: 20),
+                              const Spacer(),
+                              Footer(),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-
-                    const SizedBox(height: 20),
-                    const Spacer(),
-                    Footer(),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
-          ),
-        );
-      },
-    ),
-  ),
-);
-
+          );
         },
       ),
     );

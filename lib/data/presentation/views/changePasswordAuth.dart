@@ -10,6 +10,8 @@ import 'package:iti_freelancing_hub/data/presentation/views/signIn.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/CustomButtonWidget.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/fluttertoast.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/footer.dart';
+// Add import for localization
+import 'package:iti_freelancing_hub/generated/l10n.dart';
 
 class Changepasswordauth extends StatefulWidget {
   static const routeName = '/changepasswordauth';
@@ -33,6 +35,7 @@ class _ChangepasswordauthState extends State<Changepasswordauth> {
   @override
   Widget build(BuildContext context) {
     final resetCubit = ResetpasswordCubit.get(context);
+    final s = S.of(context);  
 
     return BlocConsumer<ResetpasswordCubit, ResetpasswordState>(
       listener: (context, state) {
@@ -42,133 +45,130 @@ class _ChangepasswordauthState extends State<Changepasswordauth> {
             builder: (context) => ChangeSuccessfullyDialog(),
           );
         } else if (state is ResetpasswordFailure) {
-        ToastMessage.showError(context, 'Invalid code, please try again');
-
+          ToastMessage.showError(context,  state.error);  
         }
       },
       builder: (context, state) {
-    return Scaffold(
-  resizeToAvoidBottomInset: true,
-  body: SafeArea(
-    child: LayoutBuilder(
-      builder: (context, constraints) {
-        return SingleChildScrollView(
-          padding: EdgeInsets.only(
-            left: 35,
-            right: 35,
-            bottom: MediaQuery.of(context).viewInsets.bottom + 20,
-          ),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: constraints.maxHeight),
-            child: IntrinsicHeight(
-              child: Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SizedBox(height: 40),
-                    Center(
-                      child: Column(
-                        children: [
-                          SvgPicture.asset(Assets.assetsImagesIti, width: 93, height: 150),
-                          SvgPicture.asset(Assets.assetsImagesFreelancingHub, width: 166, height: 30),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 30),
+        return Scaffold(
+          resizeToAvoidBottomInset: true,
+          body: SafeArea(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  padding: EdgeInsets.only(
+                    left: 35,
+                    right: 35,
+                    bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+                  ),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    child: IntrinsicHeight(
+                      child: Form(
+                        key: formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const SizedBox(height: 40),
+                            Center(
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(Assets.assetsImagesIti, width: 93, height: 150),
+                                  SvgPicture.asset(Assets.assetsImagesFreelancingHub, width: 166, height: 30),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 30),
 
-                    // New Password
-                    TextFormField(
-                      controller: newPasswordController,
-                      obscureText: obscureNewPassword,
-                      decoration: InputDecoration(
-                        hintText: 'New Password',
-                        suffixIcon: IconButton(
-                          icon: Icon(obscureNewPassword ? Icons.visibility_off : Icons.visibility),
-                          onPressed: () {
-                            setState(() {
-                              obscureNewPassword = !obscureNewPassword;
-                            });
-                          },
+                            // New Password
+                            TextFormField(
+                              controller: newPasswordController,
+                              obscureText: obscureNewPassword,
+                              decoration: InputDecoration(
+                                hintText: s.resetPassword_placeholder1,
+                                suffixIcon: IconButton(
+                                  icon: Icon(obscureNewPassword ? Icons.visibility_off : Icons.visibility),
+                                  onPressed: () {
+                                    setState(() {
+                                      obscureNewPassword = !obscureNewPassword;
+                                    });
+                                  },
+                                ),
+                              ),
+                              validator: (val) {
+                                if (val == null || val.isEmpty) return s.errors_passwordRequired;
+                                if (val.length < 8) return s.errors_passwordMinLength;
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 20),
+
+                            // Repeat Password
+                            TextFormField(
+                              controller: reapeatpasswordcontroller,
+                              obscureText: obscureRepeatPassword,
+                              decoration: InputDecoration(
+                                hintText: s.resetPassword_placeholder2,
+                                suffixIcon: IconButton(
+                                  icon: Icon(obscureRepeatPassword ? Icons.visibility_off : Icons.visibility),
+                                  onPressed: () {
+                                    setState(() {
+                                      obscureRepeatPassword = !obscureRepeatPassword;
+                                    });
+                                  },
+                                ),
+                              ),
+                              validator: (val) {
+                                if (val == null || val.isEmpty) return s.errors_passwordRequired; 
+                                if (val != newPasswordController.text) return    s.errors_passwordRequired; 
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 30),
+
+                            // Submit
+                            state is ResetpasswordLoading
+                                ? const Center(child: CircularProgressIndicator())
+                                : CustomButtonWidget(
+                                    text: s.resetPassword_submit,
+                                    onPressed: () {
+                                      if (formKey.currentState!.validate()) {
+                                        resetCubit.resetPassword(
+                                          newPassword: newPasswordController.text.trim(),
+                                          token: widget.verifyToken,
+                                        );
+                                      }
+                                    },
+                                  ),
+                            const SizedBox(height: 20),
+
+                             Align(
+                              alignment: Alignment.centerRight,
+                              child: RichText(
+                                text: TextSpan(
+                                  text: s.resetPassword_signIn,
+                                  style: TextStyles.red15SemiBold,
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(builder: (_) => SignIn()),
+                                      );
+                                    },
+                                ),
+                              ),
+                            ),
+                            const Spacer(),
+                            Footer(),
+                          ],
                         ),
                       ),
-                      validator: (val) {
-                        if (val == null || val.isEmpty) return "Please enter your password.";
-                        if (val.length < 8) return "Password must be at least 8 characters.";
-                        return null;
-                      },
                     ),
-                    const SizedBox(height: 20),
-
-                    // Repeat Password
-                    TextFormField(
-                      controller: reapeatpasswordcontroller,
-                      obscureText: obscureRepeatPassword,
-                      decoration: InputDecoration(
-                        hintText: 'Repeat Password',
-                        suffixIcon: IconButton(
-                          icon: Icon(obscureRepeatPassword ? Icons.visibility_off : Icons.visibility),
-                          onPressed: () {
-                            setState(() {
-                              obscureRepeatPassword = !obscureRepeatPassword;
-                            });
-                          },
-                        ),
-                      ),
-                      validator: (val) {
-                        if (val == null || val.isEmpty) return "Please enter repeat password.";
-                        if (val != newPasswordController.text) return "Passwords do not match.";
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 30),
-
-                    // Submit
-                    state is ResetpasswordLoading
-                        ? const Center(child: CircularProgressIndicator())
-                        : CustomButtonWidget(
-                            text: 'Change Password',
-                            onPressed: () {
-                              if (formKey.currentState!.validate()) {
-                                resetCubit.resetPassword(
-                                  newPassword: newPasswordController.text.trim(),
-                                  token: widget.verifyToken,
-                                );
-                              }
-                            },
-                          ),
-                    const SizedBox(height: 20),
-
-                    // Back to sign in
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Back to Sign In Page',
-                          style: TextStyles.red15SemiBold,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (_) => SignIn()),
-                              );
-                            },
-                        ),
-                      ),
-                    ),
-                    const Spacer(),
-                    Footer(),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             ),
           ),
         );
-      },
-    ),
-  ),
-);
-
       },
     );
   }

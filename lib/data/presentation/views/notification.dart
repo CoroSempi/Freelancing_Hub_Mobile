@@ -10,6 +10,7 @@ import 'package:iti_freelancing_hub/data/presentation/manger/cubit/notification/
 import 'package:iti_freelancing_hub/data/presentation/views/homeScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/comment.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_app_bar.dart';
+import 'package:iti_freelancing_hub/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 class Notifications extends StatefulWidget {
@@ -29,21 +30,26 @@ class _NotificationsState extends State<Notifications> {
 
   @override
   Widget build(BuildContext context) {
-    final settingsProviders = Provider.of<SettingsProvider>(context);
+    final settingsProvider = Provider.of<SettingsProvider>(context);
+    final s = S.of(context);
 
     return MainScaffold(
       body: Column(
         children: [
-          CustomAppBar(backText: "Back"),
+          CustomAppBar(
+            backText: s.backButton,
+            onBackPressed: () => Navigator.pop(context),
+            showPendingButton: false,
+          ),
           SizedBox(height: 8.h),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
                 Text(
-                  'Notifications',
+                  s.notificationsTitle,
                   style: TextStyles.black12SemiBold.copyWith(
-                    color: settingsProviders.isDark ? kColors[2] : kColors[1],
+                    color: settingsProvider.isDark ? kColors[2] : kColors[1],
                   ),
                 ),
               ],
@@ -51,7 +57,7 @@ class _NotificationsState extends State<Notifications> {
           ),
           SizedBox(height: 8.h),
           Expanded(
-            child: BlocBuilder<NotificationsCubit, NotificationsState>(
+            child: BlocBuilder< NotificationsCubit,  NotificationsState>(
               builder: (context, state) {
                 if (state is NotificationsLoading) {
                   return Center(
@@ -61,7 +67,7 @@ class _NotificationsState extends State<Notifications> {
                   if (state.notifications.isEmpty) {
                     return Center(
                       child: Text(
-                        'There are no notifications',
+                        s.noNotificationsMessage,
                         style: TextStyles.grey12Medium.copyWith(fontSize: 16),
                       ),
                     );
@@ -80,7 +86,7 @@ class _NotificationsState extends State<Notifications> {
                               notification.id,
                             );
                           }
-                          Navigator.pushReplacementNamed(
+                          Navigator.pushNamed(
                             context,
                             HomeScreen.routeName,
                           );
@@ -89,9 +95,13 @@ class _NotificationsState extends State<Notifications> {
                     },
                   );
                 } else if (state is NotificationsError) {
-                  return Center(child: Text(state.message));
+                  return Center(
+                    child: Text(
+                      '${s.errorDefaultMessage}: ${state.message}',
+                    ),
+                  );
                 } else {
-                  return SizedBox.shrink();
+                  return const SizedBox.shrink();
                 }
               },
             ),

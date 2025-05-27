@@ -17,10 +17,13 @@ import 'package:iti_freelancing_hub/data/presentation/views/change_profile.dart'
 import 'package:iti_freelancing_hub/data/presentation/views/chat.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/chats.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
+// Add import for localization
+import 'package:iti_freelancing_hub/generated/l10n.dart';
 
 class SettingsPage extends StatefulWidget {
   static const routeName = '/settings';
 
+ 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
@@ -31,6 +34,7 @@ class _SettingsPageState extends State<SettingsPage> {
     // final themeProvider = Provider.of<ThemeProvider>(context);
     SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     final settingsProviders = Provider.of<SettingsProvider>(context);
+    final s = S.of(context);  
 
     return MainScaffold(
       body: Padding(
@@ -39,12 +43,12 @@ class _SettingsPageState extends State<SettingsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomAppBar(
-              backText: 'Back',
+              backText: s.settings_back,
               onBackPressed: () {},
               showPendingButton: false,
             ),
             Text(
-              'Setting',
+              s.settings_title,
               style: TextStyles.black12SemiBold.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -68,20 +72,40 @@ class _SettingsPageState extends State<SettingsPage> {
                       activeTrackColor: kColors[0],
                       inactiveTrackColor: kColors[3],
                       activeColor: kColors[2],
-                      // inactiveThumbColor: kColors[3],
                     ),
                     SizedBox(width: 8.w),
+                  
                     Text(
-                      "Theme",
+                      s.settings_theme,
                       style: TextStyles.black12SemiBold.copyWith(
-                        color:
-                            settingsProviders.isDark
-                                ? Colors.white
-                                : Colors.black,
+                        color: settingsProviders.isDark ? Colors.white : Colors.black,
                       ),
                     ),
                   ],
                 ),
+
+                Row(children: [
+  Switch(
+                      value: settingsProvider.currentLocale.languageCode == 'ar',
+                      onChanged: (isArabic) {
+                        settingsProvider.changeLocale(
+                          isArabic ? const Locale('ar') : const Locale('en'),
+                        );
+                      },
+                      activeTrackColor: kColors[0],
+                      inactiveTrackColor: kColors[3],
+                      activeColor: kColors[2],
+                    ),
+                    SizedBox(width: 8.w),
+
+                    Text(
+                      s.settings_language,
+                      style: TextStyles.black12SemiBold.copyWith(
+                        color: settingsProviders.isDark ? Colors.white : Colors.black,
+                      ),
+                    ),
+                ],) , 
+
                 Text(
                   settingsProvider.isDark ? "Dark" : "Light",
                   style: TextStyles.red15SemiBold.copyWith(
@@ -90,21 +114,23 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ],
             ),
-
             SizedBox(height: 16.h),
             Text(
-              'Account Setting',
-              style: TextStyles.grey12Medium.copyWith(fontSize: 16),
+              s.settings_subTitle2,
+              style: TextStyles.grey12Medium.copyWith(
+                fontSize: 16,
+                fontFamily: Localizations.localeOf(context).languageCode == 'ar' ? 'shamelfabily' : null,
+              ),
             ),
             const SizedBox(height: 16),
-            // Edit Profile
             ListTile(
               leading: Icon(Icons.person_pin, color: kColors[0]),
               title: Text(
-                'Edit My Profile',
+                s.settings_editMyProfile,
                 style: TextStyles.black20SemiBold.copyWith(
                   fontSize: 14,
                   color: settingsProviders.isDark ? Colors.white : Colors.black,
+                  fontFamily: Localizations.localeOf(context).languageCode == 'ar' ? 'shamelfabilyBold' : null,
                 ),
               ),
               contentPadding: EdgeInsets.zero,
@@ -132,7 +158,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ListTile(
               leading: SvgPicture.asset(Assets.assetsKey),
               title: Text(
-                'Change Password',
+                s.settings_changePassword,
                 style: TextStyles.black20SemiBold.copyWith(
                   fontSize: 14,
                   color: settingsProviders.isDark ? Colors.white : Colors.black,
@@ -148,7 +174,7 @@ class _SettingsPageState extends State<SettingsPage> {
             SizedBox(height: 16.h),
             // Support Section
             Text(
-              'Support',
+              s.settings_subTitle3,
               style: TextStyles.grey12Medium.copyWith(fontSize: 16),
             ),
             SizedBox(height: 16.h),
@@ -156,7 +182,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ListTile(
               leading: Icon(Icons.chat, color: kColors[0]),
               title: Text(
-                'Chat with us',
+                s.settings_chat,
                 style: TextStyles.black20SemiBold.copyWith(
                   fontSize: 14,
                   color: settingsProviders.isDark ? Colors.white : Colors.black,
@@ -173,7 +199,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ListTile(
               leading: Icon(Icons.help_outline, color: kColors[0]),
               title: Text(
-                'About ITI Freelancing Hub',
+                s.settings_about,
                 style: TextStyles.black20SemiBold.copyWith(
                   fontSize: 14,
                   color: settingsProviders.isDark ? Colors.white : Colors.black,
@@ -188,7 +214,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ListTile(
               leading: Icon(Icons.logout, color: kColors[0]),
               title: Text(
-                'Sign Out',
+                s.header_signOut,
                 style: TextStyles.black20SemiBold.copyWith(
                   fontSize: 14,
                   color: settingsProviders.isDark ? Colors.white : Colors.black,

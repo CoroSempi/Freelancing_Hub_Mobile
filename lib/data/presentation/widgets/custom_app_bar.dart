@@ -14,14 +14,14 @@ class CustomAppBar extends StatelessWidget {
   final String? statusText;  
 final Color? color;
   const CustomAppBar({
-    Key? key,
+    super.key,
     this.title,
     this.backText,
     this.onBackPressed,
     this.showPendingButton = false,
     this.statusText,   
     this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

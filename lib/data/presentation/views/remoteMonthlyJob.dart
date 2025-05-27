@@ -6,10 +6,15 @@ import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/CustomButtonWidget.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/form-field.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/formFieldWithDropdown.dart';
+import 'package:iti_freelancing_hub/generated/l10n.dart'; // Added for localization
 
 class Remotemonthlyjob extends StatelessWidget {
+  const Remotemonthlyjob({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context); // Added for localization
+
     return MainScaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -19,76 +24,65 @@ class Remotemonthlyjob extends StatelessWidget {
             SvgPicture.asset(Assets.assetremote),
             SizedBox(height: 16.h),
             FormFieldWidget(
-              title: 'Job Title',
-              subtitle: 'Enter the title of the job',
-              hintText: 'Enter the title of the job',
+              title: s.jobTitleLabel, // Reused from previous: "jobTitleLabel": "Job Title"
+              subtitle: s.enterJobTitleHint, // Reused from previous: "enterJobTitleHint": "Enter the title of the job"
+              hintText: s.enterJobTitleHint,
             ),
             SizedBox(height: 16.h),
-
             FormFieldWidget(
-              title: 'Client Name',
-              subtitle: 'Enter the client\'s name',
-              hintText: 'Enter the client\'s name',
+              title: s.clientNameLabel, // Reused from previous: "clientNameLabel": "Client Name"
+              subtitle: s.enterClientNameHint, // Reused from previous: "enterClientNameHint": "Enter the client's name"
+              hintText: s.enterClientNameHint,
             ),
-
             SizedBox(height: 16.h),
-
             FormFieldWidget(
-              title: 'Start Date',
-              subtitle: 'Enter the start date',
-              hintText: 'DD/MM/YYYY',
+              title: s.startDateLabel, // Reused from previous: "startDateLabel": "Start Date"
+              subtitle: s.enterStartDateHint, // Reused from previous: "enterStartDateHint": "Enter the start date"
+              hintText: s.dateFormatHint, // Reused from previous: "dateFormatHint": "DD/MM/YYYY"
             ),
             SizedBox(height: 16.h),
-
             Row(
               children: [
                 Expanded(
                   child: FormFieldWidget(
-                    title: 'Budget',
-                    subtitle: 'Enter the budget',
-                    hintText: 'Enter the budget',
+                    title: s.budgetLabel,
+                    subtitle: s.enterBudgetHint,
+                    hintText: s.enterBudgetHint,
                   ),
                 ),
                 SizedBox(width: 16.w),
                 Expanded(
                   child: FormFieldWidget(
-                    title: 'Currency',
-                    subtitle: 'Enter the currency',
-                    hintText: 'Enter the currency',
+                    title: s.currencyLabel,
+                    subtitle: s.enterCurrencyHint,
+                    hintText: s.enterCurrencyHint,
                   ),
                 ),
               ],
             ),
             SizedBox(height: 16.h),
-
             FormFieldWidget(
-              title: 'Client Name ',
-              subtitle: '(Required)',
+              title: s.clientNameLabel,
+              subtitle: s.requiredLabel,
               hintText: '',
             ),
-
             FormFieldWidget(
-              title: 'Client Contact ',
-              subtitle: '(Required)',
+              title: s.clientContactLabel,
+              subtitle: s.requiredLabel,
               hintText: '',
             ),
-
             SizedBox(height: 24.h),
             FormFieldWithDropdown(
-              title: 'Client Country ',
-              subtitle: '(Required)',
-              dropDownText: 'dropDownText',
+              title: s.clientCountryLabel,
+              subtitle: s.requiredLabel,
+              dropDownText: s.selectCountryHint,
             ),
-
             SizedBox(height: 16.h),
-
             FormFieldWidget(
-              title: 'Proof of Work',
-              subtitle: '(Required)',
-              hintText:
-                  "Prepare a PDF document that includes screenshots of chats between you and the client, samples of the work completed, and proof of payment or invoices. Once you've compiled everything into a single PDF, upload it to Google Drive, copy the link, and paste it in here. Make sure the link is set to Anyone with the link can view so that admin can access it.",
+              title: s.proofOfWorkLabel,
+              subtitle: s.requiredLabel,
+              hintText: s.proofOfWorkInstructions,
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -103,12 +97,15 @@ class Remotemonthlyjob extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text('Back'),
+                    child: Text(s.backButton),
                   ),
                 ),
                 Spacer(),
                 Expanded(
-                  child: CustomButtonWidget(text: "Submit", onPressed: () {}),
+                  child: CustomButtonWidget(
+                    text: s.submitButton,
+                    onPressed: () {},
+                  ),
                 ),
               ],
             ),

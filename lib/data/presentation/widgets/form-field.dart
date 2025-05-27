@@ -6,16 +6,16 @@ String title;
 String subtitle;
 String hintText;
 FormFieldWidget({
-    Key? key,
+    super.key,
     required this.title,
     required this.subtitle,
     required this.hintText,
-  }) : super(key: key);
+  });
    @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
+        SizedBox(
           width: double.infinity,
           child: Column(
             mainAxisSize: MainAxisSize.min,

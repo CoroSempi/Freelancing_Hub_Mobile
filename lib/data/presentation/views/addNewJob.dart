@@ -8,76 +8,91 @@ import 'package:iti_freelancing_hub/data/presentation/views/homeScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/platFormScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/remoteMonthlyJob.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/CustomButtonWidget.dart';
+// Add import for localization
+import 'package:iti_freelancing_hub/generated/l10n.dart';
 
-class AddNewJobScreen extends StatelessWidget {
+class AddNewJobScreen extends StatefulWidget {
   static const routeName = '/add-task';
+
+  const AddNewJobScreen({super.key});
+
+  @override
+  State<AddNewJobScreen> createState() => _AddNewJobScreenState();
+}
+
+class _AddNewJobScreenState extends State<AddNewJobScreen> {
+  String? _selectedJobType;
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);  
+
     return MainScaffold(
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Add New Job', style: TextStyles.black20SemiBold),
-            SizedBox(height: 16.h),
-            Text('Choose job type', style: TextStyles.black15SemiBold),
+            Text(s.addNewJobTitle, style: TextStyles.black20SemiBold),
+            Text(s.chooseJobType, style: TextStyles.black15SemiBold),
             SizedBox(height: 16.h),
             Column(
               children: [
                 RadioListTile(
                   activeColor: kColors[0],
-                  fillColor: MaterialStateProperty.all(kColors[0]),
+                  fillColor: WidgetStateProperty.all(kColors[0]),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 8,
                     vertical: 0,
                   ),
-
                   title: Text(
-                    'Freelancing job on platform',
+                    s.jobTypePlatform,  
                     style: TextStyles.black12SemiBold,
                   ),
                   value: 'platform',
-                  groupValue: 'jobType',
+                  groupValue: _selectedJobType,
                   onChanged: (value) {
-                    // Handle selection
+                    setState(() {
+                      _selectedJobType = value as String?;
+                    });
                   },
                 ),
                 RadioListTile(
-                  activeColor: Colors.red,
-                  fillColor: MaterialStateProperty.all(Colors.red),
+                  activeColor: kColors[0],
+                  fillColor: WidgetStateProperty.all(kColors[0]),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 8,
                     vertical: 0,
                   ),
-
                   title: Text(
-                    'Freelancing job with direct contact',
+                    s.jobTypeDirectContact, 
                     style: TextStyles.black12SemiBold,
                   ),
                   value: 'directContact',
-                  groupValue: 'jobType',
+                  groupValue: _selectedJobType,
                   onChanged: (value) {
-                    // Handle selection
+                    setState(() {
+                      _selectedJobType = value as String?;
+                    });
                   },
                 ),
                 RadioListTile(
-                  activeColor: Colors.red,
-                  fillColor: MaterialStateProperty.all(Colors.red),
+                  activeColor: kColors[0],
+                  fillColor: WidgetStateProperty.all(kColors[0]),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 8,
                     vertical: 0,
                   ),
-
                   title: Text(
-                    'Remote monthly job',
+                    s.jobTypeRemoteMonthly,  
                     style: TextStyles.black12SemiBold,
                   ),
                   value: 'remoteMonthly',
-                  groupValue: 'jobType',
+                  groupValue: _selectedJobType,
                   onChanged: (value) {
-                    // Handle selection
+                    setState(() {
+                      _selectedJobType = value as String?;
+                    });
                   },
                 ),
               ],
@@ -87,60 +102,66 @@ class AddNewJobScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: CustomButtonWidget(
-                    text: "Back",
+                    text: s.backButton,  
                     onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        HomeScreen.routeName,
-                        (route) =>
-                            false, 
-                      );
+                      Navigator.pop(context);  
                     },
                   ),
                 ),
                 SizedBox(width: 16.w),
                 Expanded(
                   child: CustomButtonWidget(
-                    text: "Next",
-                    onPressed:
-                        () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => DirectContentScreen(),
-                          ),
-                        ),
+                    text: s.nextButton,  
+                    onPressed: () {
+                      if (_selectedJobType != null) {
+                        switch (_selectedJobType) {
+                          case 'platform':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => PlatformScreen()),
+                            );
+                            break;
+                          case 'directContact':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => DirectContentScreen()),
+                            );
+                            break;
+                          case 'remoteMonthly':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => Remotemonthlyjob()),
+                            );
+                            break;
+                        }
+                      }
+                    },
                   ),
                 ),
               ],
             ),
             SizedBox(height: 24.h),
             Text(
-              'Please select the appropriate type to ensure it is categorized correctly. Here are the options:',
+              s.jobTypeInstruction,
               style: TextStyles.grey12Medium,
             ),
             SizedBox(height: 8.h),
-            Expanded(
-              child: Text(
-                '• Freelancing job on platform: Select this option if the job is posted on freelancing platforms like Mostaql, Khamsat, Upwork, etc. These jobs typically involve working through a third-party site that handles payments and communications.',
-                style: TextStyles.grey12Medium,
-                softWrap: true,
-              ),
+            Text(
+              s.jobTypePlatformDescription,
+              style: TextStyles.grey12Medium,
+              softWrap: true,
             ),
             SizedBox(height: 8.h),
-            Expanded(
-              child: Text(
-                '• Freelancing job with direct contact: Choose this if the job comes from your personal network, such as connections on LinkedIn or referrals. These jobs often involve direct communication with the client without a middleman.',
-                style: TextStyles.grey12Medium,
-                softWrap: true,
-              ),
+            Text(
+              s.jobTypeDirectContactDescription,
+              style: TextStyles.grey12Medium,
+              softWrap: true,
             ),
             SizedBox(height: 8.h),
-            Expanded(
-              child: Text(
-                '• Remote monthly job: Use this option for traditional remote positions that offer a monthly salary. These jobs may have structured hours and responsibilities similar to in-office roles.',
-                style: TextStyles.grey12Medium,
-                softWrap: true,
-              ),
+            Text(
+              s.jobTypeRemoteMonthlyDescription,
+              style: TextStyles.grey12Medium,
+              softWrap: true,
             ),
             SizedBox(height: 8.h),
           ],

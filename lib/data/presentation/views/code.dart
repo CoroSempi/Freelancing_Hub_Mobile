@@ -3,17 +3,18 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/forget-password/cubit/forgetpassword_cubit.dart';
- import 'package:iti_freelancing_hub/data/presentation/manger/cubit/verify-code/cubit/verifycode_cubit.dart';
+import 'package:iti_freelancing_hub/data/presentation/manger/cubit/verify-code/cubit/verifycode_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/changePasswordAuth.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/signIn.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/CustomButtonWidget.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/footer.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/input-box-controller.dart';
-import 'package:iti_freelancing_hub/data/presentation/widgets/input_box.dart';
- 
+// Add import for localization
+import 'package:iti_freelancing_hub/generated/l10n.dart';
 
 class CodeScreen extends StatefulWidget {
   static const routeName = '/code-screen';
@@ -43,6 +44,7 @@ class _CodeScreenState extends State<CodeScreen> {
   Widget build(BuildContext context) {
     final bloc = VerifycodeCubit.get(context);
     final resend = ForgetpasswordCubit.get(context);
+    final s = S.of(context);  
 
     return BlocConsumer<VerifycodeCubit, VerifycodeState>(
       listener: (context, state) {
@@ -56,10 +58,15 @@ class _CodeScreenState extends State<CodeScreen> {
               ),
             );
           } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                  content: Text('Verification failed: No valid token received')),
-            );
+          Fluttertoast.showToast(
+                                      msg: s.verifyCody_codeError, 
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
           }
         } else if (state is VerifycodeFailure) {
           print('the token is ${bloc.verifyToken}');
@@ -69,121 +76,126 @@ class _CodeScreenState extends State<CodeScreen> {
         }
       },
       builder: (context, state) {
-      return Scaffold(
-  resizeToAvoidBottomInset: true,
-  body: SafeArea(
-    child: LayoutBuilder(
-      builder: (context, constraints) {
-        return SingleChildScrollView(
-          padding: EdgeInsets.only(
-            left: 35,
-            right: 35,
-            bottom: MediaQuery.of(context).viewInsets.bottom + 20,
-          ),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: constraints.maxHeight),
-            child: IntrinsicHeight(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 40),
-                  Center(
-                    child: Column(
-                      children: [
-                        SvgPicture.asset(Assets.assetsImagesIti, width: 93, height: 150),
-                        SvgPicture.asset(Assets.assetsImagesFreelancingHub, width: 166, height: 30),
-                      ],
-                    ),
+        return Scaffold(
+          resizeToAvoidBottomInset: true,
+          body: SafeArea(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  padding: EdgeInsets.only(
+                    left: 35,
+                    right: 35,
+                    bottom: MediaQuery.of(context).viewInsets.bottom + 20,
                   ),
-                  const SizedBox(height: 24),
-                  Text(
-                    'Enter Verification Code',
-                    style: TextStyles.black20SemiBold,
-                    textAlign: TextAlign.start,
-                  ),
-                  const SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                      6,
-                      (index) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: InputBoxController(
-                          controller: controller[index],
-                          focusNode: focusNodes[index],
-                          onChanged: (value) {
-                            if (value.isNotEmpty && index < 5) {
-                              FocusScope.of(context).requestFocus(focusNodes[index + 1]);
-                            } else if (value.isEmpty && index > 0) {
-                              FocusScope.of(context).requestFocus(focusNodes[index - 1]);
-                            }
-                          },
-                        ),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    child: IntrinsicHeight(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 40),
+                          Center(
+                            child: Column(
+                              children: [
+                                SvgPicture.asset(Assets.assetsImagesIti, width: 93, height: 150),
+                                SvgPicture.asset(Assets.assetsImagesFreelancingHub, width: 166, height: 30),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          Text(
+                            s.verifyCody_title,
+                            style: TextStyles.black20SemiBold,
+                            textAlign: TextAlign.start,
+                          ),
+                          const SizedBox(height: 15),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(
+                              6,
+                              (index) => Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 4),
+                                child: InputBoxController(
+                                  controller: controller[index],
+                                  focusNode: focusNodes[index],
+                                  onChanged: (value) {
+                                    if (value.isNotEmpty && index < 5) {
+                                      FocusScope.of(context).requestFocus(focusNodes[index + 1]);
+                                    } else if (value.isEmpty && index > 0) {
+                                      FocusScope.of(context).requestFocus(focusNodes[index - 1]);
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          Text(
+                            s.verifyCody_notice,
+                            style: TextStyles.grey12Medium,
+                          ),
+                          const SizedBox(height: 15),
+                          ConditionalBuilderRec(
+                            condition: state is! VerifycodeLoading,
+                            builder: (_) => CustomButtonWidget(
+                              text: s.verifyCody_submit,
+                              onPressed: () {
+                                String code = controller.map((c) => c.text).join();
+                                if (code.length == 6) {
+                                  bloc.verifyCode(widget.email, code);
+                                } else {
+                                    Fluttertoast.showToast(
+                                      msg: s.verifyCody_codeError, 
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
+                                }
+                              },
+                            ),
+                            fallback: (_) => const Center(child: CircularProgressIndicator()),
+                          ),
+                          const SizedBox(height: 16),
+                          CustomButtonWidget(
+                            text: s.verifyCody_resend,
+                            onPressed: () {
+                              resend.forgetPassword(widget.email);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(s.verifyCody_resend)), 
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 10),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: RichText(
+                              text: TextSpan(
+                                text: s.verifyCody_signIn,
+                                style: TextStyles.red15SemiBold,
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (_) => SignIn()),
+                                    );
+                                  },
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                          Footer(),
+                        ],
                       ),
                     ),
                   ),
-                  const SizedBox(height: 15),
-                  Text(
-                    'We have sent an email to your registered email address with a verification code.',
-                    style: TextStyles.grey12Medium,
-                  ),
-                  const SizedBox(height: 15),
-                  ConditionalBuilderRec(
-                    condition: state is! VerifycodeLoading,
-                    builder: (_) => CustomButtonWidget(
-                      text: 'Verify Code',
-                      onPressed: () {
-                        String code = controller.map((c) => c.text).join();
-                        if (code.length == 6) {
-                          bloc.verifyCode(widget.email, code);
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Please enter a 6-digit code')),
-                          );
-                        }
-                      },
-                    ),
-                    fallback: (_) => const Center(child: CircularProgressIndicator()),
-                  ),
-                  const SizedBox(height: 16),
-                  CustomButtonWidget(
-                    text: 'Resend Code',
-                    onPressed: () {
-                      resend.forgetPassword(widget.email);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Code resent successfully')),
-                      );
-                   },
-                  ),
-                  const SizedBox(height: 10),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Back to Sign In Page',
-                        style: TextStyles.red15SemiBold,
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => SignIn()),
-                            );
-                          },
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  Footer(),
-                ],
-              ),
+                );
+              },
             ),
           ),
         );
-      },
-    ),
-  ),
-);
-
       },
     );
   }

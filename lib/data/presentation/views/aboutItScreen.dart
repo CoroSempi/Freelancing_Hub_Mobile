@@ -4,12 +4,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iti_freelancing_hub/constants.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
+// Add import for localization
+import 'package:iti_freelancing_hub/generated/l10n.dart';
 
 class AboutItScreen extends StatelessWidget {
   static const routeName = '/about-it-screen';
 
+  const AboutItScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context); 
+
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 100,
@@ -20,7 +26,7 @@ class AboutItScreen extends StatelessWidget {
               SizedBox(width: 8),
               Icon(Icons.arrow_back_ios, color: kColors[0]),
               SizedBox(width: 4),
-              Text('Back', style: TextStyle(color: kColors[0], fontSize: 14)),
+              Text(s.settings_back, style: TextStyle(color: kColors[0], fontSize: 14)),
             ],
           ),
         ),
@@ -32,12 +38,12 @@ class AboutItScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'What is the ITI Freelancing Hub?',
+              s.learnMore_title,
               style: TextStyles.red15SemiBold.copyWith(fontSize: 18),
             ),
             SizedBox(height: 8.h),
             Text(
-              'The ITI Freelancing Hub is designed specifically for students who have secured their own freelancing jobs. This platform allows students to upload the details of their jobs for administrative approval. Once approved, these opportunities contribute to their graduation requirements.',
+              s.learnMore_subtitle,
               style: TextStyles.grey12Medium,
             ),
             const SizedBox(height: 16),
@@ -50,7 +56,7 @@ class AboutItScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'How to Use the Platform',
+              s.learnMore_howToUse,
               style: TextStyles.red15SemiBold.copyWith(fontSize: 18),
             ),
             const SizedBox(height: 16),
@@ -65,18 +71,17 @@ class AboutItScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Registration and Sign In',
+                      s.learnMore_slides_1_title,
                       style: TextStyles.red15SemiBold.copyWith(fontSize: 18),
                     ),
-
                     SizedBox(height: 8),
                     Text(
-                      '• Your admin will upload your email to the system. Once registered, you can log in to your account.',
+                      s.learnMore_slides_1_content_1,
                       style: TextStyles.grey12Medium,
                     ),
                     SizedBox(height: 8),
                     Text(
-                      '• Use your registered email to access the platform. If it’s your first time, you can reset your password as needed.',
+                      s.learnMore_slides_1_content_2,
                       style: TextStyles.grey12Medium,
                     ),
                   ],

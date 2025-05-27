@@ -15,6 +15,8 @@ import 'package:url_launcher/url_launcher.dart';
 class AddNote extends StatelessWidget {
   static const routeName = '/notes';
 
+  const AddNote({super.key});
+
   @override
   Widget build(BuildContext context) {
     final settingsProviders = Provider.of<SettingsProvider>(context);

@@ -52,7 +52,7 @@ class LoginCubitCubit extends Cubit<LoginCubitState> {
     }
   }
 
-  Future<void> logout() async {
+  Future<void> logout() async { 
   final prefs = await SharedPreferences.getInstance();
   await prefs.clear(); 
   user = null; 

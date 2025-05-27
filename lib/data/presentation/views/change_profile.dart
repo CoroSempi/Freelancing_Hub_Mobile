@@ -13,6 +13,7 @@ import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/profile/profile_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_Buttom.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_app_bar.dart';
+import 'package:iti_freelancing_hub/generated/l10n.dart';
 
 class ChangeProfile extends StatefulWidget {
   final Widget image;
@@ -51,6 +52,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
   @override
   Widget build(BuildContext context) {
     final settingsProvider = Provider.of<SettingsProvider>(context);
+    final s = S.of(context); // Added for localization
 
     return BlocConsumer<ProfileCubit, ProfileState>(
       listener: (context, state) {
@@ -59,7 +61,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
             SnackBar(
               backgroundColor: kColors[0],
               content: Text(
-                state.message,
+                state.message  , 
                 style: const TextStyle(color: Colors.white),
                 textAlign: TextAlign.center,
               ),
@@ -69,11 +71,11 @@ class _ChangeProfileState extends State<ChangeProfile> {
 
         if (state is ProfileAvatarUpdated) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
+            SnackBar(
               backgroundColor: Colors.green,
               content: Text(
-                'Updated successfully!',
-                style: TextStyle(color: Colors.white),
+                s.updatedSuccessfullyMessage,  
+                style: const TextStyle(color: Colors.white),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -112,12 +114,9 @@ class _ChangeProfileState extends State<ChangeProfile> {
                     Row(
                       children: [
                         Text(
-                          'Edit My Profile',
+                          s.editProfileTitle, 
                           style: TextStyles.black20SemiBold.copyWith(
-                            color:
-                                settingsProvider.isDark
-                                    ? Colors.white
-                                    : Colors.black,
+                            color: settingsProvider.isDark ? Colors.white : Colors.black,
                           ),
                         ),
                       ],
@@ -129,15 +128,17 @@ class _ChangeProfileState extends State<ChangeProfile> {
                           child: SizedBox(
                             width: 120,
                             height: 120,
-                            child:
-                                _image != null
-                                    ? Image.file(
-                                      File(_image!.path),
-                                      fit: BoxFit.cover,
-                                    )
-                                    : avatarUrl != null
+                            child: _image != null
+                                ? Image.file(
+                                    File(_image!.path),
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) => Icon(Icons.error, color: kColors[0]),
+                                  )
+                                : avatarUrl != null
                                     ? _buildImageFromUrl(avatarUrl)
-                                    : widget.image,
+                                    : (widget.image is Image
+                                        ? widget.image
+                                        : Icon(Icons.person, color: kColors[0], size: 120)),
                           ),
                         ),
                         Positioned(
@@ -167,15 +168,14 @@ class _ChangeProfileState extends State<ChangeProfile> {
                     ),
                     SizedBox(height: 28.h),
                     Text(
-                      "Your personal information is based on what you registered during the training. If you need to update any of this information, please contact the admin for assistance.",
+                      s.profileInfoMessage,  
                       style: TextStyles.grey12Medium.copyWith(fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 28.h),
-                    CustomButtoms(
-                      text: 'Submit',
-                      color:
-                          settingsProvider.isDark ? kColors[0] : Colors.black,
+                    CustomButtoms(  
+                      text: s.backButton,  
+                      color: settingsProvider.isDark ? kColors[0] : Colors.black,
                       textcolor: Colors.white,
                       onPressed: () {
                         Navigator.pop(context, true);
@@ -207,7 +207,11 @@ class _ChangeProfileState extends State<ChangeProfile> {
         return Icon(Icons.error, color: kColors[0]);
       }
     } else {
-      return Image.network(url, fit: BoxFit.cover);
+      return Image.network(
+        url,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => Icon(Icons.error, color: kColors[0]),
+      );
     }
   }
 
