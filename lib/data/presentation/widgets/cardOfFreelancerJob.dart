@@ -176,8 +176,8 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                                 children: [
                                   SvgPicture.asset(
                                     Assets.assetdate,
-                                    width: 16.w,
-                                    height: 16.h,
+                                    width: 12.w,
+                                    height: 12.h,
                                   ),
                                   SizedBox(width: 5.w),
                                   Text(
@@ -206,8 +206,8 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                                   children: [
                                     SvgPicture.asset(
                                       Assets.assetdate,
-                                      width: 16.w,
-                                      height: 16.h,
+                                      width: 12.w,
+                                      height: 12.h,
                                     ),
                                     SizedBox(width: 5.w),
                                     Text(
@@ -221,7 +221,7 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                                                     : Colors.black,
                                           ),
                                     ),
-                                    SizedBox(width: 5.w),
+                                    SizedBox(width: 2.w),
                                     Text(
                                       formatDate(job.endDate!),
                                       style: TextStyles.grey12Medium.copyWith(

@@ -11,6 +11,7 @@ import 'package:iti_freelancing_hub/data/presentation/widgets/form-field.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/formFieldWithDropdown.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/text_field.dart';
 import 'package:provider/provider.dart';
+import 'package:iti_freelancing_hub/generated/l10n.dart'; // Import generated localization
 
 class PlatformScreen extends StatelessWidget {
   PlatformScreen({super.key});
@@ -229,9 +230,11 @@ class PlatformScreen extends StatelessWidget {
     "DesignCrowd",
     "Others",
   ];
+
   @override
   Widget build(BuildContext context) {
     final settingsProviders = Provider.of<SettingsProvider>(context);
+    final s = S.of(context); // Access localized strings
 
     return MainScaffold(
       body: SingleChildScrollView(
@@ -239,64 +242,64 @@ class PlatformScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Add New Job', style: TextStyles.black15Medium.copyWith(
-               fontWeight: FontWeight.bold,
-                color: settingsProviders.isDark?Colors.white: Colors.black,
-            )),
+            Text(
+              s.addNewJobTitle,
+              style: TextStyles.black15Medium.copyWith(
+                fontWeight: FontWeight.bold,
+                color: settingsProviders.isDark ? Colors.white : Colors.black,
+              ),
+            ),
             SizedBox(height: 8.h),
             settingsProviders.isDark
-                        ? SvgPicture.asset(Assets.assetsPlatFormDark)
-                        : SvgPicture.asset(Assets.assetsPlatFormLight),
+                ? SvgPicture.asset(Assets.assetsPlatFormDark)
+                : SvgPicture.asset(Assets.assetsPlatFormLight),
             SizedBox(height: 16.h),
             Row(
               children: [
                 Text(
-                  'Job Title ',
+                  s.platformForm_jobTitle_placeholder,
                   style: TextStyles.black10SemiBold.copyWith(
                     fontSize: 14,
-                    color:
-                        settingsProviders.isDark ? Colors.white : Colors.black,
+                    color: settingsProviders.isDark ? Colors.white : Colors.black,
                   ),
                 ),
                 Text(
-                  ' (Required)',
+                  ' (${s.platformForm_jobTitle_required})',
                   style: TextStyles.grey12Medium.copyWith(fontSize: 12),
                 ),
               ],
             ),
             SizedBox(height: 2.h),
-            CustomTextFiled(hittext: 'Job Title'),
+            CustomTextFiled(hittext: s.platformForm_jobTitle_placeholder),
             SizedBox(height: 2.h),
             Text(
-              'Ensure that the title clearly describes the Job.',
+              s.platformForm_jobTitle_desc,
               style: TextStyles.grey12Medium.copyWith(fontSize: 12),
             ),
             SizedBox(height: 16.h),
             Row(
               children: [
                 Text(
-                  'Job Description ',
+                  s.platformForm_jobDescription_placeholder,
                   style: TextStyles.black10SemiBold.copyWith(
                     fontSize: 14,
-                    color:
-                        settingsProviders.isDark ? Colors.white : Colors.black,
+                    color: settingsProviders.isDark ? Colors.white : Colors.black,
                   ),
                 ),
                 Text(
-                  ' (Required)',
+                  ' (${s.platformForm_jobDescription_required})',
                   style: TextStyles.grey12Medium.copyWith(fontSize: 12),
                 ),
               ],
             ),
             SizedBox(height: 2.h),
-            CustomTextFiled(hittext: 'Job Description'),
+            CustomTextFiled(hittext: s.platformForm_jobDescription_placeholder),
             SizedBox(height: 2.h),
             Text(
-              'Ensure that the description clearly describes the Job.',
+              s.platformForm_jobDescription_desc,
               style: TextStyles.grey12Medium.copyWith(fontSize: 12),
             ),
             SizedBox(height: 16.h),
-
             Row(
               children: [
                 Expanded(
@@ -305,17 +308,16 @@ class PlatformScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'Start Date ',
+                            s.platformForm_startDate_placeholder,
                             style: TextStyles.black10SemiBold.copyWith(
                               fontSize: 14,
-                              color:
-                                  settingsProviders.isDark
-                                      ? Colors.white
-                                      : Colors.black,
+                              color: settingsProviders.isDark
+                                  ? Colors.white
+                                  : Colors.black,
                             ),
                           ),
                           Text(
-                            ' (Required)',
+                            ' (${s.platformForm_startDate_required})',
                             style: TextStyles.grey12Medium.copyWith(
                               fontSize: 12,
                             ),
@@ -325,7 +327,7 @@ class PlatformScreen extends StatelessWidget {
                       SizedBox(height: 2.h),
                       CustomTextFiled(
                         controller: dateController,
-                        hittext: 'DD/MM/YYYY',
+                        hittext: s.dateFormatHint,
                         suffixIcon: Icon(Icons.date_range_outlined),
                         readOnly: true,
                         onTap: () async {
@@ -353,17 +355,16 @@ class PlatformScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'End Date ',
+                            s.endDateLabel,
                             style: TextStyles.black10SemiBold.copyWith(
                               fontSize: 14,
-                              color:
-                                  settingsProviders.isDark
-                                      ? Colors.white
-                                      : Colors.black,
+                              color: settingsProviders.isDark
+                                  ? Colors.white
+                                  : Colors.black,
                             ),
                           ),
                           Text(
-                            ' (Required)',
+                            ' (${s.platformForm_endDate_required})',
                             style: TextStyles.grey12Medium.copyWith(
                               fontSize: 12,
                             ),
@@ -373,7 +374,7 @@ class PlatformScreen extends StatelessWidget {
                       SizedBox(height: 2.h),
                       CustomTextFiled(
                         controller: dateController,
-                        hittext: 'DD/MM/YYYY',
+                        hittext: s.dateFormatHint,
                         suffixIcon: Icon(Icons.date_range_outlined),
                         readOnly: true,
                         onTap: () async {
@@ -397,7 +398,6 @@ class PlatformScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 16.h),
-
             Row(
               children: [
                 Expanded(
@@ -406,17 +406,16 @@ class PlatformScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'Cost in USD ',
+                            s.platformForm_costInUSD_placeholder,
                             style: TextStyles.black10SemiBold.copyWith(
                               fontSize: 14,
-                              color:
-                                  settingsProviders.isDark
-                                      ? Colors.white
-                                      : Colors.black,
+                              color: settingsProviders.isDark
+                                  ? Colors.white
+                                  : Colors.black,
                             ),
                           ),
                           Text(
-                            ' (Required)',
+                            ' (${s.platformForm_costInUSD_required})',
                             style: TextStyles.grey12Medium.copyWith(
                               fontSize: 12,
                             ),
@@ -426,7 +425,7 @@ class PlatformScreen extends StatelessWidget {
                       SizedBox(height: 2.h),
                       CustomTextFiled(
                         controller: dateController,
-                        hittext: 'Cost in USD',
+                        hittext: s.platformForm_costInUSD_placeholder,
                         suffixIcon: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SvgPicture.asset(
@@ -447,17 +446,16 @@ class PlatformScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'Cost in EGP ',
+                            s.platformForm_costInEGP_placeholder,
                             style: TextStyles.black10SemiBold.copyWith(
                               fontSize: 14,
-                              color:
-                                  settingsProviders.isDark
-                                      ? Colors.white
-                                      : Colors.black,
+                              color: settingsProviders.isDark
+                                  ? Colors.white
+                                  : Colors.black,
                             ),
                           ),
                           Text(
-                            ' (Required)',
+                            ' (${s.platformForm_costInEGP_required})',
                             style: TextStyles.grey12Medium.copyWith(
                               fontSize: 12,
                             ),
@@ -482,19 +480,18 @@ class PlatformScreen extends StatelessWidget {
                 ),
               ],
             ),
-
             SizedBox(height: 24.h),
             // FormFieldWithDropdown(
-            //   title: 'Team members ',
-            //   subtitle: '(Required)',
+            //   title: s.platformForm_teamMembers_placeholder,
+            //   subtitle: '(${s.platformForm_teamMembers_required})',
             //   dropDownText: 'dropDownText',
             //   items: ['Online', 'Offline', 'Both'],
             //   backgroundColor: kColors[5],
             // ),
             SizedBox(height: 24.h),
             // FormFieldWithDropdown(
-            //   title: 'Platform ',
-            //   subtitle: '(Required)',
+            //   title: s.platformForm_platform_placeholder,
+            //   subtitle: '(${s.platformForm_platform_required})',
             //   dropDownText: 'dropDownText',
             //   items: freelancingPlatforms,
             //   backgroundColor: kColors[0],
@@ -503,50 +500,47 @@ class PlatformScreen extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'Your Profile on The Platform  ',
+                  s.platformForm_studentProfile_placeholder,
                   style: TextStyles.black10SemiBold.copyWith(
                     fontSize: 14,
-                    color:
-                        settingsProviders.isDark ? Colors.white : Colors.black,
+                    color: settingsProviders.isDark ? Colors.white : Colors.black,
                   ),
                 ),
                 Text(
-                  ' (Required)',
+                  ' (${s.platformForm_studentProfile_required})',
                   style: TextStyles.grey12Medium.copyWith(fontSize: 12),
                 ),
               ],
             ),
             SizedBox(height: 2.h),
-            CustomTextFiled(hittext: 'Your Profile on The Platform '),
+            CustomTextFiled(hittext: s.platformForm_studentProfile_placeholder),
             SizedBox(height: 2.h),
             Text(
-              'Provide the link to your profile on the chosen platform.',
+              s.platformForm_studentProfile_desc,
               style: TextStyles.grey12Medium.copyWith(fontSize: 12),
             ),
             SizedBox(height: 16.h),
             Row(
               children: [
                 Text(
-                  'Client Name ',
+                  s.platformForm_clientName_placeholder,
                   style: TextStyles.black10SemiBold.copyWith(
                     fontSize: 14,
-                    color:
-                        settingsProviders.isDark ? Colors.white : Colors.black,
+                    color: settingsProviders.isDark ? Colors.white : Colors.black,
                   ),
                 ),
                 Text(
-                  ' (Required)',
+                  ' (${s.platformForm_clientName_required})',
                   style: TextStyles.grey12Medium.copyWith(fontSize: 12),
                 ),
               ],
             ),
             SizedBox(height: 2.h),
-            CustomTextFiled(hittext: 'Client Name'),
-
+            CustomTextFiled(hittext: s.platformForm_clientName_placeholder),
             SizedBox(height: 24.h),
             // FormFieldWithDropdown(
-            //   title: 'Client Country ',
-            //   subtitle: '(Required)',
+            //   title: s.platformForm_clientCountry_placeholder,
+            //   subtitle: '(${s.platformForm_clientCountry_required})',
             //   dropDownText: 'dropDownText',
             //   items: worldCountries,
             //   backgroundColor: kColors[0],
@@ -555,53 +549,49 @@ class PlatformScreen extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'Client Profile on The Platform ',
+                  s.platformForm_clientProfile_placeholder,
                   style: TextStyles.black10SemiBold.copyWith(
                     fontSize: 14,
-                    color:
-                        settingsProviders.isDark ? Colors.white : Colors.black,
+                    color: settingsProviders.isDark ? Colors.white : Colors.black,
                   ),
                 ),
                 Text(
-                  ' (Required)',
+                  ' (${s.platformForm_clientProfile_required})',
                   style: TextStyles.grey12Medium.copyWith(fontSize: 12),
                 ),
               ],
             ),
             SizedBox(height: 2.h),
-            CustomTextFiled(hittext: 'Client Profile on The Platform'),
+            CustomTextFiled(hittext: s.platformForm_clientProfile_placeholder),
             SizedBox(height: 2.h),
             Text(
-              'Provide the link to your profile on the chosen platform.',
+              s.platformForm_clientProfile_desc,
               style: TextStyles.grey12Medium.copyWith(fontSize: 12),
             ),
             SizedBox(height: 16.h),
             Row(
               children: [
                 Text(
-                  'Proof of Work ',
+                  s.platformForm_proofOfWork_placeholder,
                   style: TextStyles.black10SemiBold.copyWith(
                     fontSize: 14,
-                    color:
-                        settingsProviders.isDark ? Colors.white : Colors.black,
+                    color: settingsProviders.isDark ? Colors.white : Colors.black,
                   ),
                 ),
                 Text(
-                  ' (Required)',
+                  ' (${s.platformForm_proofOfWork_required})',
                   style: TextStyles.grey12Medium.copyWith(fontSize: 12),
                 ),
               ],
             ),
             SizedBox(height: 2.h),
-            CustomTextFiled(hittext: 'Proof of Work'),
-
+            CustomTextFiled(hittext: s.platformForm_proofOfWork_placeholder),
             SizedBox(height: 24.h),
             Text(
-              'Prepare a PDF document that includes screenshots of chats between you and the client, samples of the work completed, and proof of payment or invoices. Once you have compiled everything into a single PDF, upload it to Google Drive, copy the link, and paste it in here. Make sure the link is set to Anyone with the link can view so that admin can access it.',
+              s.platformForm_proofOfWork_desc,
               style: TextStyles.grey12Medium.copyWith(fontSize: 14),
             ),
             SizedBox(height: 8.h),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -616,12 +606,15 @@ class PlatformScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text('Back'),
+                    child: Text(s.platformForm_buttons_back),
                   ),
                 ),
                 Spacer(),
                 Expanded(
-                  child: CustomButtonWidget(text: "Submit", onPressed: () {}),
+                  child: CustomButtonWidget(
+                    text: s.platformForm_buttons_add,
+                    onPressed: () {},
+                  ),
                 ),
               ],
             ),

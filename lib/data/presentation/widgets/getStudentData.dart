@@ -11,6 +11,8 @@ import 'package:iti_freelancing_hub/data/presentation/manger/cubit/notification/
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/notification/notification_state.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/notification.dart';
 import 'package:provider/provider.dart';
+// Add import for localization
+import 'package:iti_freelancing_hub/generated/l10n.dart';
 
 class GetStudentData extends StatefulWidget {
   const GetStudentData({super.key});
@@ -23,16 +25,24 @@ class _GetStudentDataState extends State<GetStudentData> {
   @override
   void initState() {
     super.initState();
-    context.read<NotificationsCubit>().fetchNotifications();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<NotificationsCubit>().fetchNotifications();
+      // context.read<GetstudentdataCubit>().fetchStudentData(); // Added to fetch student data
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final settingsProviders = Provider.of<SettingsProvider>(context);
+    final s = S.of(context); // Added for localization
     var data = context.watch<GetstudentdataCubit>().userModel;
 
     return BlocBuilder<GetstudentdataCubit, GetstudentdataState>(
       builder: (context, state) {
+        final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+        final customFontFamily = isArabic ? 'shamelfabily' : null;
+        final customFontFamilyBold = isArabic ? 'shamelfabilyBold' : null;
+
         if (state is GetstudentdataLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is GetstudentdataSuccess) {
@@ -53,25 +63,20 @@ class _GetStudentDataState extends State<GetStudentData> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Welcome Back',
+                              s.welcomeBackMessage,
                               style: TextStyles.black20SemiBold.copyWith(
-                                color:
-                                    settingsProviders.isDark
-                                        ? kColors[2]
-                                        : kColors[1],
+                                color: settingsProviders.isDark ? kColors[2] : kColors[1],
                                 fontSize: 12,
+                                fontFamily: customFontFamilyBold,
                               ),
                             ),
                             const SizedBox(height: 2.0),
                             Text(
-                              data?.fullName?.split(' ').take(2).join(' ') ??
-                                  'No Name',
+                              data?.fullName?.split(' ').take(2).join(' ') ?? s.defaultUserName,
                               style: TextStyles.black20SemiBold.copyWith(
-                                color:
-                                    settingsProviders.isDark
-                                        ? kColors[2]
-                                        : kColors[1],
+                                color: settingsProviders.isDark ? kColors[2] : kColors[1],
                                 fontSize: 14,
+                                fontFamily: customFontFamilyBold,
                               ),
                             ),
                           ],
@@ -94,10 +99,7 @@ class _GetStudentDataState extends State<GetStudentData> {
                             builder: (context, state) {
                               int unseenCount = 0;
                               if (state is NotificationsLoaded) {
-                                unseenCount =
-                                    context
-                                        .read<NotificationsCubit>()
-                                        .unseenCount;
+                                // unseenCount = state.unseenCount;
                               }
                               return Positioned(
                                 top: -6,
@@ -105,15 +107,16 @@ class _GetStudentDataState extends State<GetStudentData> {
                                 child: Container(
                                   padding: EdgeInsets.all(4),
                                   decoration: BoxDecoration(
-                                    color : Colors.red,
+                                    color: unseenCount == 0 ? Colors.grey : Colors.red,
                                     shape: BoxShape.circle,
                                   ),
                                   child: Text(
                                     '$unseenCount',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
+                                      fontFamily: customFontFamilyBold,
                                     ),
                                   ),
                                 ),
@@ -134,42 +137,50 @@ class _GetStudentDataState extends State<GetStudentData> {
                   ],
                 ),
                 const SizedBox(height: 20.0),
-
                 // Stats cards
                 ...[
                   buildStyledCard(
-                    "Track",
+                    s.trackLabel,
                     data?.trackName != null
                         ? data!.trackName!.split(' ').take(2).join(' ')
-                        : "No Track",
+                        : s.defaultTrackName,
                     settingsProviders,
+                    fontFamily: customFontFamily,
+                    fontFamilyBold: customFontFamilyBold,
                   ),
                   buildStyledCard(
-                    "Total Jobs",
+                    s.totalJobsLabel,
                     '${data?.jobs?.length ?? 0}',
                     settingsProviders,
+                    fontFamily: customFontFamily,
+                    fontFamilyBold: customFontFamilyBold,
                   ),
                   buildStyledCard(
-                    "Completed and Approved Jobs",
+                    s.completedJobsLabel,
                     '${data?.jobs?.where((job) => job.verified == true).length ?? 0}',
                     settingsProviders,
+                    fontFamily: customFontFamily,
+                    fontFamilyBold: customFontFamilyBold,
                   ),
                   buildStyledCard(
-                    "Total Profit Earned (USD)",
+                    s.totalProfitUSDLabel,
                     '\$${data?.jobs?.where((job) => job.verified == true).fold<int>(0, (sum, job) => sum + (job.costInUSD ?? 0)) ?? 0}',
                     settingsProviders,
+                    fontFamily: customFontFamily,
+                    fontFamilyBold: customFontFamilyBold,
                   ),
                   buildStyledCard(
-                    "Total Profit Earned (EGP)",
-                    '${(data?.jobs?.where((job) => job.verified == true).fold<int>(0, (sum, job) => sum + (job.costInUSD ?? 0)) ?? 0) * 50} EGP',
+                    s.totalProfitEGPLabel,
+                    '${(data?.jobs?.where((job) => job.verified == true).fold<int>(0, (sum, job) => sum + (job.costInUSD ?? 0)) ?? 0) * 50} ${s.currencyEGP}',
                     settingsProviders,
+                    fontFamily: customFontFamily,
+                    fontFamilyBold: customFontFamilyBold,
                   ),
                 ],
 
                 if (data?.target == true)
                   Card(
-                    color:
-                        settingsProviders.isDark ? kColors[11] : Colors.white,
+                    color: settingsProviders.isDark ? kColors[11] : Colors.white,
                     elevation: 2,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -187,12 +198,9 @@ class _GetStudentDataState extends State<GetStudentData> {
                           const SizedBox(width: 16),
                           Expanded(
                             child: Text(
-                              'Congratulations on reaching your target! We are incredibly proud of you and your hard work! This is a fantastic achievement, and we want you to take a moment to celebrate your success. Keep shining and moving forward, you’re doing great!',
+                              s.targetReachedMessage,
                               style: TextStyles.black15Medium.copyWith(
-                                color:
-                                    settingsProviders.isDark
-                                        ? Colors.white
-                                        : Colors.black,
+                                color: settingsProviders.isDark ? Colors.white : Colors.black,
                               ),
                             ),
                           ),
@@ -205,11 +213,15 @@ class _GetStudentDataState extends State<GetStudentData> {
               ],
             ),
           );
-        } else {
-          return const Center(
-            child: Text('Error occurred', style: TextStyle(color: Colors.red)),
+        } else if (state is GetstudentdataFailure) {
+          return Center(
+            child: Text(
+              s.errorOccurredMessage, // New key needed: "errorOccurredMessage": "Error occurred"
+              style: const TextStyle(color: Colors.red),
+            ),
           );
         }
+        return const SizedBox.shrink();
       },
     );
   }
@@ -218,6 +230,7 @@ class _GetStudentDataState extends State<GetStudentData> {
     String title,
     String value,
     SettingsProvider settingsProviders,
+    {String? fontFamily, String? fontFamilyBold}
   ) {
     final titleColor = settingsProviders.isDark ? Colors.white : Colors.black;
     final valueColor = kColors[5];
@@ -229,10 +242,7 @@ class _GetStudentDataState extends State<GetStudentData> {
         borderRadius: BorderRadius.circular(12.0),
         boxShadow: [
           BoxShadow(
-            color:
-                settingsProviders.isDark
-                    ? Colors.black12
-                    : Colors.grey.withOpacity(0.2),
+            color: settingsProviders.isDark ? Colors.black12 : Colors.grey.withOpacity(0.2),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -248,6 +258,7 @@ class _GetStudentDataState extends State<GetStudentData> {
                 title,
                 style: TextStyles.black12SemiBoldWithHeight.copyWith(
                   color: titleColor,
+                  fontFamily: fontFamilyBold,
                 ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
@@ -260,6 +271,7 @@ class _GetStudentDataState extends State<GetStudentData> {
                 value,
                 style: TextStyles.red15SemiBoldOpacity.copyWith(
                   color: valueColor,
+                  fontFamily: fontFamily,
                 ),
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.right,
@@ -287,7 +299,11 @@ class _GetStudentDataState extends State<GetStudentData> {
           backgroundImage: MemoryImage(decodedBytes),
         );
       } catch (e) {
-        return const Icon(Icons.error, color: Colors.red);
+        return SvgPicture.asset(
+          Assets.assetsImagesPerson,
+          width: 70.0,
+          height: 70.0,
+        ); // Fallback to SVG instead of error icon
       }
     } else {
       return CircleAvatar(radius: 35, backgroundImage: NetworkImage(avatar));

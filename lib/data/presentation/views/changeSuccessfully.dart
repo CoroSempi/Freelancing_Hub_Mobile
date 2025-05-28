@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/signIn.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/CustomButtonWidget.dart';
+import 'package:iti_freelancing_hub/generated/l10n.dart';
+import 'package:provider/provider.dart';
 
 class ChangeSuccessfullyDialog extends StatelessWidget {
   const ChangeSuccessfullyDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final settingsProvider = Provider.of<SettingsProvider>(context);
+    final s = S.of(context); // Added for localization
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
@@ -20,14 +26,18 @@ class ChangeSuccessfullyDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Changed Successfully!',
-              style: TextStyles.title,
+              s.changedSuccessfullyTitle, // Localized title
+              style: TextStyles.title.copyWith(
+                color: settingsProvider.isDark ? Colors.white : Colors.black,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
             Text(
-              'Your password has been changed successfully. You can now sign in using your new password.',
-              style: TextStyles.grey12Medium,
+              s.passwordChangedMessage, // Localized message
+              style: TextStyles.grey12Medium.copyWith(
+                color: settingsProvider.isDark ? Colors.white70 : Colors.grey,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
@@ -38,7 +48,7 @@ class ChangeSuccessfullyDialog extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             CustomButtonWidget(
-              text: 'Sign In',
+              text: s.signInButton, // Localized button text
               onPressed: () {
                 Navigator.pop(context);
                 Navigator.push(
