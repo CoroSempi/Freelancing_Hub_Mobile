@@ -13,6 +13,7 @@ import 'package:iti_freelancing_hub/data/presentation/widgets/CustomButtonWidget
 import 'package:iti_freelancing_hub/data/presentation/widgets/fluttertoast.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/footer.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/CustomTextField.dart';
+import 'package:iti_freelancing_hub/generated/l10n.dart';
 
 class SignIn extends StatelessWidget {
   static const routeName = '/sign-in';
@@ -26,6 +27,8 @@ class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var Bloc1 = LoginCubitCubit.get(context);
+              final s = S.of(context);
+
 
     return BlocConsumer<LoginCubitCubit, LoginCubitState>(
       listener: (context, state) {
@@ -73,7 +76,7 @@ class SignIn extends StatelessWidget {
                             const SizedBox(height: 25),
 
                             CustomTextFields(
-                              hint: 'Email Address',
+                              hint: s.emailHint,
                               maxLines: 1,
                               controller: emailController,
                               prefixIcon: Icon(Icons.email, color: kColors[5]),
@@ -81,31 +84,30 @@ class SignIn extends StatelessWidget {
                               // SvgPicture.asset(Assets.assetsImagesEmail, width: 10, height: 10),
                               validator: (value) {
                                 if (value == null || value.isEmpty)
-                                  return 'Please enter your email';
+                                  return s.emailRequired;
                                 return null;
                               },
                             ),
                             const SizedBox(height: 10),
                             CustomTextFields(
-                              hint: "Password",
+                             
+                                hint: s.passwordHint,
+                              
                               maxLines: 1,
                               controller: passwordController,
                               obscureText: Bloc1.isHidePassword,
                               validator: (String? val) {
                                 if (val == null || val.isEmpty)
-                                  return "Please, enter your password.";
+                                  return s.passwordRequired;
                                 return null;
                               },
                               keyboardType: TextInputType.visiblePassword,
-                              prefixIcon: Padding(
-                                padding:  EdgeInsets.all(12.0),
-                                child: SvgPicture.asset(
-                                  Assets.assetsImagesCarbonPassword,
-                                  width: 20,
-                                  height: 20,
-                                ),
-                              ),
-
+                             prefixIcon: SvgPicture.asset(
+  Assets.assetsImagesCarbonPassword,
+  width: 20,
+  height: 20,
+  fit: BoxFit.scaleDown,  
+),
                               suffixIcon: IconButton(
                                 onPressed: () => Bloc1.changePassword(),
                                 icon: Icon(
@@ -140,14 +142,14 @@ class SignIn extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 8),
                                     Text(
-                                      'Remember me',
+                                       s.rememberMeLabel,
                                       style: TextStyles.red15SemiBold,
                                     ),
                                   ],
                                 ),
                                 InkWell(
                                   child: Text(
-                                    'Forgot your password ?',
+                                    s.forgotPasswordLink,
                                     style: TextStyles.red15SemiBold,
                                   ),
                                   onTap:
@@ -167,7 +169,7 @@ class SignIn extends StatelessWidget {
                                   child: CircularProgressIndicator(),
                                 )
                                 : CustomButtonWidget(
-                                  text: 'Sign In',
+                                    text: s.signInButton,
                                   onPressed: () {
                                     if (formKey.currentState!.validate()) {
                                       final email = emailController.text.trim();
@@ -177,9 +179,9 @@ class SignIn extends StatelessWidget {
                                         ScaffoldMessenger.of(
                                           context,
                                         ).showSnackBar(
-                                          const SnackBar(
+                                            SnackBar(
                                             content: Text(
-                                              'Email and Password cannot be empty',
+                                                s.forgotPasswordLink,
                                             ),
                                           ),
                                         );
@@ -202,7 +204,7 @@ class SignIn extends StatelessWidget {
 
                             const SizedBox(height: 30),
                             Text(
-                              'If your email is not registered, please contact the admin in your branch for assistance.',
+                               s.emptyCredentialsError,
                               style: TextStyles.grey12Medium,
                               textAlign: TextAlign.center,
                             ),
@@ -215,12 +217,12 @@ class SignIn extends StatelessWidget {
                                 ),
                                 children: [
                                   TextSpan(
-                                    text:
-                                        'Click here to explore features, benefits, and how \nto make the most of your experience ',
+                                    
+                                          text: s.exploreFeaturesText,
                                     style: TextStyles.grey12Medium,
                                   ),
                                   TextSpan(
-                                    text: 'Learn More',
+                                    text:  s.learnMoreLink,
                                     style: TextStyles.red15SemiBold,
                                     recognizer:
                                         TapGestureRecognizer()
@@ -249,3 +251,21 @@ class SignIn extends StatelessWidget {
     );
   }
 }
+
+
+
+ 
+
+ 
+
+ 
+                                    
+   
+
+                                    
+                                            
+
+                                                 
+                                    
+
+     

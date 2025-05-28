@@ -7,6 +7,7 @@ import 'package:iti_freelancing_hub/data/presentation/manger/cubit/chat/chat_cub
 import 'package:iti_freelancing_hub/data/presentation/widgets/chat_buble.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_app_bar.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/text_field.dart';
+import 'package:iti_freelancing_hub/generated/l10n.dart'; // Added for localization
 
 class Chat extends StatefulWidget {
   const Chat({super.key});
@@ -23,23 +24,28 @@ class _ChatState extends State<Chat> {
   @override
   void initState() {
     super.initState();
-    context.read<ChatCubitCubit>().fetchChat();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ChatCubitCubit>().fetchChat();
+    });
   }
 
   @override
   void dispose() {
+    _usernameController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context); // Added for localization
+
     return MainScaffold(
       body: Column(
         children: [
           CustomAppBar(
-            title: 'Chat with Admin',
-            backText: 'Back',
+            title: s.chatWithAdminTitle, // Localized title
+            backText: s.backButton, // Localized back button
             onBackPressed: () {
               Navigator.of(context).pop();
             },
@@ -60,8 +66,7 @@ class _ChatState extends State<Chat> {
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Text(
-                          'Welcome! If you have any questions or problems, feel free to chat with our admin here. '
-                          'Just type your message below, and we’ll get back to you as soon as possible. We\'re here to help!',
+                          s.chatWelcomeMessage, // Localized welcome message
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16.sp,
@@ -91,7 +96,11 @@ class _ChatState extends State<Chat> {
                     },
                   );
                 } else if (state is ChatError) {
-                  return Center(child: Text('Error: ${state.error}'));
+                  return Center(
+                    child: Text(
+                      s.chatError, // Localized error message
+                    ),
+                  );
                 }
                 return const SizedBox();
               },
@@ -103,12 +112,12 @@ class _ChatState extends State<Chat> {
               children: [
                 Expanded(
                   child: CustomTextFiled(
-                    hittext: 'Ask about anything ... ',
+                    hittext: s.chatInputHint, // Localized hint text
                     controller: _usernameController,
                   ),
                 ),
                 SizedBox(width: 8.w),
-                GestureDetector(
+                InkWell( // Changed to InkWell to match the first code
                   onTap: () {
                     final text = _usernameController.text.trim();
                     if (text.isNotEmpty) {
@@ -116,6 +125,7 @@ class _ChatState extends State<Chat> {
                       _usernameController.clear();
                     }
                   },
+                  splashColor: kColors[0].withOpacity(0.3),
                   child: Container(
                     width: 50,
                     height: 50,
@@ -123,7 +133,11 @@ class _ChatState extends State<Chat> {
                       shape: BoxShape.circle,
                       color: kColors[0],
                     ),
-                    child: Icon(Icons.send, color: Colors.white, size: 30),
+                    child: const Icon(
+                      Icons.send,
+                      color: Colors.white,
+                      size: 30,
+                    ),
                   ),
                 ),
               ],

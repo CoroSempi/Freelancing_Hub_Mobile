@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iti_freelancing_hub/constants.dart';
@@ -11,6 +11,7 @@ import 'package:iti_freelancing_hub/data/presentation/widgets/form-field.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/formFieldWithDropdown.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/text_field.dart';
 import 'package:provider/provider.dart';
+import 'package:iti_freelancing_hub/generated/l10n.dart'; // Import generated localization
 
 class DirectContentScreen extends StatelessWidget {
   TextEditingController SdateController = TextEditingController();
@@ -228,9 +229,11 @@ class DirectContentScreen extends StatelessWidget {
     "Previous Clients",
     "Others",
   ];
+
   @override
   Widget build(BuildContext context) {
     final settingsProviders = Provider.of<SettingsProvider>(context);
+    final s = S.of(context)!; // Access localized strings
 
     return MainScaffold(
       body: SingleChildScrollView(
@@ -239,10 +242,10 @@ class DirectContentScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Add New Job',
+              s.addNewJobTitle,
               style: TextStyles.black15Medium.copyWith(
                 fontWeight: FontWeight.bold,
-                color: settingsProviders.isDark?Colors.white: Colors.black,
+                color: settingsProviders.isDark ? Colors.white : Colors.black,
               ),
             ),
             SizedBox(height: 8.h),
@@ -253,52 +256,49 @@ class DirectContentScreen extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'Job Title ',
+                  s.directForm_jobTitle_placeholder,
                   style: TextStyles.black10SemiBold.copyWith(
                     fontSize: 14,
-                    color:
-                        settingsProviders.isDark ? Colors.white : Colors.black,
+                    color: settingsProviders.isDark ? Colors.white : Colors.black,
                   ),
                 ),
                 Text(
-                  ' (Required)',
+                  ' (${s.directForm_jobTitle_required})',
                   style: TextStyles.grey12Medium.copyWith(fontSize: 12),
                 ),
               ],
             ),
             SizedBox(height: 2.h),
-            CustomTextFiled(hittext: 'Job Title'),
+            CustomTextFiled(hittext: s.directForm_jobTitle_placeholder),
             SizedBox(height: 2.h),
             Text(
-              'Ensure that the title clearly describes the Job.',
+              s.directForm_jobTitle_desc,
               style: TextStyles.grey12Medium.copyWith(fontSize: 12),
             ),
             SizedBox(height: 16.h),
             Row(
               children: [
                 Text(
-                  'Job Description ',
+                  s.directForm_jobDescription_placeholder,
                   style: TextStyles.black10SemiBold.copyWith(
                     fontSize: 14,
-                    color:
-                        settingsProviders.isDark ? Colors.white : Colors.black,
+                    color: settingsProviders.isDark ? Colors.white : Colors.black,
                   ),
                 ),
                 Text(
-                  ' (Required)',
+                  ' (${s.directForm_jobDescription_required})',
                   style: TextStyles.grey12Medium.copyWith(fontSize: 12),
                 ),
               ],
             ),
             SizedBox(height: 2.h),
-            CustomTextFiled(hittext: 'Job Description'),
+            CustomTextFiled(hittext: s.directForm_jobDescription_placeholder),
             SizedBox(height: 2.h),
             Text(
-              'Ensure that the description clearly describes the Job.',
+              s.directForm_jobDescription_desc,
               style: TextStyles.grey12Medium.copyWith(fontSize: 12),
             ),
             SizedBox(height: 16.h),
-
             Row(
               children: [
                 Expanded(
@@ -307,17 +307,16 @@ class DirectContentScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'Start Date ',
+                            s.directForm_startDate_placeholder,
                             style: TextStyles.black10SemiBold.copyWith(
                               fontSize: 14,
-                              color:
-                                  settingsProviders.isDark
-                                      ? Colors.white
-                                      : Colors.black,
+                              color: settingsProviders.isDark
+                                  ? Colors.white
+                                  : Colors.black,
                             ),
                           ),
                           Text(
-                            ' (Required)',
+                            ' (${s.directForm_startDate_required})',
                             style: TextStyles.grey12Medium.copyWith(
                               fontSize: 12,
                             ),
@@ -327,7 +326,7 @@ class DirectContentScreen extends StatelessWidget {
                       SizedBox(height: 2.h),
                       CustomTextFiled(
                         controller: SdateController,
-                        hittext: 'DD/MM/YYYY',
+                        hittext: s.dateFormatHint,
                         suffixIcon: Icon(Icons.date_range_outlined),
                         readOnly: true,
                         onTap: () async {
@@ -355,17 +354,16 @@ class DirectContentScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'End Date ',
+                            s.directForm_endDate_placeholder,
                             style: TextStyles.black10SemiBold.copyWith(
                               fontSize: 14,
-                              color:
-                                  settingsProviders.isDark
-                                      ? Colors.white
-                                      : Colors.black,
+                              color: settingsProviders.isDark
+                                  ? Colors.white
+                                  : Colors.black,
                             ),
                           ),
                           Text(
-                            ' (Required)',
+                            ' (${s.directForm_endDate_required})',
                             style: TextStyles.grey12Medium.copyWith(
                               fontSize: 12,
                             ),
@@ -375,7 +373,7 @@ class DirectContentScreen extends StatelessWidget {
                       SizedBox(height: 2.h),
                       CustomTextFiled(
                         controller: EdateController,
-                        hittext: 'DD/MM/YYYY',
+                        hittext: s.dateFormatHint,
                         suffixIcon: Icon(Icons.date_range_outlined),
                         readOnly: true,
                         onTap: () async {
@@ -399,7 +397,6 @@ class DirectContentScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 16.h),
-
             Row(
               children: [
                 Expanded(
@@ -408,17 +405,16 @@ class DirectContentScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'Cost in USD ',
+                            s.directForm_costInUSD_placeholder,
                             style: TextStyles.black10SemiBold.copyWith(
                               fontSize: 14,
-                              color:
-                                  settingsProviders.isDark
-                                      ? Colors.white
-                                      : Colors.black,
+                              color: settingsProviders.isDark
+                                  ? Colors.white
+                                  : Colors.black,
                             ),
                           ),
                           Text(
-                            ' (Required)',
+                            ' (${s.directForm_costInUSD_required})',
                             style: TextStyles.grey12Medium.copyWith(
                               fontSize: 12,
                             ),
@@ -427,7 +423,7 @@ class DirectContentScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 2.h),
                       CustomTextFiled(
-                        hittext: 'Cost in USD',
+                        hittext: s.directForm_costInUSD_placeholder,
                         suffixIcon: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SvgPicture.asset(
@@ -448,17 +444,16 @@ class DirectContentScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'Cost in EGP ',
+                            s.directForm_costInEGP_placeholder,
                             style: TextStyles.black10SemiBold.copyWith(
                               fontSize: 14,
-                              color:
-                                  settingsProviders.isDark
-                                      ? Colors.white
-                                      : Colors.black,
+                              color: settingsProviders.isDark
+                                  ? Colors.white
+                                  : Colors.black,
                             ),
                           ),
                           Text(
-                            ' (Required)',
+                            ' (${s.directForm_costInEGP_required})',
                             style: TextStyles.grey12Medium.copyWith(
                               fontSize: 12,
                             ),
@@ -483,48 +478,44 @@ class DirectContentScreen extends StatelessWidget {
                 ),
               ],
             ),
-
             SizedBox(height: 24.h),
             // FormFieldWithDropdown(
-            //   title: 'Team members ',
-            //   subtitle: '(Required)',
+            //   title: s.directForm_teamMembers_placeholder,
+            //   subtitle: '(${s.directForm_teamMembers_required})',
             //   dropDownText: 'dropDownText',
             //   items: ['Online', 'Offline', 'Both'],
             //   backgroundColor: kColors[5],
             // ),
             SizedBox(height: 24.h),
             // FormFieldWithDropdown(
-            //   title: 'Platform ',
-            //   subtitle: '(Required)',
+            //   title: s.directForm_platform_placeholder,
+            //   subtitle: '(${s.directForm_platform_required})',
             //   dropDownText: 'dropDownText',
             //   items: Contacts,
             //   backgroundColor: kColors[0],
             // ),
-
             SizedBox(height: 16.h),
             Row(
               children: [
                 Text(
-                  'Client Name ',
+                  s.directForm_clientName_placeholder,
                   style: TextStyles.black10SemiBold.copyWith(
                     fontSize: 14,
-                    color:
-                        settingsProviders.isDark ? Colors.white : Colors.black,
+                    color: settingsProviders.isDark ? Colors.white : Colors.black,
                   ),
                 ),
                 Text(
-                  ' (Required)',
+                  ' (${s.directForm_clientName_required})',
                   style: TextStyles.grey12Medium.copyWith(fontSize: 12),
                 ),
               ],
             ),
             SizedBox(height: 2.h),
-            CustomTextFiled(hittext: 'Client Name'),
-
+            CustomTextFiled(hittext: s.directForm_clientName_placeholder),
             SizedBox(height: 24.h),
             // FormFieldWithDropdown(
-            //   title: 'Client Country ',
-            //   subtitle: '(Required)',
+            //   title: s.directForm_clientCountry_placeholder,
+            //   subtitle: '(${s.directForm_clientCountry_required})',
             //   dropDownText: 'dropDownText',
             //   items: worldCountries,
             //   backgroundColor: kColors[0],
@@ -533,53 +524,49 @@ class DirectContentScreen extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'Client Contact  ',
+                  s.directForm_clientContact_placeholder,
                   style: TextStyles.black10SemiBold.copyWith(
                     fontSize: 14,
-                    color:
-                        settingsProviders.isDark ? Colors.white : Colors.black,
+                    color: settingsProviders.isDark ? Colors.white : Colors.black,
                   ),
                 ),
                 Text(
-                  ' (Required)',
+                  ' (${s.directForm_clientContact_required})',
                   style: TextStyles.grey12Medium.copyWith(fontSize: 12),
                 ),
               ],
             ),
             SizedBox(height: 2.h),
-            CustomTextFiled(hittext: 'Client Contact '),
+            CustomTextFiled(hittext: s.directForm_clientContact_placeholder),
             SizedBox(height: 2.h),
             Text(
-              "Make sure to include either the client's profile link on the platform or their contact number.",
+              s.directForm_clientContact_desc,
               style: TextStyles.grey12Medium.copyWith(fontSize: 12),
             ),
             SizedBox(height: 16.h),
             Row(
               children: [
                 Text(
-                  'Proof of Work ',
+                  s.directForm_proofOfWork_placeholder,
                   style: TextStyles.black10SemiBold.copyWith(
                     fontSize: 14,
-                    color:
-                        settingsProviders.isDark ? Colors.white : Colors.black,
+                    color: settingsProviders.isDark ? Colors.white : Colors.black,
                   ),
                 ),
                 Text(
-                  ' (Required)',
+                  ' (${s.directForm_proofOfWork_required})',
                   style: TextStyles.grey12Medium.copyWith(fontSize: 12),
                 ),
               ],
             ),
             SizedBox(height: 2.h),
-            CustomTextFiled(hittext: 'Proof of Work'),
-
+            CustomTextFiled(hittext: s.directForm_proofOfWork_placeholder),
             SizedBox(height: 24.h),
             Text(
-              'Prepare a PDF document that includes screenshots of chats between you and the client, samples of the work completed, and proof of payment or invoices. Once you have compiled everything into a single PDF, upload it to Google Drive, copy the link, and paste it in here. Make sure the link is set to Anyone with the link can view so that admin can access it.',
+              s.directForm_proofOfWork_desc,
               style: TextStyles.grey12Medium.copyWith(fontSize: 14),
             ),
             SizedBox(height: 8.h),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -594,12 +581,15 @@ class DirectContentScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text('Back'),
+                    child: Text(s.directForm_buttons_back),
                   ),
                 ),
                 Spacer(),
                 Expanded(
-                  child: CustomButtonWidget(text: "Submit", onPressed: () {}),
+                  child: CustomButtonWidget(
+                    text: s.directForm_buttons_add,
+                    onPressed: () {},
+                  ),
                 ),
               ],
             ),

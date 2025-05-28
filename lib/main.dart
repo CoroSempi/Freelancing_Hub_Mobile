@@ -6,7 +6,6 @@ import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/remote/Dio-Helper.dart';
 import 'package:iti_freelancing_hub/data/local/cashHelper.dart';
-import 'package:iti_freelancing_hub/data/presentation/manger/cubit/add_certificate/add_certificate_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/changmypassword/changmypassword_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/chat/chat_cubit_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/forget-password/cubit/forgetpassword_cubit.dart';
@@ -20,28 +19,34 @@ import 'package:iti_freelancing_hub/data/presentation/manger/cubit/reset-passwor
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/verify-code/cubit/verifycode_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/aboutItScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/addNewJob.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/add_certificate.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/add_note.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/changePassword.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/change_profile.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/chats.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/directContentScreen.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/homeScreen.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/platFormScreen.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/remoteMonthlyJob.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/setting.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/signIn.dart';
+import 'package:iti_freelancing_hub/generated/l10n.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'generated/l10n.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
-//corosempi@gmail.com
-void main() {
-  CashHelper.init();
 
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+  final savedLang = prefs.getString('locale') ?? 'en';
+  CashHelper.init();
   DioHelper.init();
 
   runApp(
-    ChangeNotifierProvider(create: (_) => SettingsProvider(), child: MyApp()),
+    ChangeNotifierProvider(
+      create: (_) => SettingsProvider(initialLocale: Locale(savedLang)),
+      child: MyApp(),
+    ),
   );
 }
 
@@ -65,28 +70,30 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => NotificationsCubit()),
             BlocProvider(create: (context) => ChangePasswordCubit()),
             BlocProvider(create: (context) => ForgetpasswordCubit()),
-            BlocProvider(create: (context) => AddCertificateCubit()),
             BlocProvider(create: (_) => VerifycodeCubit()),
-
             BlocProvider(create: (context) => ResetpasswordCubit()),
-
             BlocProvider(
               create: (context) => GetstudentdataCubit()..getStudentData(),
             ),
-
             BlocProvider(
-              create:
-                  (context) =>
-                      GetalljobsCubit()
-                        ..getAllJobs()
-                        ..getDataPreference(),
+              create: (context) =>
+                  GetalljobsCubit()
+                    ..getAllJobs()
+                    ..getDataPreference(),
             ),
-
             BlocProvider(
               create: (context) => GetcertificateCubit()..getCertificate(),
             ),
           ],
           child: MaterialApp(
+            locale: settingsProvider.currentLocale,
+            localizationsDelegates: [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
             debugShowCheckedModeBanner: false,
             title: 'ITI Freelancing',
             themeMode: settingsProvider.themeMode,
@@ -107,18 +114,16 @@ class MyApp extends StatelessWidget {
                   return MaterialPageRoute(builder: (_) => HomeScreen());
                 case AddNewJobScreen.routeName:
                   return MaterialPageRoute(builder: (_) => AddNewJobScreen());
-                case AddNewJobScreen.routeName:
+                case AddNote.routeName:
                   return MaterialPageRoute(builder: (_) => AddNote());
-
                 case ChangeProfile.routeName:
                   final args = settings.arguments as Map<String, dynamic>?;
                   final userId = args?['userId'] ?? '';
                   return MaterialPageRoute(
-                    builder:
-                        (_) => ChangeProfile(
-                          userId: userId,
-                          image: SvgPicture.asset(Assets.assetsavatar),
-                        ),
+                    builder: (_) => ChangeProfile(
+                      userId: userId,
+                      image: SvgPicture.asset(Assets.assetsavatar),
+                    ),
                   );
                 case ChatScreen.routeName:
                   return MaterialPageRoute(builder: (_) => ChatScreen());

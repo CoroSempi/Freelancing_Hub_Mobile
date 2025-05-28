@@ -15,6 +15,7 @@ import 'package:iti_freelancing_hub/data/presentation/views/signIn.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_Buttom.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_app_bar.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/text_field.dart';
+import 'package:iti_freelancing_hub/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 class Changepassword extends StatefulWidget {
@@ -33,6 +34,7 @@ class _ChangepasswordState extends State<Changepassword> {
   bool isButtonEnabled = false;
   bool isNewPasswordValid = true;
   bool isRepeatPasswordValid = true;
+  bool isPasswordsMatch = true;
 
   @override
   void initState() {
@@ -46,11 +48,13 @@ class _ChangepasswordState extends State<Changepassword> {
     setState(() {
       isNewPasswordValid = newPasswordController.text.length >= 8;
       isRepeatPasswordValid = repeatPasswordController.text.length >= 8;
+      isPasswordsMatch = newPasswordController.text == repeatPasswordController.text;
 
       isButtonEnabled =
           oldPasswordController.text.isNotEmpty &&
           isNewPasswordValid &&
-          isRepeatPasswordValid;
+          isRepeatPasswordValid &&
+          isPasswordsMatch;
     });
   }
 
@@ -69,6 +73,7 @@ class _ChangepasswordState extends State<Changepassword> {
   @override
   Widget build(BuildContext context) {
     final settingsProviders = Provider.of<SettingsProvider>(context);
+    final s = S.of(context);
 
     return BlocProvider(
       create: (_) => ChangePasswordCubit(),
@@ -80,18 +85,17 @@ class _ChangepasswordState extends State<Changepassword> {
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: Text(
-                    'Changed Successfully!',
+                    s.changedSuccessfullyTitle,
                     style: TextStyles.grey12Medium.copyWith(
                       fontSize: 16,
-                      color:
-                          settingsProviders.isDark ? Colors.white : Colors.grey,
+                      color: settingsProviders.isDark ? Colors.white : Colors.grey,
                     ),
                   ),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "Your password has been updated. You can now log in with your new password. If you have any issues, feel free to reach out for assistance!",
+                        s.passwordUpdatedMessage,
                         style: TextStyles.grey12Medium.copyWith(fontSize: 14),
                       ),
                       SizedBox(height: 12.h),
@@ -110,16 +114,14 @@ class _ChangepasswordState extends State<Changepassword> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              settingsProviders.isDark
-                                  ? kColors[0]
-                                  : Colors.black,
+                              settingsProviders.isDark ? kColors[0] : Colors.black,
                           padding: EdgeInsets.symmetric(vertical: 12),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                         child: Text(
-                          'Back to Settings',
+                          s.backToSettingsButton,
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -132,7 +134,7 @@ class _ChangepasswordState extends State<Changepassword> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: kColors[0],
-                content: Center(child: Text('Wrong Password')),
+                content: Center(child: Text(state.error ?? s.wrongPasswordError)),
               ),
             );
           }
@@ -147,14 +149,14 @@ class _ChangepasswordState extends State<Changepassword> {
                   children: [
                     CustomAppBar(
                       backText: 'Back',
-                      onBackPressed: () {},
+                      onBackPressed: () => Navigator.pop(context),
                       showPendingButton: false,
                     ),
                     SizedBox(height: 8.h),
                     Row(
                       children: [
                         Text(
-                          'Change Password',
+                          s.changePasswordTitle,
                           style: TextStyles.grey12Medium.copyWith(fontSize: 20),
                         ),
                       ],
@@ -165,13 +167,10 @@ class _ChangepasswordState extends State<Changepassword> {
                     Row(
                       children: [
                         Text(
-                          'Your Current Password',
+                          s.currentPasswordLabel,
                           style: TextStyles.black12SemiBold.copyWith(
                             fontSize: 12,
-                            color:
-                                settingsProviders.isDark
-                                    ? kColors[3]
-                                    : kColors[1],
+                            color: settingsProviders.isDark ? kColors[3] : kColors[1],
                           ),
                         ),
                       ],
@@ -179,7 +178,7 @@ class _ChangepasswordState extends State<Changepassword> {
                     SizedBox(height: 8.h),
                     CustomTextFiled(
                       controller: oldPasswordController,
-                      hittext: 'Password',
+                      hittext: s.currentPasswordLabel, // Reusing label for hint
                       prefixImage: "assets/images/key.svg",
                       isPassword: true,
                     ),
@@ -189,13 +188,10 @@ class _ChangepasswordState extends State<Changepassword> {
                     Row(
                       children: [
                         Text(
-                          'Your New Password',
+                          s.newPasswordLabel,
                           style: TextStyles.grey12Medium.copyWith(
                             fontSize: 12,
-                            color:
-                                settingsProviders.isDark
-                                    ? kColors[3]
-                                    : kColors[1],
+                            color: settingsProviders.isDark ? kColors[3] : kColors[1],
                           ),
                         ),
                       ],
@@ -203,7 +199,7 @@ class _ChangepasswordState extends State<Changepassword> {
                     SizedBox(height: 8.h),
                     CustomTextFiled(
                       controller: newPasswordController,
-                      hittext: 'Password',
+                      hittext: s.newPasswordLabel, // Reusing label for hint
                       prefixImage: "assets/images/key.svg",
                       isPassword: true,
                     ),
@@ -212,7 +208,7 @@ class _ChangepasswordState extends State<Changepassword> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Password must be at least 8 characters',
+                          s.passwordMinLength,
                           style: TextStyle(color: kColors[0], fontSize: 12),
                         ),
                       ),
@@ -223,13 +219,10 @@ class _ChangepasswordState extends State<Changepassword> {
                     Row(
                       children: [
                         Text(
-                          'Repeat Your New Password',
+                          s.repeatPasswordLabel,
                           style: TextStyles.grey12Medium.copyWith(
                             fontSize: 12,
-                            color:
-                                settingsProviders.isDark
-                                    ? kColors[3]
-                                    : kColors[1],
+                            color: settingsProviders.isDark ? kColors[3] : kColors[1],
                           ),
                         ),
                       ],
@@ -237,16 +230,18 @@ class _ChangepasswordState extends State<Changepassword> {
                     SizedBox(height: 8.h),
                     CustomTextFiled(
                       controller: repeatPasswordController,
-                      hittext: 'Password',
+                      hittext: s.repeatPasswordLabel, // Reusing label for hint
                       prefixImage: "assets/images/key.svg",
                       isPassword: true,
                     ),
-                    if (!isRepeatPasswordValid) ...[
+                    if (!isRepeatPasswordValid || !isPasswordsMatch) ...[
                       SizedBox(height: 4.h),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Password must be at least 8 characters',
+                          !isRepeatPasswordValid
+                              ? s.passwordMinLength
+                              : s.passwordsMismatch,
                           style: TextStyle(color: kColors[0], fontSize: 12),
                         ),
                       ),
@@ -259,36 +254,34 @@ class _ChangepasswordState extends State<Changepassword> {
                         style: TextStyle(color: Colors.black, fontSize: 15),
                         children: [
                           TextSpan(
-                            text: 'If you’ve forgotten your password, simply ',
+                            text: s.forgotPasswordIntro,
                             style: TextStyles.grey12Medium,
                           ),
                           TextSpan(
-                            text: 'sign out',
+                            text: s.signOutLink,
                             style: TextStyles.red15SemiBold,
-                            recognizer:
-                                TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => SignIn(),
-                                      ),
-                                    );
-                                  },
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SignIn(),
+                                  ),
+                                );
+                              },
                           ),
                           TextSpan(
-                            text: ' and click on ',
+                            text: s.resetPasswordInstruction,
                             style: TextStyles.grey12Medium,
                           ),
                           TextSpan(
-                            text: 'Forgot Password?',
+                            text: s.forgotPasswordLink,
                             style: TextStyles.grey12Medium.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           TextSpan(
-                            text:
-                                ' on the login page to reset it using your registered email address.',
+                            text: s.resetPasswordInstruction,
                             style: TextStyles.grey12Medium,
                           ),
                         ],
@@ -301,39 +294,30 @@ class _ChangepasswordState extends State<Changepassword> {
                     state is ChangePasswordLoading
                         ? CircularProgressIndicator(color: kColors[0])
                         : CustomButtoms(
-                          text: 'Change Password',
-                          color:
-                              settingsProviders.isDark
-                                  ? kColors[0]
-                                  : Colors.black,
-                          textcolor: Colors.white,
-                          onPressed:
-                              isButtonEnabled
-                                  ? () {
+                            text: s.changePasswordTitle,
+                            color: settingsProviders.isDark ? kColors[0] : Colors.black,
+                            textcolor: Colors.white,
+                            onPressed: isButtonEnabled
+                                ? () {
                                     if (newPasswordController.text !=
                                         repeatPasswordController.text) {
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
+                                      ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
                                           backgroundColor: kColors[0],
                                           content: Center(
-                                            child: Text(
-                                              'Passwords do not match',
-                                            ),
+                                            child: Text(s.passwordsMismatch),
                                           ),
                                         ),
                                       );
                                       return;
                                     }
                                     cubit.changePassword(
-                                      currentPassword:
-                                          oldPasswordController.text,
+                                      currentPassword: oldPasswordController.text,
                                       newPassword: newPasswordController.text,
                                     );
                                   }
-                                  : null,
-                        ),
+                                : null,
+                          ),
                   ],
                 ),
               ),
