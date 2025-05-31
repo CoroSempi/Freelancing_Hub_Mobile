@@ -243,7 +243,12 @@ class JobDetails extends StatelessWidget {
                       SizedBox(height: 8.h),
                       Row(
                         children: [
-                          SvgPicture.asset(Assets.assetsusd),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: SizedBox(
+                              child: SvgPicture.asset(Assets.assetsusd),
+                            ),
+                          ),
                           SizedBox(width: 5.w),
                           Text(
                             '${job.costInUSD ?? job.paymentInUSD}',
@@ -255,7 +260,12 @@ class JobDetails extends StatelessWidget {
                             ),
                           ),
                           SizedBox(width: 10.w),
-                          SvgPicture.asset(Assets.assetsegp),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: SizedBox(
+                              child: SvgPicture.asset(Assets.assetsegp),
+                            ),
+                          ),
                           SizedBox(width: 5.w),
                           Text(
                             '${job.costInEGP ?? job.paymentInEGP}',

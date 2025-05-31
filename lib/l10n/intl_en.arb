@@ -306,7 +306,7 @@
   "rememberMeLabel": "Remember me",
   "forgotPasswordLink": "Forgot your password ?",
   "signInButton": "Sign In",
-  "emptyCredentialsError": "Email and Password cannot be empty",
+  "emptyCredentialsError": "If your email is not registered, please contact the administrator at your branch for assistance.",
   "unregisteredEmailMessage": "If your email is not registered, please contact the admin in your branch for assistance.",
   "exploreFeaturesText": "Click here to explore features, benefits, and how to make the most of your experience"  , 
 
@@ -411,10 +411,40 @@
   "myJobs" :"Freelance projects " , 
   "myCertificates" : "Certificates" , 
   "DarkMode" : "Dark " ,
-  "LightMode" : "Light" 
+  "LightMode" : "Light" ,
 
 
+  "app_title": "ITI Freelancing Hub",
+  "what_is_iti_freelancing_hub": "What is the ITI Freelancing Hub?",
+  "iti_hub_description": "The ITI Freelancing Hub is designed specifically for students who have secured their own freelancing jobs. This platform allows students to upload the details of their jobs for administrative approval. Once approved, these opportunities contribute to their graduation requirements.",
+  "how_to_use_platform": "How to Use the Platform",
+  "registration_and_sign_in": "Registration and Sign In",
+  "admin_upload_email": "• Your admin will upload your email to the system. Once registered, you can log in to your account.",
+  "use_registered_email": "• Use your registered email to access the platform. If it’s your first time, you can reset your password as needed.",
+  "back": "Back",
+  "switch_language": "Switch to Arabic",
+"addNewCertificate": "Add New Certificate",
+  "editCertificate": "Edit Certificate",
+  "certificateId": "Certificate ID",
+  "certificateDescription": "Certificate Description",
+  "companyName": "Company Name",
+  "courseApproach": "Course Approach",
+  "proofOfCertificate": "Proof of Certificate",
+  "submit": "Submit",
+  "update": "Update",
+  "updatedModal_addedTitle": "Certificate Added Successfully!",
+  "updatedModal_updatedTitle": "Certificate Updated Successfully!",
+  "updatedModal_addedMessage": "Your certificate has been added. You can view it from your profile.",
+  "updatedModal_updatedMessage": "Your certificate has been updated.",
+  "certificateIdHint": "Ensure that the Certificate ID is correct.",
+  "certificateDescriptionHint": "Ensure the description clearly describes the certificate.",
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "companyNameHint": "Ensure that the Company Name is correct.",
 
+  "proofOfCertificateHint": "Ensure that the Proof of Certificate is correct.",
+  "proofUploadNote": "Upload a scanned copy or a photo of the certificate as a single PDF to Google Drive, make the link shareable, and paste it here."
+ 
 
 }
 

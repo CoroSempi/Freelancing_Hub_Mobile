@@ -9,12 +9,12 @@ class Footer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 16),
+      padding:  EdgeInsets.symmetric(vertical: 16),
         child: Center(
         child: Text(
            S.of(context).footerCopyright,
           style: const TextStyle(
-            fontSize: 14,
+            fontSize: 12,
             color: kPrimaryColor,  
           ),
         ),

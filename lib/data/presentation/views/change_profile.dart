@@ -107,13 +107,16 @@ class _ChangeProfileState extends State<ChangeProfile> {
                       onBackPressed: () => Navigator.pop(context),
                       showPendingButton: false,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 20.h),
                     Row(
                       children: [
                         Text(
                           s.editProfileTitle,
                           style: TextStyles.black20SemiBold.copyWith(
-                            color: settingsProvider.isDark ? Colors.white : Colors.black,
+                            color:
+                                settingsProvider.isDark
+                                    ? Colors.white
+                                    : Colors.black,
                           ),
                         ),
                       ],
@@ -123,14 +126,15 @@ class _ChangeProfileState extends State<ChangeProfile> {
                       children: [
                         ClipOval(
                           child: SizedBox(
-                            width: 120,
-                            height: 120,
-                            child: _image != null
-                                ? Image.file(
-                                    File(_image!.path),
-                                    fit: BoxFit.cover,
-                                  )
-                                : avatarUrl != null
+                            width: 150,
+                            height: 150,
+                            child:
+                                _image != null
+                                    ? Image.file(
+                                      File(_image!.path),
+                                      fit: BoxFit.cover,
+                                    )
+                                    : avatarUrl != null
                                     ? _buildImageFromUrl(avatarUrl)
                                     : widget.image,
                           ),
@@ -160,16 +164,17 @@ class _ChangeProfileState extends State<ChangeProfile> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 28.h),
+                    SizedBox(height: 30.h),
                     Text(
                       s.profileInfoMessage,
                       style: TextStyles.grey12Medium.copyWith(fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 28.h),
+                    SizedBox(height: 30.h),
                     CustomButtoms(
                       text: s.submitButton,
-                      color: settingsProvider.isDark ? kColors[0] : Colors.black,
+                      color:
+                          settingsProvider.isDark ? kColors[0] : Colors.black,
                       textcolor: Colors.white,
                       onPressed: () {
                         Navigator.pop(context, true);
@@ -204,7 +209,9 @@ class _ChangeProfileState extends State<ChangeProfile> {
       return Image.network(
         url,
         fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => Icon(Icons.error, color: kColors[0]),
+        errorBuilder:
+            (context, error, stackTrace) =>
+                Icon(Icons.error, color: kColors[0]),
       );
     }
   }

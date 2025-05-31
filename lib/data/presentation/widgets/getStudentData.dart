@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iti_freelancing_hub/constants.dart';
 import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
@@ -47,7 +48,7 @@ class _GetStudentDataState extends State<GetStudentData> {
           return const Center(child: CircularProgressIndicator());
         } else if (state is GetstudentdataSuccess) {
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -65,16 +66,23 @@ class _GetStudentDataState extends State<GetStudentData> {
                             Text(
                               s.welcomeBackMessage,
                               style: TextStyles.black20SemiBold.copyWith(
-                                color: settingsProviders.isDark ? kColors[2] : kColors[1],
+                                color:
+                                    settingsProviders.isDark
+                                        ? kColors[2]
+                                        : kColors[1],
                                 fontSize: 12,
                                 fontFamily: customFontFamilyBold,
                               ),
                             ),
                             const SizedBox(height: 2.0),
                             Text(
-                              data?.fullName?.split(' ').take(2).join(' ') ?? s.defaultUserName,
+                              data?.fullName?.split(' ').take(2).join(' ') ??
+                                  s.defaultUserName,
                               style: TextStyles.black20SemiBold.copyWith(
-                                color: settingsProviders.isDark ? kColors[2] : kColors[1],
+                                color:
+                                    settingsProviders.isDark
+                                        ? kColors[2]
+                                        : kColors[1],
                                 fontSize: 14,
                                 fontFamily: customFontFamilyBold,
                               ),
@@ -99,7 +107,10 @@ class _GetStudentDataState extends State<GetStudentData> {
                             builder: (context, state) {
                               int unseenCount = 0;
                               if (state is NotificationsLoaded) {
-                                // unseenCount = state.unseenCount;
+                                unseenCount =
+                                    context
+                                        .read<NotificationsCubit>()
+                                        .unseenCount;
                               }
                               return Positioned(
                                 top: -6,
@@ -107,16 +118,15 @@ class _GetStudentDataState extends State<GetStudentData> {
                                 child: Container(
                                   padding: EdgeInsets.all(4),
                                   decoration: BoxDecoration(
-                                    color: unseenCount == 0 ? Colors.grey : Colors.red,
+                                    color: Colors.red,
                                     shape: BoxShape.circle,
                                   ),
                                   child: Text(
                                     '$unseenCount',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: customFontFamilyBold,
                                     ),
                                   ),
                                 ),
@@ -180,13 +190,18 @@ class _GetStudentDataState extends State<GetStudentData> {
 
                 if (data?.target == true)
                   Card(
-                    color: settingsProviders.isDark ? kColors[11] : Colors.white,
+                    color:
+                        settingsProviders.isDark ? kColors[11] : Colors.white,
                     elevation: 2,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      margin: EdgeInsets.symmetric(
+                        // vertical: 8.h,
+                        horizontal: 0.w,
+                      ),
+                      padding: EdgeInsets.all(10.w),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -200,7 +215,10 @@ class _GetStudentDataState extends State<GetStudentData> {
                             child: Text(
                               s.targetReachedMessage,
                               style: TextStyles.black15Medium.copyWith(
-                                color: settingsProviders.isDark ? Colors.white : Colors.black,
+                                color:
+                                    settingsProviders.isDark
+                                        ? Colors.white
+                                        : Colors.black,
                               ),
                             ),
                           ),
@@ -229,20 +247,24 @@ class _GetStudentDataState extends State<GetStudentData> {
   Widget buildStyledCard(
     String title,
     String value,
-    SettingsProvider settingsProviders,
-    {String? fontFamily, String? fontFamilyBold}
-  ) {
+    SettingsProvider settingsProviders, {
+    String? fontFamily,
+    String? fontFamilyBold,
+  }) {
     final titleColor = settingsProviders.isDark ? Colors.white : Colors.black;
     final valueColor = kColors[5];
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 6.0),
+      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
       decoration: BoxDecoration(
         color: settingsProviders.isDark ? kColors[11] : Colors.white,
         borderRadius: BorderRadius.circular(12.0),
         boxShadow: [
           BoxShadow(
-            color: settingsProviders.isDark ? Colors.black12 : Colors.grey.withOpacity(0.2),
+            color:
+                settingsProviders.isDark
+                    ? Colors.black12
+                    : Colors.grey.withOpacity(0.2),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -264,7 +286,7 @@ class _GetStudentDataState extends State<GetStudentData> {
                 maxLines: 1,
               ),
             ),
-            const SizedBox(width: 12.0),
+            SizedBox(width: 12.h),
             Expanded(
               flex: 1,
               child: Text(

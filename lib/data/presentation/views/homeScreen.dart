@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iti_freelancing_hub/constants.dart';
 import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
-import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/addNewJob.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/add_note.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/chat.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/setting.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_home.dart';
@@ -41,14 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final s = S.of(context);
 
     final List<BottomNavigationBarItem> _items = [
-      BottomNavigationBarItem(
-        icon: Icon(Icons.home),
-        label: s.homeTabLabel,
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.chat),
-        label: s.chatTabLabel,
-      ),
+      BottomNavigationBarItem(icon: Icon(Icons.home), label: s.homeTabLabel),
+      BottomNavigationBarItem(icon: Icon(Icons.chat), label: s.chatTabLabel),
       BottomNavigationBarItem(
         icon: Icon(Icons.add_circle_outline),
         label: s.addJobTabLabel,
@@ -65,8 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: _items,
-        selectedItemColor: settingsProvider.isDark ? kColors[5] : kColors[1],
-        unselectedItemColor: settingsProvider.isDark ? Colors.white70 : Colors.grey,
+        selectedItemColor: settingsProvider.isDark ? kColors[5] : kColors[5],
+        unselectedItemColor:
+            settingsProvider.isDark ? Colors.grey : Colors.grey,
         type: BottomNavigationBarType.fixed,
       ),
     );

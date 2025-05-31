@@ -116,7 +116,10 @@ class CertificateDetails extends StatelessWidget {
                           ),
                           SizedBox(width: 5.w),
                           Text(
-                            cert.studentName ?? '',
+                            (cert.studentName ?? '')
+                                .split(' ')
+                                .take(2)
+                                .join(' '),
                             style: TextStyles.grey12Medium,
                           ),
                         ],
@@ -229,7 +232,6 @@ class CertificateDetails extends StatelessWidget {
                         settingsProvider,
                       ),
                       SizedBox(height: 16.h),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -340,34 +342,39 @@ class CertificateDetails extends StatelessWidget {
                           ),
                           SizedBox(width: 10.w),
                           ElevatedButton(
-                            onPressed: () async {
-                              final updated = await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => AddCertificate(
-                                        certificate: {
-                                          "_id": cert.id,
-                                          "certificateId": cert.certificateId,
-                                          "certificateDescription":
-                                              cert.certificateDescription,
-                                          "startDate": cert.startDate,
-                                          "endDate": cert.endDate,
-                                          "Company": cert.company,
-                                          "proofOfCertificate":
-                                              cert.proofOfCertificate,
-                                          "approach": cert.approach,
-                                        },
-                                      ),
-                                ),
-                              );
-
-                              if (updated == true) {
-                                context
-                                    .read<CertificateDetailsCubit>()
-                                    .getCertificateDetails(certificateId);
-                              }
-                            },
+                            onPressed:
+                                cert.verified
+                                    ? null
+                                    : () async {
+                                      final updated = await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder:
+                                              (context) => AddCertificate(
+                                                certificate: {
+                                                  "_id": cert.id,
+                                                  "certificateId":
+                                                      cert.certificateId,
+                                                  "certificateDescription":
+                                                      cert.certificateDescription,
+                                                  "startDate": cert.startDate,
+                                                  "endDate": cert.endDate,
+                                                  "Company": cert.company,
+                                                  "proofOfCertificate":
+                                                      cert.proofOfCertificate,
+                                                  "approach": cert.approach,
+                                                },
+                                              ),
+                                        ),
+                                      );
+                                      if (updated == true) {
+                                        context
+                                            .read<CertificateDetailsCubit>()
+                                            .getCertificateDetails(
+                                              certificateId,
+                                            );
+                                      }
+                                    },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: kColors[1],
                               foregroundColor: kColors[2],

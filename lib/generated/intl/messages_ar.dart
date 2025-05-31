@@ -31,6 +31,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "LightMode": MessageLookupByLibrary.simpleMessage("الوضع الفاتح"),
     "acceptedStatus": MessageLookupByLibrary.simpleMessage("مقبول"),
     "addJobTabLabel": MessageLookupByLibrary.simpleMessage("إضافة وظيفة"),
+    "addNewCertificate": MessageLookupByLibrary.simpleMessage(
+      "إضافة شهادة جديدة",
+    ),
     "addNewJobButton": MessageLookupByLibrary.simpleMessage(
       "إضافة وظيفة جديدة",
     ),
@@ -61,7 +64,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "addedModal_updatedTitle": MessageLookupByLibrary.simpleMessage(
       "تم تعديل الوظيفة بنجاح",
     ),
+    "admin_upload_email": MessageLookupByLibrary.simpleMessage(
+      "• سيقوم المسؤول بتحميل بريدك الإلكتروني إلى النظام. بمجرد التسجيل، يمكنك تسجيل الدخول إلى حسابك.",
+    ),
+    "app_title": MessageLookupByLibrary.simpleMessage(
+      "مركز التوظيف الحر لتكنولوجيا المعلومات",
+    ),
     "approachLabel": MessageLookupByLibrary.simpleMessage("النهج:"),
+    "back": MessageLookupByLibrary.simpleMessage("رجوع"),
     "backButton": MessageLookupByLibrary.simpleMessage("رجوع"),
     "backToSettingsButton": MessageLookupByLibrary.simpleMessage(
       "العودة إلى الإعدادات",
@@ -79,6 +89,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "certificateDeletionTitle": MessageLookupByLibrary.simpleMessage(
       "تأكيد حذف الشهادة",
+    ),
+    "certificateDescription": MessageLookupByLibrary.simpleMessage(
+      "وصف الشهادة",
+    ),
+    "certificateDescriptionHint": MessageLookupByLibrary.simpleMessage(
+      "تأكد من أن الوصف يوضح الشهادة بوضوح.",
     ),
     "certificateForm_approach_placeholder":
         MessageLookupByLibrary.simpleMessage("نهج الدورة"),
@@ -139,6 +155,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "certificateForm_title": MessageLookupByLibrary.simpleMessage(
       "اضافة شهادة جديدة",
+    ),
+    "certificateId": MessageLookupByLibrary.simpleMessage("معرف الشهادة"),
+    "certificateIdHint": MessageLookupByLibrary.simpleMessage(
+      "تأكد من أن معرف الشهادة صحيح.",
     ),
     "certificateIdLabel": MessageLookupByLibrary.simpleMessage("رقم الشهادة: "),
     "certificateTitle": m0,
@@ -207,6 +227,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "companyContactLabel": MessageLookupByLibrary.simpleMessage("تواصل الشركة"),
     "companyCountryLabel": MessageLookupByLibrary.simpleMessage("بلد الشركة"),
     "companyLabel": MessageLookupByLibrary.simpleMessage("الشركة:"),
+    "companyName": MessageLookupByLibrary.simpleMessage("اسم الشركة"),
+    "companyNameHint": MessageLookupByLibrary.simpleMessage(
+      "تاكد ان اسم الشركه صحيح",
+    ),
     "companyNameLabel": MessageLookupByLibrary.simpleMessage("اسم الشركة"),
     "completedApprovedJobsLabel": MessageLookupByLibrary.simpleMessage(
       "الوظائف المكتملة والموافق عليها:",
@@ -226,6 +250,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "للحصول على المساعدة.",
     ),
     "contributorsLabel": MessageLookupByLibrary.simpleMessage("المساهمون: "),
+    "courseApproach": MessageLookupByLibrary.simpleMessage("طريقة الدورة"),
     "currencyEGP": MessageLookupByLibrary.simpleMessage("جنيه مصري"),
     "currencyLabel": MessageLookupByLibrary.simpleMessage("العملة"),
     "currencyUSD": MessageLookupByLibrary.simpleMessage("دولار أمريكي"),
@@ -273,13 +298,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "مطلوب",
     ),
     "directForm_costInEGP_placeholder": MessageLookupByLibrary.simpleMessage(
-      "التكلفة بالجنيه",
+      "السعر بالجنيه",
     ),
     "directForm_costInEGP_required": MessageLookupByLibrary.simpleMessage(
       "تُحسب تلقائيًا",
     ),
     "directForm_costInUSD_placeholder": MessageLookupByLibrary.simpleMessage(
-      "التكلفة بالدولار",
+      "السعر بالدولار",
     ),
     "directForm_costInUSD_required": MessageLookupByLibrary.simpleMessage(
       "مطلوب",
@@ -338,6 +363,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "عمل حر بتواصل مباشر",
     ),
     "editButton": MessageLookupByLibrary.simpleMessage("تعديل"),
+    "editCertificate": MessageLookupByLibrary.simpleMessage("تعديل الشهادة"),
     "editProfileTitle": MessageLookupByLibrary.simpleMessage(
       "تعديل ملفي الشخصي",
     ),
@@ -357,8 +383,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "يرجى إدخال بريدك الإلكتروني",
     ),
     "emptyCredentialsError": MessageLookupByLibrary.simpleMessage(
-      "لا يمكن أن يكون البريد الإلكتروني أو كلمة المرور فارغين",
+      "إذا لم يكن بريدك الإلكتروني مسجلاً، يرجى التواصل مع المسؤول في فرعك للحصول على المساعدة.",
     ),
+    "endDate": MessageLookupByLibrary.simpleMessage("تاريخ النهاية"),
     "endDateLabel": MessageLookupByLibrary.simpleMessage("الانتهاء:"),
     "enterBudgetHint": MessageLookupByLibrary.simpleMessage("أدخل الميزانية"),
     "enterClientNameHint": MessageLookupByLibrary.simpleMessage(
@@ -453,6 +480,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "تحدث مع الذكاء الاصطناعي",
     ),
     "homeTabLabel": MessageLookupByLibrary.simpleMessage("الرئيسية"),
+    "how_to_use_platform": MessageLookupByLibrary.simpleMessage(
+      "كيفية استخدام النظام",
+    ),
+    "iti_hub_description": MessageLookupByLibrary.simpleMessage(
+      "تم تصميم مركز التوظيف الحر لتكنولوجيا المعلومات خصيصًا للطلاب الذين حصلوا على وظائف حرة بأنفسهم. يتيح هذا النظام للطلاب رفع تفاصيل وظائفهم للحصول على الموافقة الإدارية. بمجرد الموافقة، تساهم هذه الفرص في استيفاء متطلبات التخرج.",
+    ),
     "jobDeletedSuccess": MessageLookupByLibrary.simpleMessage(
       "تم حذف الوظيفة بنجاح",
     ),
@@ -682,6 +715,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileInfoMessage": MessageLookupByLibrary.simpleMessage(
       "معلوماتك الشخصية مبنية على ما سجلته أثناء التدريب. إذا كنت بحاجة إلى تحديث أي من هذه المعلومات، يرجى التواصل مع المسؤول للحصول على المساعدة.",
     ),
+    "proofOfCertificate": MessageLookupByLibrary.simpleMessage("إثبات الشهادة"),
+    "proofOfCertificateHint": MessageLookupByLibrary.simpleMessage(
+      "تأكد من أن إثبات الشهادة صحيح.",
+    ),
     "proofOfCertificateLabel": MessageLookupByLibrary.simpleMessage(
       "إثبات الشهادة: ",
     ),
@@ -689,6 +726,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "أعد مستند PDF يحتوي على لقطات شاشة للدردشات بينك وبين العميل، عينات من العمل المكتمل، وإثبات الدفع أو الفواتير. بمجرد أن تجمع كل شيء في ملف PDF واحد، قم برفعه إلى Google Drive، انسخ الرابط، وألصقه هنا. تأكد من أن الرابط معين على \'يمكن لأي شخص يمتلك الرابط الاطلاع\' حتى يتمكن المسؤول من الوصول إليه.",
     ),
     "proofOfWorkLabel": MessageLookupByLibrary.simpleMessage("إثبات العمل"),
+    "proofUploadNote": MessageLookupByLibrary.simpleMessage(
+      "قم برفع نسخة ممسوحة ضوئيًا أو صورة من الشهادة كملف PDF إلى Google Drive، واجعل الرابط قابلاً للمشاركة والصق الرابط هنا.",
+    ),
+    "registration_and_sign_in": MessageLookupByLibrary.simpleMessage(
+      "التسجيل وتسجيل الدخول",
+    ),
     "rememberMeLabel": MessageLookupByLibrary.simpleMessage("تذكرني"),
     "remoteForm_buttons_add": MessageLookupByLibrary.simpleMessage("إضافة"),
     "remoteForm_buttons_back": MessageLookupByLibrary.simpleMessage("رجوع"),
@@ -873,10 +916,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "signIn_title": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "signOutLink": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
+    "startDate": MessageLookupByLibrary.simpleMessage("تاريخ البداية"),
     "startDateLabel": MessageLookupByLibrary.simpleMessage("البداية:"),
     "studentNameLabel": MessageLookupByLibrary.simpleMessage("اسم الطالب"),
     "studentProfileLabel": MessageLookupByLibrary.simpleMessage("ملف الطالب"),
+    "submit": MessageLookupByLibrary.simpleMessage("إرسال"),
     "submitButton": MessageLookupByLibrary.simpleMessage("إرسال"),
+    "switch_language": MessageLookupByLibrary.simpleMessage(
+      "تغيير إلى الإنجليزية",
+    ),
     "targetReachedMessage": MessageLookupByLibrary.simpleMessage(
       "تهانينا على تحقيق هدفك! نحن فخورون جدًا بك وبعملك الشاق! هذا إنجاز رائع، ونريدك أن تأخذ لحظة للاحتفال بنجاحك. استمر في التألق والتقدم، أنت تقوم بعمل رائع!",
     ),
@@ -914,8 +962,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "unregisteredEmailMessage": MessageLookupByLibrary.simpleMessage(
       "إذا لم يكن بريدك الإلكتروني مسجلاً، يرجى التواصل مع المسؤول في فرعك للمساعدة.",
     ),
+    "update": MessageLookupByLibrary.simpleMessage("تحديث"),
+    "updatedModal_addedMessage": MessageLookupByLibrary.simpleMessage(
+      "تمت إضافة الشهادة الخاصة بك. يمكنك عرضها من ملفك الشخصي.",
+    ),
+    "updatedModal_addedTitle": MessageLookupByLibrary.simpleMessage(
+      "تمت إضافة الشهادة بنجاح!",
+    ),
+    "updatedModal_updatedMessage": MessageLookupByLibrary.simpleMessage(
+      "تم تحديث الشهادة الخاصة بك.",
+    ),
+    "updatedModal_updatedTitle": MessageLookupByLibrary.simpleMessage(
+      "تم تحديث الشهادة بنجاح!",
+    ),
     "updatedSuccessfullyMessage": MessageLookupByLibrary.simpleMessage(
       "تم التحديث بنجاح!",
+    ),
+    "use_registered_email": MessageLookupByLibrary.simpleMessage(
+      "• استخدم بريدك الإلكتروني المسجل للوصول إلى النظام. إذا كانت هذه هي المرة الأولى، يمكنك إعادة تعيين كلمة المرور حسب الحاجة.",
     ),
     "verifyCody_codeError": MessageLookupByLibrary.simpleMessage(
       "رمز التحقق غير صحيح. يرجى المحاولة مرة أخرى.",
@@ -939,6 +1003,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "viewProofButton": MessageLookupByLibrary.simpleMessage("عرض الإثبات"),
     "welcomeBackMessage": MessageLookupByLibrary.simpleMessage("مرحبًا بعودتك"),
+    "what_is_iti_freelancing_hub": MessageLookupByLibrary.simpleMessage(
+      "ما هو مركز التوظيف الحر لتكنولوجيا المعلومات؟",
+    ),
     "wrongPasswordError": MessageLookupByLibrary.simpleMessage(
       "كلمة المرور خاطئة",
     ),

@@ -10,7 +10,6 @@ import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/models/jobModel.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/details/details_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/getAll-jobs/cubit/getalljobs_cubit.dart';
-import 'package:iti_freelancing_hub/data/presentation/views/add_note.dart';
 import 'package:iti_freelancing_hub/data/presentation/views/details.dart';
 import 'package:provider/provider.dart';
 
@@ -58,7 +57,7 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
             itemBuilder: (context, index) {
               final job = jobs[index];
               return Container(
-                margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
+                margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
                 padding: EdgeInsets.all(12.w),
                 decoration: BoxDecoration(
                   color: settingsProviders.isDark ? kColors[11] : Colors.white,
@@ -153,13 +152,23 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                                 job.jobType == 'Remote monthly job'
                                     ? (job.companytName != null ||
                                             job.companyCountry != null
-                                        ? '${job.companytName ?? ''}${job.companytName != null && job.companyCountry != null ? ' - ' : ''}${job.companyCountry ?? ''}'
+                                        ? '${job.companytName ?? ''}'
+                                            '${job.companytName != null && job.companyCountry != null ? ' - ' : ''}'
+                                            '${job.companyCountry ?? ''}'
                                         : 'Unknown')
                                     : (job.teamMembers != null &&
-                                        job.teamMembers!.isNotEmpty)
-                                    ? (job.teamMembers!.first.studentName ??
-                                        'Unknown')
-                                    : 'Unknown',
+                                            job.teamMembers!.isNotEmpty
+                                        ? job.teamMembers!
+                                            .map(
+                                              (e) =>
+                                                  e.studentName
+                                                      ?.split(' ')
+                                                      .take(2)
+                                                      .join(' ') ??
+                                                  '',
+                                            )
+                                            .join(', ')
+                                        : ' No contributors'),
                                 style: TextStyles.grey12Medium.copyWith(
                                   fontSize: 12.sp,
                                 ),
@@ -176,8 +185,8 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                                 children: [
                                   SvgPicture.asset(
                                     Assets.assetdate,
-                                    width: 12.w,
-                                    height: 12.h,
+                                    width: 16.w,
+                                    height: 16.h,
                                   ),
                                   SizedBox(width: 5.w),
                                   Text(
@@ -206,8 +215,8 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                                   children: [
                                     SvgPicture.asset(
                                       Assets.assetdate,
-                                      width: 12.w,
-                                      height: 12.h,
+                                      width: 16.w,
+                                      height: 16.h,
                                     ),
                                     SizedBox(width: 5.w),
                                     Text(
@@ -221,7 +230,7 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                                                     : Colors.black,
                                           ),
                                     ),
-                                    SizedBox(width: 2.w),
+                                    SizedBox(width: 5.w),
                                     Text(
                                       formatDate(job.endDate!),
                                       style: TextStyles.grey12Medium.copyWith(
@@ -239,15 +248,23 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                           children: [
                             Expanded(
                               child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  SvgPicture.asset(
-                                    Assets.assetsusd,
-                                    width: 10,
-                                    height: 10,
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 4),
+                                    child: SizedBox(
+                                      // width: 15,
+                                      // height: 15,
+                                      child: SvgPicture.asset(
+                                        Assets.assetsusd,
+
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
                                   ),
                                   SizedBox(width: 4.w),
                                   Text(
-                                    '${job.paymentInUSD ?? 0} ',
+                                    '${job.paymentInUSD ?? job.costInUSD ?? 0}',
                                     style: TextStyles.black12SemiBold.copyWith(
                                       fontSize: 12,
                                       color:
@@ -256,20 +273,24 @@ class _CardOfFreelancerJobState extends State<CardOfFreelancerJob> {
                                               : Colors.black,
                                     ),
                                   ),
+
                                   SizedBox(width: 10.w),
 
                                   Padding(
-                                    padding: EdgeInsets.all(0.0),
-                                    child: SvgPicture.asset(
-                                      Assets.assetsegp,
+                                    padding: EdgeInsets.only(bottom: 2),
+                                    child: SizedBox(
+                                      // width: 17,
+                                      // height: 17,
+                                      child: SvgPicture.asset(
+                                        Assets.assetsegp,
 
-                                      width: 8,
-                                      height: 8,
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
                                   ),
                                   SizedBox(width: 4.w),
                                   Text(
-                                    '${job.paymentInEGP ?? 0} ',
+                                    '${job.paymentInEGP ?? job.costInEGP ?? 0} ',
                                     style: TextStyles.black12SemiBold.copyWith(
                                       fontSize: 12,
 

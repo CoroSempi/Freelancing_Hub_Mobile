@@ -92,4 +92,5 @@ class Assets {
 
   static String assetsRemotDark = "assets/images/RemoteDark.svg";
   static String assetsRemotLight = "assets/images/RemoteLight.svg";
+  static String assetsRectangle = "assets/images/Rectangle 6.svg";
 }

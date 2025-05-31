@@ -11,15 +11,15 @@ class CustomAppBar extends StatelessWidget {
   final String? backText;
   final VoidCallback? onBackPressed;
   final bool showPendingButton;
-  final String? statusText;  
-final Color? color;
+  final String? statusText;
+  final Color? color;
   const CustomAppBar({
     Key? key,
     this.title,
     this.backText,
     this.onBackPressed,
     this.showPendingButton = false,
-    this.statusText,   
+    this.statusText,
     this.color,
   }) : super(key: key);
 
@@ -39,43 +39,48 @@ final Color? color;
                 (Route<dynamic> route) => false,
               );
             },
-            child: Row(
-              children: [
-                Icon(Icons.arrow_back_ios, color: kColors[5], size: 20),
-                if (backText != null)
-                  Text(
-                    backText!,
-                    style: TextStyles.red15SemiBold.copyWith(color: kColors[5]),
-                  ),
-              ],
+            child: Container(
+              margin: EdgeInsets.only(left: 5),
+              child: Row(
+                children: [
+                  Icon(Icons.arrow_back_ios, color: kColors[5], size: 20),
+                  if (backText != null)
+                    Text(
+                      backText!,
+                      style: TextStyles.red15SemiBold.copyWith(
+                        color: kColors[5],
+                      ),
+                    ),
+                ],
+              ),
             ),
           ),
-
-          SizedBox(width: 10.w),
+          SizedBox(width: 50.w),
 
           if (title != null)
             Text(
               title!,
               style: TextStyles.black12SemiBold.copyWith(
                 color: settingsProviders.isDark ? Colors.white : Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
             ),
 
-         if (showPendingButton && statusText != null) ...[
-  const Spacer(),
-  Container(
-    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-    decoration: BoxDecoration(
-      color: color,
-      borderRadius: BorderRadius.circular(30),
-    ),
-    child: Text(
-      statusText!, 
-      style: const TextStyle(color: Colors.black),
-    ),
-  ),
-],
-
+          if (showPendingButton && statusText != null) ...[
+            const Spacer(),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Text(
+                statusText!,
+                style: const TextStyle(color: Colors.black),
+              ),
+            ),
+          ],
         ],
       ),
     );

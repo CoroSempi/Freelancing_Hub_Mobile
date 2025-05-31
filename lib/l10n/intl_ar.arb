@@ -146,9 +146,9 @@
   "directForm_startDate_required": "مطلوب",
   "directForm_endDate_placeholder": "تاريخ الانتهاء",
   "directForm_endDate_required": "مطلوب",
-  "directForm_costInUSD_placeholder": "التكلفة بالدولار",
+  "directForm_costInUSD_placeholder": "السعر بالدولار",
   "directForm_costInUSD_required": "مطلوب",
-  "directForm_costInEGP_placeholder": "التكلفة بالجنيه",
+  "directForm_costInEGP_placeholder": "السعر بالجنيه",
   "directForm_costInEGP_required": "تُحسب تلقائيًا",
   "directForm_teamMembers_placeholder": "أعضاء الفريق",
   "directForm_teamMembers_required": "اختياري",
@@ -305,7 +305,7 @@
   "rememberMeLabel": "تذكرني",
   "forgotPasswordLink": "هل نسيت كلمة المرور؟",
   "signInButton": "تسجيل الدخول",
-  "emptyCredentialsError": "لا يمكن أن يكون البريد الإلكتروني أو كلمة المرور فارغين",
+  "emptyCredentialsError": "إذا لم يكن بريدك الإلكتروني مسجلاً، يرجى التواصل مع المسؤول في فرعك للحصول على المساعدة.",
   "unregisteredEmailMessage": "إذا لم يكن بريدك الإلكتروني مسجلاً، يرجى التواصل مع المسؤول في فرعك للمساعدة.",
   "exploreFeaturesText": "اضغط هنا لاستكشاف المزايا والفوائد وكيفية الاستفادة من تجربتك",
   "changedSuccessfullyTitle": "تم التغيير بنجاح!",
@@ -408,8 +408,40 @@
   "myJobs" : "مشاريع العمل الحر",
   "myCertificates" : "الشهادات " , 
   "DarkMode": "الوضع الداكن",
-  "LightMode": "الوضع الفاتح"
+  "LightMode": "الوضع الفاتح",
 
 
 
+  "app_title": "مركز التوظيف الحر لتكنولوجيا المعلومات",
+  "what_is_iti_freelancing_hub": "ما هو مركز التوظيف الحر لتكنولوجيا المعلومات؟",
+  "iti_hub_description": "تم تصميم مركز التوظيف الحر لتكنولوجيا المعلومات خصيصًا للطلاب الذين حصلوا على وظائف حرة بأنفسهم. يتيح هذا النظام للطلاب رفع تفاصيل وظائفهم للحصول على الموافقة الإدارية. بمجرد الموافقة، تساهم هذه الفرص في استيفاء متطلبات التخرج.",
+  "how_to_use_platform": "كيفية استخدام النظام",
+  "registration_and_sign_in": "التسجيل وتسجيل الدخول",
+  "admin_upload_email": "• سيقوم المسؤول بتحميل بريدك الإلكتروني إلى النظام. بمجرد التسجيل، يمكنك تسجيل الدخول إلى حسابك.",
+  "use_registered_email": "• استخدم بريدك الإلكتروني المسجل للوصول إلى النظام. إذا كانت هذه هي المرة الأولى، يمكنك إعادة تعيين كلمة المرور حسب الحاجة.",
+  "back": "رجوع",
+  "switch_language": "تغيير إلى الإنجليزية",
+  "addNewCertificate": "إضافة شهادة جديدة",
+  "editCertificate": "تعديل الشهادة",
+  "certificateId": "معرف الشهادة",
+  "certificateDescription": "وصف الشهادة",
+  "companyName": "اسم الشركة",
+  "courseApproach": "طريقة الدورة",
+  "proofOfCertificate": "إثبات الشهادة",
+  "submit": "إرسال",
+  "update": "تحديث",
+  "updatedModal_addedTitle": "تمت إضافة الشهادة بنجاح!",
+  "updatedModal_updatedTitle": "تم تحديث الشهادة بنجاح!",
+  "updatedModal_addedMessage": "تمت إضافة الشهادة الخاصة بك. يمكنك عرضها من ملفك الشخصي.",
+  "updatedModal_updatedMessage": "تم تحديث الشهادة الخاصة بك.",
+"certificateDescriptionHint": "تأكد من أن الوصف يوضح الشهادة بوضوح.",
+
+  "certificateIdHint": "تأكد من أن معرف الشهادة صحيح.",
+
+  "startDate": "تاريخ البداية",
+  "endDate": "تاريخ النهاية",
+
+  "proofOfCertificateHint": "تأكد من أن إثبات الشهادة صحيح.",
+  "proofUploadNote": "قم برفع نسخة ممسوحة ضوئيًا أو صورة من الشهادة كملف PDF إلى Google Drive، واجعل الرابط قابلاً للمشاركة والصق الرابط هنا.",
+"companyNameHint":"تاكد ان اسم الشركه صحيح"
 }

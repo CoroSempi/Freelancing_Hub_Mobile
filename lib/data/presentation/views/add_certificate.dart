@@ -6,24 +6,19 @@ import 'package:iti_freelancing_hub/constants.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/custom_home.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/text_field.dart';
 import 'package:provider/provider.dart';
-
+import 'package:iti_freelancing_hub/generated/l10n.dart';
 import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
-
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/add_certificate/add_certificate_cubit.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/add_certificate/add_certificate_state.dart';
-
 import 'package:iti_freelancing_hub/data/presentation/widgets/CustomButtonWidget.dart';
-import 'package:iti_freelancing_hub/data/presentation/widgets/form-field.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/formFieldWithDropdown.dart';
 
 class AddCertificate extends StatefulWidget {
   final Map<String, dynamic>? certificate;
-
   const AddCertificate({Key? key, this.certificate}) : super(key: key);
-
   static const routeName = '/add-certificate';
 
   @override
@@ -32,17 +27,14 @@ class AddCertificate extends StatefulWidget {
 
 class _AddCertificateState extends State<AddCertificate> {
   final _formKey = GlobalKey<FormState>();
-
   final TextEditingController certIdController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
   final TextEditingController companyNameController = TextEditingController();
   final TextEditingController proofController = TextEditingController();
-
   String? courseApproach;
   bool isSubmitEnabled = false;
-
   bool isEditMode = false;
   String? editingCertificateId;
 
@@ -106,6 +98,7 @@ class _AddCertificateState extends State<AddCertificate> {
   @override
   Widget build(BuildContext context) {
     final settingsProvider = Provider.of<SettingsProvider>(context);
+    final localizations = S.of(context);
 
     return MainScaffold(
       body: BlocProvider(
@@ -119,10 +112,10 @@ class _AddCertificateState extends State<AddCertificate> {
                     (ctx) => AlertDialog(
                       title: Text(
                         isEditMode
-                            ? 'Certificate Updated Successfully!'
-                            : 'Certificate Added Successfully!',
+                            ? localizations.updatedModal_updatedTitle
+                            : localizations.updatedModal_addedTitle,
                         style: TextStyles.grey12Medium.copyWith(
-                          fontSize: 16,
+                          fontSize: 14,
                           color:
                               settingsProvider.isDark
                                   ? Colors.white
@@ -134,8 +127,8 @@ class _AddCertificateState extends State<AddCertificate> {
                         children: [
                           Text(
                             isEditMode
-                                ? "Your certificate has been updated."
-                                : "Your certificate has been added. You can view it from your profile.",
+                                ? localizations.updatedModal_updatedMessage
+                                : localizations.updatedModal_addedMessage,
                             style: TextStyles.grey12Medium.copyWith(
                               fontSize: 14,
                             ),
@@ -167,8 +160,8 @@ class _AddCertificateState extends State<AddCertificate> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            child: const Text(
-                              'Back',
+                            child: Text(
+                              localizations.remoteForm_buttons_back,
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
@@ -194,7 +187,9 @@ class _AddCertificateState extends State<AddCertificate> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      isEditMode ? 'Edit Certificate' : 'Add New Certificate',
+                      isEditMode
+                          ? localizations.editCertificate
+                          : localizations.addNewCertificate,
                       style: TextStyles.black15Medium.copyWith(
                         fontWeight: FontWeight.bold,
                         color:
@@ -204,35 +199,39 @@ class _AddCertificateState extends State<AddCertificate> {
                       ),
                     ),
                     SizedBox(height: 8.h),
-                    settingsProvider.isDark
-                        ? SvgPicture.asset(Assets.assetsAddCertDark)
-                        : SvgPicture.asset(Assets.assetsAddCertLigth),
+                    Row(
+                      children: [
+                        SvgPicture.asset(Assets.assetsRectangle),
+                        SizedBox(width: 4.w),
+                        Text(localizations.addNewCertificate),
+                      ],
+                    ),
                     SizedBox(height: 16.h),
-
-                    _buildLabel('Certificate ID', settingsProvider),
+                    _buildLabel(localizations.certificateId, settingsProvider),
                     CustomTextFiled(
                       controller: certIdController,
-                      hittext: 'Certificate ID',
+                      hittext: localizations.certificateId,
                     ),
-                    _buildHint('Ensure that the Certificate ID is Right.'),
-
-                    _buildLabel('Certificate Description', settingsProvider),
+                    _buildHint(localizations.certificateIdHint),
+                    _buildLabel(
+                      localizations.certificateDescription,
+                      settingsProvider,
+                    ),
                     CustomTextFiled(
                       controller: descriptionController,
-                      hittext: 'Certificate Description',
+                      hittext: localizations.certificateDescription,
                     ),
-                    _buildHint(
-                      'Ensure that the description clearly describes the certificate.',
-                    ),
-
+                    _buildHint(localizations.certificateDescriptionHint),
                     SizedBox(height: 16.h),
-
                     Row(
                       children: [
                         Expanded(
                           child: Column(
                             children: [
-                              _buildLabel('Start Date', settingsProvider),
+                              _buildLabel(
+                                localizations.startDate,
+                                settingsProvider,
+                              ),
                               CustomTextFiled(
                                 controller: startDateController,
                                 hittext: 'dd/mm/yyyy',
@@ -260,10 +259,13 @@ class _AddCertificateState extends State<AddCertificate> {
                         Expanded(
                           child: Column(
                             children: [
-                              _buildLabel('End Date', settingsProvider),
+                              _buildLabel(
+                                localizations.endDate,
+                                settingsProvider,
+                              ),
                               CustomTextFiled(
                                 controller: endDateController,
-                                hittext: 'dd/mm/yyy',
+                                hittext: 'dd/mm/yyyy',
                                 suffixIcon: const Icon(
                                   Icons.date_range_outlined,
                                 ),
@@ -271,7 +273,6 @@ class _AddCertificateState extends State<AddCertificate> {
                                 onTap: () async {
                                   final picked = await showDatePicker(
                                     context: context,
-                                    barrierColor: kColors[5],
                                     initialDate: DateTime.now(),
                                     firstDate: DateTime(2000),
                                     lastDate: DateTime(2100),
@@ -287,51 +288,41 @@ class _AddCertificateState extends State<AddCertificate> {
                         ),
                       ],
                     ),
-
                     SizedBox(height: 16.h),
-
-                    _buildLabel('Company Name', settingsProvider),
+                    _buildLabel(localizations.companyName, settingsProvider),
                     CustomTextFiled(
                       controller: companyNameController,
-                      hittext: 'Company Name',
+                      hittext: localizations.companyName,
                     ),
-                    _buildHint('Ensure that the Company Name is Right.'),
-
+                    _buildHint(localizations.companyNameHint),
                     SizedBox(height: 24.h),
-
                     FormFieldWithDropdown(
-                      title: 'Course Approach',
-                      subtitle: '(Required)',
+                      title: localizations.courseApproach,
+                      subtitle: localizations.remoteForm_jobTitle_required,
                       dropDownText: courseApproach,
-                      items: ['Online', 'Offline', 'Both'],
+                      items: ['online', 'offline', 'both'],
                       onChanged: (value) {
-                        setState(() {
-                          courseApproach = value;
-                        });
+                        setState(() => courseApproach = value);
                         _checkFormValid();
                       },
                       backgroundColor: kColors[0],
                     ),
-
                     SizedBox(height: 16.h),
-
-                    _buildLabel('Proof of Certificate', settingsProvider),
+                    _buildLabel(
+                      localizations.proofOfCertificate,
+                      settingsProvider,
+                    ),
                     CustomTextFiled(
                       controller: proofController,
-                      hittext: 'Proof of Certificate',
+                      hittext: localizations.proofOfCertificate,
                     ),
-                    _buildHint(
-                      'Ensure that the Proof of Certificate is Right.',
-                    ),
-
+                    _buildHint(localizations.proofOfCertificateHint),
                     SizedBox(height: 8.h),
                     Text(
-                      'Upload a scanned copy or a photo of the certificate as a single PDF to Google Drive, make the link shareable, and paste it here.',
+                      localizations.proofUploadNote,
                       style: TextStyles.grey12Medium.copyWith(fontSize: 14),
                     ),
-
                     SizedBox(height: 8.h),
-
                     Row(
                       children: [
                         Expanded(
@@ -344,8 +335,9 @@ class _AddCertificateState extends State<AddCertificate> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
+                              minimumSize: const Size.fromHeight(50),
                             ),
-                            child: const Text('Back'),
+                            child: Text(localizations.remoteForm_buttons_back),
                           ),
                         ),
                         const Spacer(),
@@ -354,7 +346,9 @@ class _AddCertificateState extends State<AddCertificate> {
                             text:
                                 state is AddCertificateLoading
                                     ? 'Submitting...'
-                                    : (isEditMode ? 'Update' : 'Submit'),
+                                    : (isEditMode
+                                        ? localizations.update
+                                        : localizations.submit),
                             onPressed:
                                 isSubmitEnabled &&
                                         state is! AddCertificateLoading
@@ -375,7 +369,6 @@ class _AddCertificateState extends State<AddCertificate> {
                                               proofController.text.trim(),
                                           "approach": courseApproach,
                                         };
-
                                         if (isEditMode &&
                                             editingCertificateId != null) {
                                           context
@@ -407,6 +400,8 @@ class _AddCertificateState extends State<AddCertificate> {
   }
 
   Widget _buildLabel(String text, SettingsProvider settingsProvider) {
+    final localizations = S.of(context);
+
     return Row(
       children: [
         Text(
@@ -416,8 +411,9 @@ class _AddCertificateState extends State<AddCertificate> {
             color: settingsProvider.isDark ? Colors.white : Colors.black,
           ),
         ),
-        const Text(
-          ' (Required)',
+        Text(
+          localizations.remoteForm_jobTitle_required,
+
           style: TextStyle(fontSize: 12, color: Colors.grey),
         ),
       ],

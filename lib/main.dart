@@ -30,7 +30,6 @@ import 'package:iti_freelancing_hub/generated/l10n.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'generated/l10n.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
@@ -76,10 +75,11 @@ class MyApp extends StatelessWidget {
               create: (context) => GetstudentdataCubit()..getStudentData(),
             ),
             BlocProvider(
-              create: (context) =>
-                  GetalljobsCubit()
-                    ..getAllJobs()
-                    ..getDataPreference(),
+              create:
+                  (context) =>
+                      GetalljobsCubit()
+                        ..getAllJobs()
+                        ..getDataPreference(),
             ),
             BlocProvider(
               create: (context) => GetcertificateCubit()..getCertificate(),
@@ -120,10 +120,11 @@ class MyApp extends StatelessWidget {
                   final args = settings.arguments as Map<String, dynamic>?;
                   final userId = args?['userId'] ?? '';
                   return MaterialPageRoute(
-                    builder: (_) => ChangeProfile(
-                      userId: userId,
-                      image: SvgPicture.asset(Assets.assetsavatar),
-                    ),
+                    builder:
+                        (_) => ChangeProfile(
+                          userId: userId,
+                          image: SvgPicture.asset(Assets.assetsavatar),
+                        ),
                   );
                 case ChatScreen.routeName:
                   return MaterialPageRoute(builder: (_) => ChatScreen());

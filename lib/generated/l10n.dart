@@ -2904,10 +2904,10 @@ class S {
     );
   }
 
-  /// `Email and Password cannot be empty`
+  /// `If your email is not registered, please contact the administrator at your branch for assistance.`
   String get emptyCredentialsError {
     return Intl.message(
-      'Email and Password cannot be empty',
+      'If your email is not registered, please contact the administrator at your branch for assistance.',
       name: 'emptyCredentialsError',
       desc: '',
       args: [],
@@ -3747,6 +3747,271 @@ class S {
   /// `Light`
   String get LightMode {
     return Intl.message('Light', name: 'LightMode', desc: '', args: []);
+  }
+
+  /// `ITI Freelancing Hub`
+  String get app_title {
+    return Intl.message(
+      'ITI Freelancing Hub',
+      name: 'app_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What is the ITI Freelancing Hub?`
+  String get what_is_iti_freelancing_hub {
+    return Intl.message(
+      'What is the ITI Freelancing Hub?',
+      name: 'what_is_iti_freelancing_hub',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The ITI Freelancing Hub is designed specifically for students who have secured their own freelancing jobs. This platform allows students to upload the details of their jobs for administrative approval. Once approved, these opportunities contribute to their graduation requirements.`
+  String get iti_hub_description {
+    return Intl.message(
+      'The ITI Freelancing Hub is designed specifically for students who have secured their own freelancing jobs. This platform allows students to upload the details of their jobs for administrative approval. Once approved, these opportunities contribute to their graduation requirements.',
+      name: 'iti_hub_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How to Use the Platform`
+  String get how_to_use_platform {
+    return Intl.message(
+      'How to Use the Platform',
+      name: 'how_to_use_platform',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Registration and Sign In`
+  String get registration_and_sign_in {
+    return Intl.message(
+      'Registration and Sign In',
+      name: 'registration_and_sign_in',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `• Your admin will upload your email to the system. Once registered, you can log in to your account.`
+  String get admin_upload_email {
+    return Intl.message(
+      '• Your admin will upload your email to the system. Once registered, you can log in to your account.',
+      name: 'admin_upload_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `• Use your registered email to access the platform. If it’s your first time, you can reset your password as needed.`
+  String get use_registered_email {
+    return Intl.message(
+      '• Use your registered email to access the platform. If it’s your first time, you can reset your password as needed.',
+      name: 'use_registered_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Back`
+  String get back {
+    return Intl.message('Back', name: 'back', desc: '', args: []);
+  }
+
+  /// `Switch to Arabic`
+  String get switch_language {
+    return Intl.message(
+      'Switch to Arabic',
+      name: 'switch_language',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add New Certificate`
+  String get addNewCertificate {
+    return Intl.message(
+      'Add New Certificate',
+      name: 'addNewCertificate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Certificate`
+  String get editCertificate {
+    return Intl.message(
+      'Edit Certificate',
+      name: 'editCertificate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Certificate ID`
+  String get certificateId {
+    return Intl.message(
+      'Certificate ID',
+      name: 'certificateId',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Certificate Description`
+  String get certificateDescription {
+    return Intl.message(
+      'Certificate Description',
+      name: 'certificateDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company Name`
+  String get companyName {
+    return Intl.message(
+      'Company Name',
+      name: 'companyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Course Approach`
+  String get courseApproach {
+    return Intl.message(
+      'Course Approach',
+      name: 'courseApproach',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Proof of Certificate`
+  String get proofOfCertificate {
+    return Intl.message(
+      'Proof of Certificate',
+      name: 'proofOfCertificate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Submit`
+  String get submit {
+    return Intl.message('Submit', name: 'submit', desc: '', args: []);
+  }
+
+  /// `Update`
+  String get update {
+    return Intl.message('Update', name: 'update', desc: '', args: []);
+  }
+
+  /// `Certificate Added Successfully!`
+  String get updatedModal_addedTitle {
+    return Intl.message(
+      'Certificate Added Successfully!',
+      name: 'updatedModal_addedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Certificate Updated Successfully!`
+  String get updatedModal_updatedTitle {
+    return Intl.message(
+      'Certificate Updated Successfully!',
+      name: 'updatedModal_updatedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your certificate has been added. You can view it from your profile.`
+  String get updatedModal_addedMessage {
+    return Intl.message(
+      'Your certificate has been added. You can view it from your profile.',
+      name: 'updatedModal_addedMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your certificate has been updated.`
+  String get updatedModal_updatedMessage {
+    return Intl.message(
+      'Your certificate has been updated.',
+      name: 'updatedModal_updatedMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ensure that the Certificate ID is correct.`
+  String get certificateIdHint {
+    return Intl.message(
+      'Ensure that the Certificate ID is correct.',
+      name: 'certificateIdHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ensure the description clearly describes the certificate.`
+  String get certificateDescriptionHint {
+    return Intl.message(
+      'Ensure the description clearly describes the certificate.',
+      name: 'certificateDescriptionHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start Date`
+  String get startDate {
+    return Intl.message('Start Date', name: 'startDate', desc: '', args: []);
+  }
+
+  /// `End Date`
+  String get endDate {
+    return Intl.message('End Date', name: 'endDate', desc: '', args: []);
+  }
+
+  /// `Ensure that the Company Name is correct.`
+  String get companyNameHint {
+    return Intl.message(
+      'Ensure that the Company Name is correct.',
+      name: 'companyNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ensure that the Proof of Certificate is correct.`
+  String get proofOfCertificateHint {
+    return Intl.message(
+      'Ensure that the Proof of Certificate is correct.',
+      name: 'proofOfCertificateHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload a scanned copy or a photo of the certificate as a single PDF to Google Drive, make the link shareable, and paste it here.`
+  String get proofUploadNote {
+    return Intl.message(
+      'Upload a scanned copy or a photo of the certificate as a single PDF to Google Drive, make the link shareable, and paste it here.',
+      name: 'proofUploadNote',
+      desc: '',
+      args: [],
+    );
   }
 }
 

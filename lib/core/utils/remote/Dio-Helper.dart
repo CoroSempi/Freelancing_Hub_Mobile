@@ -353,6 +353,8 @@ class DioHelper {
         options: options,
       );
       print('addremote $response');
+      print('Type of response.data: ${response.data.runtimeType}');
+
       print(response.data);
       return response;
     } catch (e) {
@@ -361,25 +363,24 @@ class DioHelper {
     }
   }
 
-static Future<Response> updateRemoteJob(
-  String id,
-  Map<String, dynamic> data,
-) async {
-  final prefs = await SharedPreferences.getInstance();
-  final token = prefs.getString(kAccessTokenKey);
+  static Future<Response> updateRemoteJob(
+    String id,
+    Map<String, dynamic> data,
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString(kAccessTokenKey);
 
-  Options? options;
-  if (token != null) {
-    options = Options(headers: {'Authorization': 'Bearer $token'});
+    Options? options;
+    if (token != null) {
+      options = Options(headers: {'Authorization': 'Bearer $token'});
+    }
+
+    final response = await dio.put(
+      'students/remoteJob/$id',
+      data: data,
+      options: options,
+    );
+
+    return response;
   }
-
-  final response = await dio.put(
-    'students/remoteJob/$id',
-    data: data,
-    options: options,
-  );
-
-  return response;
-}
-
 }

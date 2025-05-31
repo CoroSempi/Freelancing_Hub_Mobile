@@ -29,11 +29,13 @@ class Remotemonthlyjob extends StatefulWidget {
 class _RemotemonthlyjobState extends State<Remotemonthlyjob> {
   final TextEditingController dateController = TextEditingController();
   final TextEditingController jobTitleController = TextEditingController();
-  final TextEditingController jobDescriptionController = TextEditingController();
+  final TextEditingController jobDescriptionController =
+      TextEditingController();
   final TextEditingController costUSDController = TextEditingController();
   final TextEditingController costEGPController = TextEditingController();
   final TextEditingController companyNameController = TextEditingController();
-  final TextEditingController companyContactController = TextEditingController();
+  final TextEditingController companyContactController =
+      TextEditingController();
   final TextEditingController proofOfWorkController = TextEditingController();
 
   String? courseApproach;
@@ -42,7 +44,197 @@ class _RemotemonthlyjobState extends State<Remotemonthlyjob> {
     'Afghanistan',
     'Albania',
     'Algeria',
-    // ... (rest of the countries list remains unchanged)
+    'Andorra',
+    'Angola',
+    'Antigua and Barbuda',
+    'Argentina',
+    'Armenia',
+    'Australia',
+    'Austria',
+    'Azerbaijan',
+    'Bahamas',
+    'Bahrain',
+    'Bangladesh',
+    'Barbados',
+    'Belarus',
+    'Belgium',
+    'Belize',
+    'Benin',
+    'Bhutan',
+    'Bolivia',
+    'Bosnia and Herzegovina',
+    'Botswana',
+    'Brazil',
+    'Brunei',
+    'Bulgaria',
+    'Burkina Faso',
+    'Burundi',
+    'Cabo Verde',
+    'Cambodia',
+    'Cameroon',
+    'Canada',
+    'Central African Republic',
+    'Chad',
+    'Chile',
+    'China',
+    'Colombia',
+    'Comoros',
+    'Congo (Congo-Brazzaville)',
+    'Costa Rica',
+    'Croatia',
+    'Cuba',
+    'Cyprus',
+    'Czechia (Czech Republic)',
+    'Democratic Republic of the Congo',
+    'Denmark',
+    'Djibouti',
+    'Dominica',
+    'Dominican Republic',
+    'Ecuador',
+    'Egypt',
+    'El Salvador',
+    'Equatorial Guinea',
+    'Eritrea',
+    'Estonia',
+    'Eswatini (fmr. "Swaziland")',
+    'Ethiopia',
+    'Fiji',
+    'Finland',
+    'France',
+    'Gabon',
+    'Gambia',
+    'Georgia',
+    'Germany',
+    'Ghana',
+    'Greece',
+    'Grenada',
+    'Guatemala',
+    'Guinea',
+    'Guinea-Bissau',
+    'Guyana',
+    'Haiti',
+    'Holy See',
+    'Honduras',
+    'Hungary',
+    'Iceland',
+    'India',
+    'Indonesia',
+    'Iran',
+    'Iraq',
+    'Ireland',
+    'Israel',
+    'Italy',
+    'Jamaica',
+    'Japan',
+    'Jordan',
+    'Kazakhstan',
+    'Kenya',
+    'Kiribati',
+    'Kuwait',
+    'Kyrgyzstan',
+    'Laos',
+    'Latvia',
+    'Lebanon',
+    'Lesotho',
+    'Liberia',
+    'Libya',
+    'Liechtenstein',
+    'Lithuania',
+    'Luxembourg',
+    'Madagascar',
+    'Malawi',
+    'Malaysia',
+    'Maldives',
+    'Mali',
+    'Malta',
+    'Marshall Islands',
+    'Mauritania',
+    'Mauritius',
+    'Mexico',
+    'Micronesia',
+    'Moldova',
+    'Monaco',
+    'Mongolia',
+    'Montenegro',
+    'Morocco',
+    'Mozambique',
+    'Myanmar (formerly Burma)',
+    'Namibia',
+    'Nauru',
+    'Nepal',
+    'Netherlands',
+    'New Zealand',
+    'Nicaragua',
+    'Niger',
+    'Nigeria',
+    'North Korea',
+    'North Macedonia',
+    'Norway',
+    'Oman',
+    'Pakistan',
+    'Palau',
+    'Palestine State',
+    'Panama',
+    'Papua New Guinea',
+    'Paraguay',
+    'Peru',
+    'Philippines',
+    'Poland',
+    'Portugal',
+    'Qatar',
+    'Romania',
+    'Russia',
+    'Rwanda',
+    'Saint Kitts and Nevis',
+    'Saint Lucia',
+    'Saint Vincent and the Grenadines',
+    'Samoa',
+    'San Marino',
+    'Sao Tome and Principe',
+    'Saudi Arabia',
+    'Senegal',
+    'Serbia',
+    'Seychelles',
+    'Sierra Leone',
+    'Singapore',
+    'Slovakia',
+    'Slovenia',
+    'Solomon Islands',
+    'Somalia',
+    'South Africa',
+    'South Korea',
+    'South Sudan',
+    'Spain',
+    'Sri Lanka',
+    'Sudan',
+    'Suriname',
+    'Sweden',
+    'Switzerland',
+    'Syria',
+    'Tajikistan',
+    'Tanzania',
+    'Thailand',
+    'Timor-Leste',
+    'Togo',
+    'Tonga',
+    'Trinidad and Tobago',
+    'Tunisia',
+    'Turkey',
+    'Turkmenistan',
+    'Tuvalu',
+    'Uganda',
+    'Ukraine',
+    'United Arab Emirates',
+    'United Kingdom',
+    'United States of America',
+    'Uruguay',
+    'Uzbekistan',
+    'Vanuatu',
+    'Venezuela',
+    'Vietnam',
+    'Yemen',
+    'Zambia',
+    'Zimbabwe',
   ];
 
   @override
@@ -100,9 +292,10 @@ class _RemotemonthlyjobState extends State<Remotemonthlyjob> {
             showDialog(
               context: context,
               barrierDismissible: false,
-              builder: (_) => Center(
-                child: CircularProgressIndicator(color: kColors[0]),
-              ),
+              builder:
+                  (_) => Center(
+                    child: CircularProgressIndicator(color: kColors[0]),
+                  ),
             );
           } else {
             Navigator.of(context, rootNavigator: true).pop();
@@ -111,65 +304,69 @@ class _RemotemonthlyjobState extends State<Remotemonthlyjob> {
           if (state is RemotjobSuccess) {
             showDialog(
               context: context,
-              builder: (_) => AlertDialog(
-                title: Text(
-                  widget.existingJobData == null
-                      ? localizations.addedModal_addedTitle
-                      : localizations.addedModal_updatedTitle,
-                  style: TextStyles.grey12Medium.copyWith(
-                    fontSize: 16,
-                    color: settingsProviders.isDark ? Colors.white : Colors.grey,
-                  ),
-                ),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
+              builder:
+                  (_) => AlertDialog(
+                    title: Text(
                       widget.existingJobData == null
-                          ? localizations.addedModal_addedMessage
-                          : localizations.addedModal_updatedMessage,
-                      style: TextStyles.grey12Medium.copyWith(fontSize: 14),
+                          ? localizations.addedModal_addedTitle
+                          : localizations.addedModal_updatedTitle,
+                      style: TextStyles.grey12Medium.copyWith(
+                        fontSize: 16,
+                        color:
+                            settingsProviders.isDark
+                                ? Colors.white
+                                : Colors.grey,
+                      ),
                     ),
-                    SizedBox(height: 12.h),
-                    SvgPicture.asset(Assets.assetsImagesTrue, height: 80),
-                  ],
-                ),
-                actions: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CustomeHome(),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          widget.existingJobData == null
+                              ? localizations.addedModal_addedMessage
+                              : localizations.addedModal_updatedMessage,
+                          style: TextStyles.grey12Medium.copyWith(fontSize: 14),
+                        ),
+                        SizedBox(height: 12.h),
+                        SvgPicture.asset(Assets.assetsImagesTrue, height: 80),
+                      ],
+                    ),
+                    actions: [
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CustomeHome(),
+                              ),
+                              (route) => false,
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                settingsProviders.isDark
+                                    ? kColors[0]
+                                    : Colors.black,
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
-                          (route) => false,
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            settingsProviders.isDark ? kColors[0] : Colors.black,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          child: Text(
+                            localizations.remoteForm_buttons_back,
+                            style: const TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
-                      child: Text(
-                        localizations.remoteForm_buttons_back,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
             );
           } else if (state is RemotjobFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('errorMessage'),
-              ),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('errorMessage')));
           }
         },
         builder: (context, state) {
@@ -186,33 +383,57 @@ class _RemotemonthlyjobState extends State<Remotemonthlyjob> {
                     style: TextStyles.black15Medium.copyWith(
                       fontWeight: FontWeight.bold,
                       color:
-                          settingsProviders.isDark ? Colors.white : Colors.black,
+                          settingsProviders.isDark
+                              ? Colors.white
+                              : Colors.black,
                     ),
                   ),
                   SizedBox(height: 8.h),
-                  settingsProviders.isDark
-                      ? SvgPicture.asset(Assets.assetsRemotDark)
-                      : SvgPicture.asset(Assets.assetsRemotLight),
+                  Row(
+                    children: [
+                      SvgPicture.asset(Assets.assetsRectangle),
+                      SizedBox(width: 4.w),
+                      Text(
+                        localizations.jobTypeRemoteMonthly,
+                        style: TextStyles.black15Medium.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color:
+                              settingsProviders.isDark
+                                  ? Colors.white
+                                  : Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(height: 16.h),
 
-                  _buildLabel(localizations.remoteForm_jobTitle_placeholder,
-                      settingsProviders),
+                  _buildLabel(
+                    localizations.remoteForm_jobTitle_placeholder,
+                    settingsProviders,
+                  ),
                   CustomTextFiled(
                     controller: jobTitleController,
                     hittext: localizations.remoteForm_jobTitle_placeholder,
                   ),
                   _buildHelperText(localizations.remoteForm_jobTitle_desc),
 
-                  _buildLabel(localizations.remoteForm_jobDescription_placeholder,
-                      settingsProviders),
+                  _buildLabel(
+                    localizations.remoteForm_jobDescription_placeholder,
+                    settingsProviders,
+                  ),
                   CustomTextFiled(
                     controller: jobDescriptionController,
-                    hittext: localizations.remoteForm_jobDescription_placeholder,
+                    hittext:
+                        localizations.remoteForm_jobDescription_placeholder,
                   ),
-                  _buildHelperText(localizations.remoteForm_jobDescription_desc),
+                  _buildHelperText(
+                    localizations.remoteForm_jobDescription_desc,
+                  ),
 
-                  _buildLabel(localizations.remoteForm_startDate_placeholder,
-                      settingsProviders),
+                  _buildLabel(
+                    localizations.remoteForm_startDate_placeholder,
+                    settingsProviders,
+                  ),
                   CustomTextFiled(
                     controller: dateController,
                     hittext: localizations.dateFormatHint,
@@ -242,12 +463,14 @@ class _RemotemonthlyjobState extends State<Remotemonthlyjob> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             _buildLabel(
-                                localizations.remoteForm_paymentInUSD_placeholder,
-                                settingsProviders),
+                              localizations.remoteForm_paymentInUSD_placeholder,
+                              settingsProviders,
+                            ),
                             CustomTextFiled(
                               controller: costUSDController,
                               hittext:
-                                  localizations.remoteForm_paymentInUSD_placeholder,
+                                  localizations
+                                      .remoteForm_paymentInUSD_placeholder,
                               suffixIcon: Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: SvgPicture.asset(
@@ -267,9 +490,10 @@ class _RemotemonthlyjobState extends State<Remotemonthlyjob> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             _buildLabel(
-                                localizations.remoteForm_paymentInEGP_placeholder,
-                                settingsProviders),
-                                SizedBox(height: 8.h),
+                              localizations.remoteForm_paymentInEGP_placeholder,
+                              settingsProviders,
+                            ),
+                            SizedBox(height: 8.h),
                             CustomTextFiled(
                               controller: costEGPController,
                               hittext: '00.0',
@@ -291,8 +515,10 @@ class _RemotemonthlyjobState extends State<Remotemonthlyjob> {
                   ),
 
                   SizedBox(height: 24.h),
-                  _buildLabel(localizations.remoteForm_companyName_placeholder,
-                      settingsProviders),
+                  _buildLabel(
+                    localizations.remoteForm_companyName_placeholder,
+                    settingsProviders,
+                  ),
                   CustomTextFiled(
                     controller: companyNameController,
                     hittext: localizations.remoteForm_companyName_placeholder,
@@ -304,21 +530,29 @@ class _RemotemonthlyjobState extends State<Remotemonthlyjob> {
                     subtitle: localizations.remoteForm_companyCountry_required,
                     dropDownText: courseApproach,
                     items: worldCountries,
-                    onChanged: (value) => setState(() => courseApproach = value),
+                    onChanged:
+                        (value) => setState(() => courseApproach = value),
                     backgroundColor: kColors[0],
                   ),
 
                   SizedBox(height: 16.h),
-                  _buildLabel(localizations.remoteForm_companyContact_placeholder,
-                      settingsProviders),
+                  _buildLabel(
+                    localizations.remoteForm_companyContact_placeholder,
+                    settingsProviders,
+                  ),
                   CustomTextFiled(
                     controller: companyContactController,
-                    hittext: localizations.remoteForm_companyContact_placeholder,
+                    hittext:
+                        localizations.remoteForm_companyContact_placeholder,
                   ),
-                  _buildHelperText(localizations.remoteForm_companyContact_desc),
+                  _buildHelperText(
+                    localizations.remoteForm_companyContact_desc,
+                  ),
 
-                  _buildLabel(localizations.remoteForm_proofOfWork_placeholder,
-                      settingsProviders),
+                  _buildLabel(
+                    localizations.remoteForm_proofOfWork_placeholder,
+                    settingsProviders,
+                  ),
                   CustomTextFiled(
                     controller: proofOfWorkController,
                     hittext: localizations.remoteForm_proofOfWork_placeholder,
@@ -345,6 +579,7 @@ class _RemotemonthlyjobState extends State<Remotemonthlyjob> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
+                            minimumSize: const Size(double.infinity, 50),
                           ),
                           child: Text(localizations.remoteForm_buttons_back),
                         ),
@@ -352,17 +587,16 @@ class _RemotemonthlyjobState extends State<Remotemonthlyjob> {
                       const Spacer(),
                       Expanded(
                         child: CustomButtonWidget(
-                          text: widget.existingJobData == null
-                              ? localizations.remoteForm_buttons_add
-                              : localizations.remoteForm_buttons_update,
+                          text:
+                              widget.existingJobData == null
+                                  ? localizations.remoteForm_buttons_add
+                                  : localizations.remoteForm_buttons_update,
                           onPressed: () {
                             if (!_isFormValid()) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   backgroundColor: kColors[0],
-                                  content: Center(
-                                    child: Text('errorMessage'),
-                                  ),
+                                  content: Center(child: Text('errorMessage')),
                                 ),
                               );
                               return;
@@ -374,11 +608,15 @@ class _RemotemonthlyjobState extends State<Remotemonthlyjob> {
                                   jobDescriptionController.text.trim(),
                               'startDate': dateController.text.trim(),
                               'paymentInUSD':
-                                  double.tryParse(costUSDController.text.trim()) ??
-                                      0,
+                                  double.tryParse(
+                                    costUSDController.text.trim(),
+                                  ) ??
+                                  0,
                               'paymentInEGP':
-                                  double.tryParse(costEGPController.text.trim()) ??
-                                      0,
+                                  double.tryParse(
+                                    costEGPController.text.trim(),
+                                  ) ??
+                                  0,
                               'companytName': companyNameController.text.trim(),
                               'companyCountry': courseApproach,
                               'companyContact':
@@ -389,13 +627,13 @@ class _RemotemonthlyjobState extends State<Remotemonthlyjob> {
                             if (widget.existingJobData != null &&
                                 widget.jobId != null) {
                               context.read<RemotjobCubit>().updateRemoteJob(
-                                    widget.jobId!,
-                                    jobData,
-                                  );
+                                widget.jobId!,
+                                jobData,
+                              );
                             } else {
                               context.read<RemotjobCubit>().addRemoteJob(
-                                    jobData,
-                                  );
+                                jobData,
+                              );
                             }
                           },
                         ),

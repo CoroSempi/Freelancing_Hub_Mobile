@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:iti_freelancing_hub/constants.dart';
 import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/mainscafold.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/CustomButtonWidget.dart';
-import 'package:iti_freelancing_hub/data/presentation/widgets/form-field.dart';
-import 'package:iti_freelancing_hub/data/presentation/widgets/formFieldWithDropdown.dart';
+
 import 'package:iti_freelancing_hub/data/presentation/widgets/text_field.dart';
 import 'package:provider/provider.dart';
 import 'package:iti_freelancing_hub/generated/l10n.dart'; // Import generated localization

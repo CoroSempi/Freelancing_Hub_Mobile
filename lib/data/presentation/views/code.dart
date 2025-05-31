@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:iti_freelancing_hub/core/providers/setting_provider.dart';
 import 'package:iti_freelancing_hub/core/utils/images/app_images.dart';
 import 'package:iti_freelancing_hub/core/utils/styles.dart';
 import 'package:iti_freelancing_hub/data/presentation/manger/cubit/forget-password/cubit/forgetpassword_cubit.dart';
@@ -13,7 +14,8 @@ import 'package:iti_freelancing_hub/data/presentation/views/signIn.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/CustomButtonWidget.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/footer.dart';
 import 'package:iti_freelancing_hub/data/presentation/widgets/input-box-controller.dart';
-import 'package:iti_freelancing_hub/generated/l10n.dart'; // Added for localization
+import 'package:iti_freelancing_hub/generated/l10n.dart';
+import 'package:provider/provider.dart'; // Added for localization
 
 class CodeScreen extends StatefulWidget {
   static const routeName = '/code-screen';
@@ -41,6 +43,8 @@ class _CodeScreenState extends State<CodeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final settingsProviders = Provider.of<SettingsProvider>(context);
+
     final bloc = VerifycodeCubit.get(context);
     final resend = ForgetpasswordCubit.get(context);
     final s = S.of(context); // Added for localization
@@ -112,10 +116,14 @@ class _CodeScreenState extends State<CodeScreen> {
                             ),
                           ),
                           const SizedBox(height: 24),
-                          Text(
-                            s.verifyCody_title, // Localized title
-                            style: TextStyles.black20SemiBold,
-                            textAlign: TextAlign.start,
+                          Center(
+                            child: Text(
+                              s.verifyCody_title, // Localized title
+                              style: TextStyles.black20SemiBold.copyWith(
+                                color: settingsProviders.isDark ?Colors.white :Colors.black,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
                           ),
                           const SizedBox(height: 15),
                           Row(
